@@ -3,7 +3,7 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>BRITO</title>
+    <title>Rio Negrinho Shop</title>
     <script src="https://cdn.tailwindcss.com"></script>
     <style>
         /* Estilização Azul e Branco */
@@ -29,21 +29,23 @@
     </div>
 
     <div class="delivery-banner">
-        Catálogo de produtos do Brito: compre hoje, chega amanhã! 🚚
+        COMPRE HOJE CHEGA AMANHÃ 🚚
     </div>
 
     <header class="shadow-sm sticky top-0 z-50 p-4">
         <div class="container mx-auto flex flex-col md:flex-row justify-between items-center gap-4">
-            <h1 class="text-2xl font-bold text-blue-900 tracking-tighter uppercase">BRITO</h1>
+            <h1 class="text-2xl font-bold text-blue-900 tracking-tighter uppercase">RIO NEGRINHO SHOP</h1>
             <input type="text" id="searchBar" onkeyup="filterProducts()" placeholder="Pesquisar no catálogo..." class="w-full md:w-1/2 p-2 border-2 border-blue-100 rounded-lg focus:outline-none focus:ring-2 focus:ring-blue-500 bg-white">
-            <button onclick="toggleCart()" class="relative bg-blue-700 hover:bg-blue-800 text-white px-4 py-2 rounded-lg font-bold flex items-center gap-2 transition">
-                <span>CARRINHO</span>
-                <span id="cartCount" class="absolute -top-2 -right-2 bg-red-500 text-white text-xs rounded-full h-5 w-5 flex items-center justify-center">0</span>
+            <button onclick="toggleCart()" class="relative bg-blue-700 hover:bg-blue-800 text-white p-3 rounded-full transition shadow-md">
+                <svg xmlns="http://www.w3.org/2000/svg" class="h-6 w-6" fill="none" viewBox="0 0 24 24" stroke="currentColor">
+                    <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M3 3h2l.4 2M7 13h10l4-8H5.4M7 13L5.4 5M7 13l-2.293 2.293c-.63.63-.184 1.707.707 1.707H17m0 0a2 2 0 100 4 2 2 0 000-4zm-8 2a2 2 0 11-4 0 2 2 0 014 0z" />
+                </svg>
+                <span id="cartCount" class="absolute -top-1 -right-1 bg-red-500 text-white text-[10px] font-bold rounded-full h-5 w-5 flex items-center justify-center border-2 border-white">0</span>
             </button>
         </div>
     </header>
 
-    <main class="container mx-auto p-4 grid grid-cols-1 sm:grid-cols-2 md:grid-cols-3 lg:grid-cols-4 gap-6 min-h-[60vh]" id="productGrid">
+    <main class="container mx-auto p-2 grid grid-cols-2 sm:grid-cols-2 md:grid-cols-3 lg:grid-cols-4 gap-2 md:gap-6 min-h-[60vh]" id="productGrid">
     </main>
 
     <section class="container mx-auto p-4 mt-8">
@@ -57,17 +59,60 @@
         </div>
     </section>
 
-    <footer class="bg-blue-900 text-white mt-12 py-10 px-4 text-center">
-        <div class="container mx-auto">
-            <h2 class="text-2xl font-bold mb-4">Acompanhe nosso Devocional</h2>
-            <p class="text-blue-100 mb-6 max-w-2xl mx-auto leading-relaxed">
-                Convido você para <strong>orar comigo à meia-noite</strong> e acompanhar o nosso <strong>devocional às 7 da manhã</strong> todos os dias no meu canal oficial.
-            </p>
-            <a href="https://www.youtube.com/@jadirbritooficial" target="_blank" class="inline-flex items-center gap-2 bg-white text-blue-900 font-bold py-3 px-8 rounded-full transition-transform hover:scale-105">
-                <svg class="w-6 h-6 fill-[#FF0000]" viewBox="0 0 24 24"><path d="M19.615 3.184c-3.604-.246-11.631-.245-15.23 0-3.897.266-4.356 2.62-4.385 8.816.029 6.185.484 8.549 4.385 8.816 3.6.245 11.626.246 15.23 0 3.897-.266 4.356-2.62 4.385-8.816-.029-6.185-.484-8.549-4.385-8.816zm-10.615 12.816v-8l8 3.993-8 4.007z"/></svg>
-                INSCREVA-SE NO CANAL
-            </a>
-            <p class="text-blue-300 mt-8 text-xs">© 2026 BRITO - Rio Negrinho/SC</p>
+    <footer class="bg-gradient-to-b from-blue-950 to-blue-900 text-white mt-12 py-12 px-4 text-center">
+        <div class="container mx-auto max-w-6xl">
+            <div class="bg-white/10 border border-white/10 rounded-3xl p-6 md:p-8 shadow-2xl backdrop-blur-sm">
+                <h2 class="text-3xl md:text-4xl font-extrabold mb-3 tracking-tight">
+                    🙏 Fortaleça sua fé todos os dias
+                </h2>
+                <p class="text-blue-100 mb-8 max-w-3xl mx-auto leading-relaxed text-base md:text-lg">
+                    Convido você para <strong>orar comigo à meia-noite</strong> e acompanhar o nosso
+                    <strong>devocional às 7 da manhã</strong> todos os dias. Aproveite também para enviar
+                    seu <strong>pedido de oração</strong>.
+                </p>
+
+                <div class="grid grid-cols-1 md:grid-cols-2 gap-6 items-stretch">
+                    
+                    <div class="bg-white text-blue-950 rounded-2xl p-6 shadow-xl flex flex-col justify-between">
+                        <div>
+                            <div class="inline-flex items-center justify-center w-16 h-16 rounded-full bg-red-100 mb-4">
+                                <svg class="w-8 h-8 fill-[#FF0000]" viewBox="0 0 24 24">
+                                    <path d="M19.615 3.184c-3.604-.246-11.631-.245-15.23 0-3.897.266-4.356 2.62-4.385 8.816.029 6.185.484 8.549 4.385 8.816 3.6.245 11.626.246 15.23 0 3.897-.266 4.356-2.62 4.385-8.816-.029-6.185-.484-8.549-4.385-8.816zm-10.615 12.816v-8l8 3.993-8 4.007z"/>
+                                </svg>
+                            </div>
+                            <h3 class="text-2xl font-bold mb-2">Acompanhe no YouTube</h3>
+                            <p class="text-blue-700 leading-relaxed mb-5">
+                                Inscreva-se no canal oficial para receber palavras de fé, oração e devocionais diariamente.
+                            </p>
+                        </div>
+
+                        <a href="https://www.youtube.com/@jadirbritooficial" target="_blank" class="inline-flex justify-center items-center gap-2 bg-red-600 hover:bg-red-700 text-white font-bold py-3 px-6 rounded-full transition-transform hover:scale-105 shadow-lg uppercase tracking-wide">
+                            <svg class="w-5 h-5 fill-white" viewBox="0 0 24 24">
+                                <path d="M19.615 3.184c-3.604-.246-11.631-.245-15.23 0-3.897.266-4.356 2.62-4.385 8.816.029 6.185.484 8.549 4.385 8.816 3.6.245 11.626.246 15.23 0 3.897-.266 4.356-2.62 4.385-8.816-.029-6.185-.484-8.549-4.385-8.816zm-10.615 12.816v-8l8 3.993-8 4.007z"/>
+                            </svg>
+                            Inscreva-se no canal
+                        </a>
+                    </div>
+
+                    <div class="bg-blue-800/60 border border-blue-700 rounded-2xl p-6 shadow-xl text-left">
+                        <h3 class="text-2xl font-bold mb-2 text-white">📩 Envie seu pedido de oração</h3>
+                        <p class="text-blue-100 mb-4 leading-relaxed">
+                            Escreva seu pedido de oração abaixo.
+                        </p>
+
+                        <div class="flex flex-col gap-3">
+                            <textarea id="pedidoOracao" rows="5" placeholder="Digite aqui seu pedido de oração..." class="w-full p-4 rounded-2xl border-2 border-blue-300 bg-white text-blue-950 placeholder:text-blue-400 focus:outline-none focus:ring-2 focus:ring-white resize-none"></textarea>
+
+                            <button onclick="enviarPedidoOracao()" class="w-full bg-green-500 hover:bg-green-600 text-white font-bold py-3 rounded-2xl transition shadow-lg uppercase tracking-wider">
+                                Enviar pedido
+                            </button>
+                        </div>
+                    </div>
+
+                </div>
+
+                <p class="text-blue-200 mt-8 text-xs">© 2026 BRITO - Rio Negrinho/SC</p>
+            </div>
         </div>
     </footer>
 
@@ -113,14 +158,14 @@
         function initStore() {
             const grid = document.getElementById('productGrid');
             grid.innerHTML = products.map(p => `
-                <div class="product-box p-4 flex flex-col items-center text-center">
+                <div class="product-box p-3 flex flex-col items-center text-center">
                     <a href="${p.img}" target="_blank">
-                        <img src="${p.img}" alt="${p.nome}" class="w-48 h-48 object-cover mb-4 rounded cursor-zoom-in">
+                        <img src="${p.img}" alt="${p.nome}" class="w-full aspect-square object-cover mb-2 rounded cursor-zoom-in">
                     </a>
-                    <h3 class="font-bold text-lg h-12 overflow-hidden text-blue-900">${p.nome}</h3>
-                    <p class="text-blue-500 text-sm mb-2">${p.desc}</p>
-                    <span class="text-blue-700 font-bold text-xl mb-4">R$ ${p.preco.toFixed(2)}</span>
-                    <button onclick="addToCart(${p.id})" class="mt-auto bg-blue-600 text-white px-6 py-2 rounded-full hover:bg-blue-700 w-full transition font-bold shadow-sm">Adicionar</button>
+                    <h3 class="font-bold text-sm md:text-lg h-10 overflow-hidden text-blue-900 leading-tight">${p.nome}</h3>
+                    <p class="text-blue-500 text-[10px] md:text-sm mb-1">${p.desc}</p>
+                    <span class="text-blue-700 font-bold text-lg mb-3">R$ ${p.preco.toFixed(2)}</span>
+                    <button onclick="addToCart(${p.id})" class="mt-auto bg-blue-600 text-white px-4 py-2 rounded-full hover:bg-blue-700 w-full transition font-bold text-xs md:text-base shadow-sm">Adicionar</button>
                 </div>
             `).join('');
             loadUserData();
@@ -143,7 +188,6 @@
             const product = products.find(p => p.id === id);
             cart.push(product);
             updateCartUI();
-            if(!document.getElementById('cartSidebar').classList.contains('active')) toggleCart();
         }
 
         function removeFromCart(index) {
@@ -202,6 +246,21 @@
             const fone = "5547988771313";
             window.open(`https://api.whatsapp.com/send?phone=${fone}&text=${mensagem}`, '_blank');
             produtoInput.value = ""; 
+        }
+
+        function enviarPedidoOracao() {
+            const pedido = document.getElementById('pedidoOracao').value.trim();
+
+            if (pedido === "") {
+                alert("Por favor, escreva seu pedido de oração.");
+                return;
+            }
+
+            const mensagem = encodeURIComponent(`*PEDIDO DE ORAÇÃO* \n\nOlá, gostaria de enviar este pedido de oração:\n\n${pedido}`);
+            const fone = "5547988233530";
+
+            window.open(`https://api.whatsapp.com/send?phone=${fone}&text=${mensagem}`, '_blank');
+            document.getElementById('pedidoOracao').value = "";
         }
 
         function finalizePurchase() {
