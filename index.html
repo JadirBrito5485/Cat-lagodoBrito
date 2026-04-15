@@ -6,19 +6,20 @@
     <title>BRITO</title>
     <script src="https://cdn.tailwindcss.com"></script>
     <style>
-        /* Estilização Customizada Estilo Box */
-        body { background-color: #f4f4f9; font-family: sans-serif; }
-        .product-box { transition: transform 0.2s; border: 1px solid #ddd; background: white; border-radius: 8px; overflow: hidden; }
-        .product-box:hover { transform: translateY(-5px); box-shadow: 0 10px 15px -3px rgba(0,0,0,0.1); }
-        .cart-sidebar { position: fixed; right: -100%; top: 0; width: 350px; height: 100%; background: white; box-shadow: -5px 0 15px rgba(0,0,0,0.2); transition: 0.3s; z-index: 1000; overflow-y: auto; }
+        /* Estilização Azul e Branco */
+        body { background-color: #f0f7ff; font-family: sans-serif; }
+        .product-box { transition: transform 0.2s; border: 1px solid #cce0ff; background: white; border-radius: 8px; overflow: hidden; }
+        .product-box:hover { transform: translateY(-5px); box-shadow: 0 10px 15px -3px rgba(37, 99, 235, 0.1); }
+        .cart-sidebar { position: fixed; right: -100%; top: 0; width: 350px; height: 100%; background: white; box-shadow: -5px 0 15px rgba(0,0,0,0.1); transition: 0.3s; z-index: 1000; overflow-y: auto; }
         .cart-sidebar.active { right: 0; }
-        .overlay { position: fixed; top: 0; left: 0; width: 100%; height: 100%; background: rgba(0,0,0,0.5); display: none; z-index: 999; }
+        .overlay { position: fixed; top: 0; left: 0; width: 100%; height: 100%; background: rgba(30, 58, 138, 0.4); display: none; z-index: 999; }
         .overlay.active { display: block; }
         input::-webkit-outer-spin-button, input::-webkit-inner-spin-button { -webkit-appearance: none; margin: 0; }
         
-        /* Banner de Destaque Superior */
-        .top-promo-banner { background: #1a202c; color: #fff; font-size: 0.75rem; font-weight: bold; text-align: center; padding: 6px; text-transform: uppercase; letter-spacing: 1px; }
-        .delivery-banner { background: #fff9c4; color: #856404; font-size: 0.875rem; font-weight: 700; text-align: center; padding: 8px; border-bottom: 1px solid #ffeeba; }
+        .top-promo-banner { background: #1e3a8a; color: #fff; font-size: 0.75rem; font-weight: bold; text-align: center; padding: 6px; text-transform: uppercase; letter-spacing: 1px; }
+        .delivery-banner { background: #dbeafe; color: #1e40af; font-size: 0.875rem; font-weight: 700; text-align: center; padding: 8px; border-bottom: 1px solid #bfdbfe; }
+        
+        header { background-color: #ffffff !important; border-bottom: 2px solid #dbeafe; }
     </style>
 </head>
 <body>
@@ -31,11 +32,11 @@
         Catálogo de produtos do Brito: compre hoje, chega amanhã! 🚚
     </div>
 
-    <header class="bg-white shadow-sm sticky top-0 z-50 p-4">
+    <header class="shadow-sm sticky top-0 z-50 p-4">
         <div class="container mx-auto flex flex-col md:flex-row justify-between items-center gap-4">
-            <h1 class="text-2xl font-bold text-gray-800 tracking-tighter uppercase">BRITO</h1>
-            <input type="text" id="searchBar" onkeyup="filterProducts()" placeholder="Pesquisar no catálogo..." class="w-full md:w-1/2 p-2 border rounded-lg focus:outline-none focus:ring-2 focus:ring-blue-500">
-            <button onclick="toggleCart()" class="relative bg-gray-800 text-white px-4 py-2 rounded-lg font-bold flex items-center gap-2">
+            <h1 class="text-2xl font-bold text-blue-900 tracking-tighter uppercase">BRITO</h1>
+            <input type="text" id="searchBar" onkeyup="filterProducts()" placeholder="Pesquisar no catálogo..." class="w-full md:w-1/2 p-2 border-2 border-blue-100 rounded-lg focus:outline-none focus:ring-2 focus:ring-blue-500 bg-white">
+            <button onclick="toggleCart()" class="relative bg-blue-700 hover:bg-blue-800 text-white px-4 py-2 rounded-lg font-bold flex items-center gap-2 transition">
                 <span>CARRINHO</span>
                 <span id="cartCount" class="absolute -top-2 -right-2 bg-red-500 text-white text-xs rounded-full h-5 w-5 flex items-center justify-center">0</span>
             </button>
@@ -46,66 +47,65 @@
     </main>
 
     <section class="container mx-auto p-4 mt-8">
-        <div class="bg-blue-50 border-2 border-dashed border-blue-200 rounded-2xl p-6 text-center shadow-sm">
+        <div class="bg-white border-2 border-dashed border-blue-300 rounded-2xl p-6 text-center shadow-sm">
             <h3 class="text-lg font-bold text-blue-900 mb-2">🛒 Não encontrou o que procurava?</h3>
-            <p class="text-sm text-blue-700 mb-4">Me diga qual produto você deseja e eu verifico a disponibilidade para você agora mesmo!</p>
+            <p class="text-sm text-blue-600 mb-4">Me diga qual produto você deseja e eu verifico a disponibilidade para você agora mesmo!</p>
             <div class="max-w-md mx-auto flex flex-col gap-3">
-                <input type="text" id="produtoNaoEncontrado" placeholder="Digite o nome do produto aqui..." class="w-full p-3 border-2 border-white rounded-xl focus:outline-none focus:ring-2 focus:ring-blue-500 shadow-inner">
-                <button onclick="enviarPedidoEspecial()" class="w-full bg-blue-600 hover:bg-blue-700 text-white font-bold py-3 rounded-xl transition shadow-md">SOLICITAR</button>
+                <input type="text" id="produtoNaoEncontrado" placeholder="Digite o nome do produto aqui..." class="w-full p-3 border-2 border-blue-50 rounded-xl focus:outline-none focus:ring-2 focus:ring-blue-500 shadow-inner bg-blue-50/30">
+                <button onclick="enviarPedidoEspecial()" class="w-full bg-blue-600 hover:bg-blue-700 text-white font-bold py-3 rounded-xl transition shadow-md uppercase tracking-wider">Solicitar agora</button>
             </div>
         </div>
     </section>
 
-    <footer class="bg-gray-900 text-white mt-12 py-10 px-4 text-center">
+    <footer class="bg-blue-900 text-white mt-12 py-10 px-4 text-center">
         <div class="container mx-auto">
             <h2 class="text-2xl font-bold mb-4">Acompanhe nosso Devocional</h2>
-            <p class="text-gray-300 mb-6 max-w-2xl mx-auto leading-relaxed">
+            <p class="text-blue-100 mb-6 max-w-2xl mx-auto leading-relaxed">
                 Convido você para <strong>orar comigo à meia-noite</strong> e acompanhar o nosso <strong>devocional às 7 da manhã</strong> todos os dias no meu canal oficial.
             </p>
-            <a href="https://www.youtube.com/@jadirbritooficial" target="_blank" class="inline-flex items-center gap-2 bg-[#FF0000] text-white font-bold py-3 px-8 rounded-full transition-transform hover:scale-105">
-                <svg class="w-6 h-6 fill-current" viewBox="0 0 24 24"><path d="M19.615 3.184c-3.604-.246-11.631-.245-15.23 0-3.897.266-4.356 2.62-4.385 8.816.029 6.185.484 8.549 4.385 8.816 3.6.245 11.626.246 15.23 0 3.897-.266 4.356-2.62 4.385-8.816-.029-6.185-.484-8.549-4.385-8.816zm-10.615 12.816v-8l8 3.993-8 4.007z"/></svg>
+            <a href="https://www.youtube.com/@jadirbritooficial" target="_blank" class="inline-flex items-center gap-2 bg-white text-blue-900 font-bold py-3 px-8 rounded-full transition-transform hover:scale-105">
+                <svg class="w-6 h-6 fill-[#FF0000]" viewBox="0 0 24 24"><path d="M19.615 3.184c-3.604-.246-11.631-.245-15.23 0-3.897.266-4.356 2.62-4.385 8.816.029 6.185.484 8.549 4.385 8.816 3.6.245 11.626.246 15.23 0 3.897-.266 4.356-2.62 4.385-8.816-.029-6.185-.484-8.549-4.385-8.816zm-10.615 12.816v-8l8 3.993-8 4.007z"/></svg>
                 INSCREVA-SE NO CANAL
             </a>
-            <p class="text-gray-500 mt-2 text-xs">© 2026 BRITO - Rio Negrinho/SC</p>
+            <p class="text-blue-300 mt-8 text-xs">© 2026 BRITO - Rio Negrinho/SC</p>
         </div>
     </footer>
 
     <div class="overlay" id="overlay" onclick="toggleCart()"></div>
     <div class="cart-sidebar p-6" id="cartSidebar">
-        <div class="flex justify-between items-center border-b pb-4 mb-4">
-            <h2 class="text-xl font-bold">Meu Pedido</h2>
-            <button onclick="toggleCart()" class="text-gray-500 text-2xl">&times;</button>
+        <div class="flex justify-between items-center border-b-2 border-blue-50 pb-4 mb-4">
+            <h2 class="text-xl font-bold text-blue-900">Meu Pedido</h2>
+            <button onclick="toggleCart()" class="text-gray-400 text-2xl">&times;</button>
         </div>
         
         <div id="cartItems" class="space-y-4 mb-6"></div>
 
-        <div class="border-t pt-4">
-            <p class="text-lg font-bold flex justify-between">Total: <span id="cartTotal">R$ 0,00</span></p>
+        <div class="border-t-2 border-blue-50 pt-4">
+            <p class="text-lg font-bold flex justify-between text-blue-900">Total: <span id="cartTotal">R$ 0,00</span></p>
             <p class="text-green-600 text-xs font-bold mb-4 uppercase text-right">Frete Grátis Aplicado!</p>
             
-            <h3 class="font-bold mb-2 text-sm uppercase text-gray-600">Dados de Entrega</h3>
+            <h3 class="font-bold mb-2 text-sm uppercase text-blue-400 tracking-wider">Dados de Entrega</h3>
             <form id="checkoutForm" class="space-y-2">
-                <input type="text" id="nome" placeholder="Nome Completo" required class="w-full p-2 border rounded text-sm">
-                <input type="text" id="cpf" placeholder="CPF" required class="w-full p-2 border rounded text-sm">
+                <input type="text" id="nome" placeholder="Nome Completo" required class="w-full p-2 border-2 border-blue-50 rounded text-sm bg-blue-50/30 focus:border-blue-500 outline-none">
+                <input type="text" id="cpf" placeholder="CPF" required class="w-full p-2 border-2 border-blue-50 rounded text-sm bg-blue-50/30 focus:border-blue-500 outline-none">
                 <div class="flex gap-2">
-                    <input type="text" id="rua" placeholder="Rua" required class="w-full p-2 border rounded text-sm">
-                    <input type="text" id="numero" placeholder="Nº" required class="w-20 p-2 border rounded text-sm">
+                    <input type="text" id="rua" placeholder="Rua" required class="w-full p-2 border-2 border-blue-50 rounded text-sm bg-blue-50/30 focus:border-blue-500 outline-none">
+                    <input type="text" id="numero" placeholder="Nº" required class="w-20 p-2 border-2 border-blue-50 rounded text-sm bg-blue-50/30 focus:border-blue-500 outline-none">
                 </div>
-                <input type="text" id="bairro" placeholder="Bairro" required class="w-full p-2 border rounded text-sm">
-                <textarea id="obs" placeholder="Observações (opcional)" class="w-full p-2 border rounded text-sm"></textarea>
+                <input type="text" id="bairro" placeholder="Bairro" required class="w-full p-2 border-2 border-blue-50 rounded text-sm bg-blue-50/30 focus:border-blue-500 outline-none">
+                <textarea id="obs" placeholder="Observações (opcional)" class="w-full p-2 border-2 border-blue-50 rounded text-sm bg-blue-50/30 focus:border-blue-500 outline-none"></textarea>
             </form>
 
             <button onclick="finalizePurchase()" class="w-full bg-green-600 text-white font-bold py-4 rounded-lg mt-4 hover:bg-green-700 shadow-lg transition">FINALIZAR COMPRA</button>
-            <button onclick="toggleCart()" class="w-full text-gray-500 font-bold py-2 mt-2 text-sm">CONTINUAR COMPRANDO</button>
+            <button onclick="toggleCart()" class="w-full text-blue-400 font-bold py-2 mt-2 text-sm">CONTINUAR COMPRANDO</button>
         </div>
     </div>
 
     <script>
-        // --- LISTA DE PRODUTOS ---
         const products = [
-            { id: 1, nome: "Mochila Militar Tática Impermeável 50 Litros Grande Reforçada com Brinde Bandeira1", preco: 139.00, desc: "FRETE GRÁTIS", img: "https://down-br.img.susercontent.com/file/br-11134207-7r98o-m0yvwkfatbmm3e@resize_w900_nl.webp" },
-            { id: 2, nome: "Fone De Ouvido Sem Fio E6s Bluetooth 5.0 Tws Com Tela LED Digital", preco: 44.00, desc: "FRETE GRÁTIS", img: "https://down-br.img.susercontent.com/file/br-11134211-7qukw-lixj4075llbped.webp" },
-            { id: 3, nome: "Balança Digital Medidora Corporal Bioimpedância até 180kg via Bluethooth", preco: 69.00, desc: "FRETE GRÁTIS", img: "https://down-br.img.susercontent.com/file/sg-11134201-7rdwg-mdq4q84uj2ck74@resize_w900_nl.webp" }
+            { id: 1, nome: "Mochila Militar Tática Impermeável 50 Litros Grande Reforçada com Brinde Bandeira1", preco: 139.00, desc: "FRETE GRÁTIS - CHEGA AMANHÃ ", img: "https://down-br.img.susercontent.com/file/br-11134207-7r98o-m0yvwkfatbmm3e@resize_w900_nl.webp" },
+            { id: 2, nome: "Fone De Ouvido Sem Fio E6s Bluetooth 5.0 Tws Com Tela LED Digital", preco: 44.00, desc: "FRETE GRÁTIS - CHEGA AMANHÃ", img: "https://down-br.img.susercontent.com/file/br-11134211-7qukw-lixj4075llbped.webp" },
+            { id: 3, nome: "Balança Digital Medidora Corporal Bioimpedância até 180kg via Bluethooth", preco: 69.00, desc: "FRETE GRÁTIS - CHEGA AMANHÃ", img: "https://down-br.img.susercontent.com/file/sg-11134201-7rdwg-mdq4q84uj2ck74@resize_w900_nl.webp" }
         ];
 
         let cart = [];
@@ -117,10 +117,10 @@
                     <a href="${p.img}" target="_blank">
                         <img src="${p.img}" alt="${p.nome}" class="w-48 h-48 object-cover mb-4 rounded cursor-zoom-in">
                     </a>
-                    <h3 class="font-bold text-lg h-12 overflow-hidden text-gray-800">${p.nome}</h3>
-                    <p class="text-gray-500 text-sm mb-2">${p.desc}</p>
-                    <span class="text-blue-600 font-bold text-xl mb-4">R$ ${p.preco.toFixed(2)}</span>
-                    <button onclick="addToCart(${p.id})" class="mt-auto bg-blue-600 text-white px-6 py-2 rounded-full hover:bg-blue-700 w-full transition font-bold">Adicionar</button>
+                    <h3 class="font-bold text-lg h-12 overflow-hidden text-blue-900">${p.nome}</h3>
+                    <p class="text-blue-500 text-sm mb-2">${p.desc}</p>
+                    <span class="text-blue-700 font-bold text-xl mb-4">R$ ${p.preco.toFixed(2)}</span>
+                    <button onclick="addToCart(${p.id})" class="mt-auto bg-blue-600 text-white px-6 py-2 rounded-full hover:bg-blue-700 w-full transition font-bold shadow-sm">Adicionar</button>
                 </div>
             `).join('');
             loadUserData();
@@ -154,9 +154,9 @@
         function updateCartUI() {
             const list = document.getElementById('cartItems');
             list.innerHTML = cart.map((item, index) => `
-                <div class="flex justify-between items-center bg-gray-50 p-2 rounded">
+                <div class="flex justify-between items-center bg-blue-50 p-2 rounded">
                     <div class="text-sm">
-                        <p class="font-bold">${item.nome}</p>
+                        <p class="font-bold text-blue-900">${item.nome}</p>
                         <p class="text-blue-600 font-bold">R$ ${item.preco.toFixed(2)}</p>
                     </div>
                     <button onclick="removeFromCart(${index})" class="text-red-500 font-bold px-2">Remover</button>
@@ -191,36 +191,26 @@
             }
         }
 
-        // FUNÇÃO PARA ENVIAR PRODUTO DESEJADO NÃO ENCONTRADO
         function enviarPedidoEspecial() {
             const produtoInput = document.getElementById('produtoNaoEncontrado');
             const produtoNome = produtoInput.value.trim();
-            
             if (produtoNome === "") {
-                alert("Por favor, digite o nome do produto que você está procurando.");
+                alert("Por favor, digite o nome do produto.");
                 return;
             }
-
-            const mensagem = `*INTERESSE EM PRODUTO NÃO ENCONTRADO*%0A%0A` +
-                             `Olá Brito, procurei o seguinte produto no catálogo e não encontrei:%0A%0A` +
-                             `*Produto:* ${produtoNome}%0A%0A` +
-                             `Gostaria de saber se você consegue este item para mim.`;
-
+            const mensagem = `*INTERESSE EM PRODUTO NÃO ENCONTRADO*%0A%0AOlá Brito, procurei o produto *${produtoNome}* no catálogo e não encontrei. Você consegue para mim?`;
             const fone = "5547988771313";
             window.open(`https://api.whatsapp.com/send?phone=${fone}&text=${mensagem}`, '_blank');
-            produtoInput.value = ""; // Limpa o campo após o envio
+            produtoInput.value = ""; 
         }
 
         function finalizePurchase() {
             if (cart.length === 0) return alert("Adicione produtos ao carrinho!");
             const form = document.getElementById('checkoutForm');
             if (!form.checkValidity()) return alert("Por favor, preencha o endereço para entrega.");
-
             saveUserData();
-
             const total = document.getElementById('cartTotal').innerText;
             let itensMsg = cart.map(i => `- ${i.nome} (R$ ${i.preco.toFixed(2)})`).join('%0A');
-            
             const mensagem = `*NOVO PEDIDO - BRITO*%0A%0A` +
                              `*Cliente:* ${document.getElementById('nome').value}%0A` +
                              `*CPF:* ${document.getElementById('cpf').value}%0A` +
@@ -229,16 +219,13 @@
                              `*Produtos:*%0A${itensMsg}%0A%0A` +
                              `*FRETE:* GRÁTIS%0A` +
                              `*TOTAL:* ${total}`;
-
             window.open(`https://api.whatsapp.com/send?phone=5547988771313&text=${mensagem}`, '_blank');
         }
 
-        // Blindagem do site
         document.addEventListener('contextmenu', e => e.preventDefault());
         document.onkeydown = e => {
             if (e.keyCode == 123 || (e.ctrlKey && e.shiftKey && e.keyCode == 73) || (e.ctrlKey && e.keyCode == 85)) return false;
         };
-
         window.onload = initStore;
     </script>
 </body>
