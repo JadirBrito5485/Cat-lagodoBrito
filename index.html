@@ -3,185 +3,259 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Bate-Papo Rio Negrinho - Oficial</title>
+    <title>Rio Negrinho Shop - Sincronizado</title>
     <script src="https://cdn.tailwindcss.com"></script>
     <script src="https://www.gstatic.com/firebasejs/8.10.0/firebase-app.js"></script>
     <script src="https://www.gstatic.com/firebasejs/8.10.0/firebase-database.js"></script>
     <style>
-        body { background-color: #0b141a; color: #e9edef; font-family: sans-serif; }
-        .chat-bg { background-image: url('https://user-images.githubusercontent.com/15075759/28719144-86dc0f70-73b1-11e7-911d-60d70fcded21.png'); opacity: 0.95; }
-        .msg-box { max-width: 75%; padding: 8px 12px; border-radius: 8px; margin-bottom: 4px; display: flex; align-items: flex-start; gap: 10px; }
-        .msg-in { background-color: #202c33; align-self: flex-start; }
-        .msg-out { background-color: #005c4b; align-self: flex-end; flex-direction: row-reverse; }
-        #modal-cadastro { background: rgba(0,0,0,0.95); z-index: 9999; transition: opacity 0.3s; }
+        body { background-color: #f0f7ff; font-family: sans-serif; overflow-x: hidden; }
+        .product-box { transition: transform 0.2s; border: 1px solid #cce0ff; background: white; border-radius: 8px; overflow: hidden; }
+        .product-box:hover { transform: translateY(-5px); box-shadow: 0 10px 15px -3px rgba(37, 99, 235, 0.1); }
+        .cart-sidebar { position: fixed; right: -100%; top: 0; width: 100%; max-width: 400px; height: 100%; background: white; box-shadow: -5px 0 15px rgba(0,0,0,0.1); transition: 0.3s; z-index: 1000; overflow-y: auto; }
+        .cart-sidebar.active { right: 0; }
+        .modal-zoom { position: fixed; top: 0; left: 0; width: 100%; height: 100%; background: rgba(0,0,0,0.9); display: none; z-index: 2000; align-items: center; justify-content: center; cursor: zoom-out; }
+        .modal-desc { position: fixed; top: 50%; left: 50%; transform: translate(-50%, -50%); width: 95%; max-width: 500px; background: white; border-radius: 20px; padding: 20px; display: none; z-index: 1500; box-shadow: 0 20px 25px -5px rgba(0,0,0,0.2); }
+        .overlay { position: fixed; top: 0; left: 0; width: 100%; height: 100%; background: rgba(30, 58, 138, 0.4); display: none; z-index: 999; }
+        .overlay.active { display: block; }
+        .top-promo-banner { background: #1e3a8a; color: #fff; font-size: 0.7rem; font-weight: bold; text-align: center; padding: 6px; text-transform: uppercase; letter-spacing: 1px; }
+        .delivery-banner { background: #dbeafe; color: #1e40af; font-size: 0.8rem; font-weight: 700; text-align: center; padding: 8px; border-bottom: 1px solid #bfdbfe; }
+        .product-title { font-size: 0.875rem; line-height: 1.25rem; height: 2.5rem; display: -webkit-box; -webkit-line-clamp: 2; -webkit-box-orient: vertical; overflow: hidden; }
+        .cart-input { width: 100%; padding: 0.7rem; border: 1px solid #e2e8f0; border-radius: 0.5rem; font-size: 0.9rem; outline: none; transition: border-color 0.2s; background: #f8fafc; }
+        .cart-input:focus { border-color: #3b82f6; background: #fff; }
+        .out-of-stock { filter: grayscale(1); opacity: 0.7; }
     </style>
 </head>
-<body class="h-screen flex flex-col overflow-hidden">
+<body>
 
-    <div id="modal-cadastro" class="fixed inset-0 flex items-center justify-center p-4">
-        <div class="bg-[#202c33] p-8 rounded-2xl w-full max-w-md shadow-2xl border border-slate-700">
-            <h2 class="text-2xl font-bold text-center text-green-500 mb-6 uppercase">Cadastro de Membro</h2>
-            <div class="space-y-4">
-                <div class="flex flex-col items-center mb-4">
-                    <label for="img-input" class="cursor-pointer group">
-                        <div id="preview-avatar" class="w-24 h-24 bg-slate-700 rounded-full flex items-center justify-center border-2 border-dashed border-slate-500 overflow-hidden group-hover:border-green-500 transition-all">
-                            <span class="text-[10px] text-slate-400">CLIQUE PARA FOTO</span>
-                        </div>
-                    </label>
-                    <input type="file" id="img-input" accept="image/*" class="hidden" onchange="previewImage(this)">
-                </div>
-                <input type="text" id="reg-nome" placeholder="Nome Completo" class="w-full p-3 bg-[#111b21] rounded-xl border border-slate-700 outline-none focus:ring-2 ring-green-500">
-                <input type="text" id="reg-cpf" placeholder="CPF" class="w-full p-3 bg-[#111b21] rounded-xl border border-slate-700 outline-none focus:ring-2 ring-green-500">
-                <input type="text" id="reg-whats" placeholder="WhatsApp (DDD + Número)" class="w-full p-3 bg-[#111b21] rounded-xl border border-slate-700 outline-none focus:ring-2 ring-green-500">
-                <button onclick="salvarCadastro()" class="w-full bg-[#00a884] text-white font-black py-4 rounded-xl uppercase hover:bg-[#008f6f] transition-all shadow-lg">Entrar no Chat</button>
+    <div class="top-promo-banner">🔥 APROVEITE: FRETE GRÁTIS RIO NEGRINHO! 🔥</div>
+    <div class="delivery-banner">COMPRE HOJE, RECEBA AMANHÃ 🚚</div>
+
+    <header class="shadow-sm sticky top-0 z-50 p-4 bg-white">
+        <div class="container mx-auto flex flex-col md:flex-row justify-between items-center gap-4">
+            <h1 class="text-xl md:text-2xl font-bold text-blue-900 tracking-tighter uppercase">RIO NEGRINHO SHOP</h1>
+            <input type="text" id="searchBar" onkeyup="filterProducts()" placeholder="O que você procura?" class="w-full md:w-1/2 p-2 border-2 border-blue-100 rounded-lg outline-none focus:border-blue-500 transition-colors">
+            <button onclick="toggleCart()" class="relative bg-blue-700 text-white p-3 rounded-full shadow-md hover:bg-blue-800 transition-colors">
+                <svg xmlns="http://www.w3.org/2000/svg" class="h-6 w-6" fill="none" viewBox="0 0 24 24" stroke="currentColor"><path d="M3 3h2l.4 2M7 13h10l4-8H5.4M7 13L5.4 5M7 13l-2.293 2.293c-.63.63-.184 1.707.707 1.707H17m0 0a2 2 0 100 4 2 2 0 000-4zm-8 2a2 2 0 11-4 0 2 2 0 014 0z" stroke-width="2"/></svg>
+                <span id="cartCount" class="absolute -top-1 -right-1 bg-red-500 text-white text-[10px] font-bold rounded-full h-5 w-5 flex items-center justify-center border-2 border-white">0</span>
+            </button>
+        </div>
+    </header>
+
+    <main class="container mx-auto p-2 grid grid-cols-2 md:grid-cols-4 gap-2 md:gap-4 mt-4" id="productGrid">
+        <div class="col-span-full text-center py-10 text-blue-400 font-bold animate-pulse">Sincronizando estoque em tempo real...</div>
+    </main>
+
+    <section class="container mx-auto p-4 mt-8">
+        <div class="bg-white border-2 border-dashed border-blue-300 rounded-2xl p-6 text-center shadow-sm">
+            <h3 class="text-lg font-bold text-blue-900 mb-2">🛒 Não encontrou o que procurava?</h3>
+            <p class="text-sm text-blue-600 mb-4 px-2">Me diga qual produto você deseja e eu verifico para você!</p>
+            <div class="max-w-md mx-auto flex flex-col gap-3">
+                <input type="text" id="produtoEspecial" placeholder="Ex: Air Fryer, Ventilador..." class="cart-input border-blue-100">
+                <button onclick="solicitarProduto()" class="w-full bg-blue-600 hover:bg-blue-700 text-white font-bold py-3 rounded-xl transition shadow-md uppercase text-sm">Solicitar agora</button>
             </div>
+        </div>
+    </section>
+
+    <div id="modalZoom" class="modal-zoom" onclick="this.style.display='none'">
+        <img id="imgZoomed" src="" class="max-w-[95%] max-h-[80%] rounded-lg shadow-2xl">
+    </div>
+
+    <div id="modalDesc" class="modal-desc">
+        <div class="flex justify-between items-start mb-4">
+            <h3 id="descTitle" class="text-lg font-bold text-blue-900"></h3>
+            <button onclick="closeDesc()" class="text-2xl text-gray-400">&times;</button>
+        </div>
+        <div class="max-h-[300px] overflow-y-auto mb-6">
+            <p id="descContent" class="text-sm text-gray-600 leading-relaxed whitespace-pre-line"></p>
+        </div>
+        <button id="btnDescAdd" class="w-full font-bold py-3 rounded-xl transition uppercase"></button>
+    </div>
+
+    <footer class="bg-gradient-to-b from-blue-950 to-blue-900 text-white py-12 px-4 text-center">
+        <div class="container mx-auto max-w-4xl bg-white/10 rounded-3xl p-6 md:p-10 backdrop-blur-sm mb-6 border border-white/10">
+            <h2 class="text-2xl font-bold mb-4">Como funciona sua compra 📦</h2>
+            <div class="text-blue-100 text-base md:text-lg leading-relaxed space-y-4">
+                <p>Seja muito bem-vindo à <strong>Rio Negrinho Shop</strong>! Sua compra é finalizada via <strong>WhatsApp</strong>.</p>
+                <div class="grid grid-cols-1 md:grid-cols-3 gap-3 text-sm pt-4">
+                    <div class="bg-blue-900/50 p-3 rounded-lg border border-blue-800">💳 <strong>Pagamento:</strong> Pix ou Cartão na entrega.</div>
+                    <div class="bg-blue-900/50 p-3 rounded-lg border border-blue-800">🚚 <strong>Entrega VIP:</strong> Frete grátis em Rio Negrinho!</div>
+                    <div class="bg-blue-900/50 p-3 rounded-lg border border-blue-800">📍 <strong>Confiança:</strong> Compra segura com atendimento humano.</div>
+                </div>
+            </div>
+        </div>
+        <p class="text-blue-400 text-xs font-medium tracking-widest uppercase">© 2026 BRITO - Rio Negrinho/SC</p>
+    </footer>
+
+    <div class="overlay" id="overlay" onclick="toggleCart(); closeDesc();"></div>
+    
+    <div class="cart-sidebar p-5 md:p-6" id="cartSidebar">
+        <div class="flex justify-between items-center mb-4 border-b pb-2">
+            <h2 class="text-xl font-bold text-blue-900">Meu Pedido</h2>
+            <button onclick="toggleCart()" class="text-gray-400 text-2xl">&times;</button>
+        </div>
+        <div id="cartItems" class="space-y-3 mb-6 max-h-40 overflow-y-auto"></div>
+        <div class="pt-2 space-y-3">
+            <div class="flex justify-between items-center mb-4 bg-blue-50 p-3 rounded-lg">
+                <span class="text-blue-900 font-bold text-sm uppercase">Total:</span>
+                <span id="cartTotal" class="text-xl font-black text-blue-700">R$ 0,00</span>
+            </div>
+            <div class="space-y-2">
+                <input type="text" id="nome" placeholder="Nome" class="cart-input">
+                <input type="text" id="rua" placeholder="Rua e Número" class="cart-input">
+                <input type="text" id="bairro" placeholder="Bairro" class="cart-input">
+                <textarea id="obs" placeholder="Observações..." class="cart-input h-16 resize-none"></textarea>
+            </div>
+            <button onclick="finalizePurchase()" class="w-full bg-green-600 hover:bg-green-700 text-white font-extrabold py-4 rounded-xl shadow-lg uppercase text-sm">Finalizar no WhatsApp</button>
         </div>
     </div>
 
-    <header class="bg-[#202c33] p-4 flex items-center justify-between border-b border-slate-700 shadow-md">
-        <div class="flex items-center gap-3">
-            <img id="my-avatar" src="" class="w-10 h-10 rounded-full border-2 border-green-500 object-cover hidden">
-            <div>
-                <h1 class="font-bold text-sm" id="chat-title">Bate-Papo Rio Negrinho</h1>
-                <p class="text-[10px] text-green-500 font-bold uppercase tracking-widest">Online agora</p>
-            </div>
-        </div>
-        <button onclick="logout()" class="text-[10px] text-red-400 font-bold uppercase hover:underline">Sair / Trocar Conta</button>
-    </header>
-
-    <main id="chat-window" class="flex-1 overflow-y-auto p-4 flex flex-col gap-4 chat-bg"></main>
-
-    <footer class="bg-[#202c33] p-4">
-        <form id="chat-form" class="max-w-4xl mx-auto flex gap-2">
-            <input type="text" id="msg-input" placeholder="Escreva sua mensagem..." autocomplete="off" class="flex-1 bg-[#2a3942] border-none rounded-xl px-4 py-3 text-sm outline-none text-white">
-            <button type="submit" class="bg-[#00a884] text-white p-3 rounded-xl hover:bg-[#008f6f] transition-all active:scale-90">
-                <svg xmlns="http://www.w3.org/2000/svg" class="h-6 w-6" fill="none" viewBox="0 0 24 24" stroke="currentColor"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M12 19l9 2-9-18-9 18 9-2zm0 0v-8" /></svg>
-            </button>
-        </form>
-    </footer>
-
     <script>
-        // --- 1. CONFIGURAÇÃO FIREBASE ---
-        // Se você não tiver as chaves agora, o chat funcionará apenas localmente.
+        // CONFIGURAÇÃO DO SEU FIREBASE (Brito, use suas chaves aqui)
         const firebaseConfig = {
-            apiKey: "AIzaSyAs-SUA-CHAVE", // SUBSTITUA AQUI
-            databaseURL: "https://seu-projeto-default-rtdb.firebaseio.com/", // SUBSTITUA AQUI
-            projectId: "seu-projeto", // SUBSTITUA AQUI
-        };
-        
-        // Inicializa Firebase apenas se a chave não for a de exemplo
-        let db = null;
-        let messagesRef = null;
-        if(firebaseConfig.apiKey !== "AIzaSyAs-SUA-CHAVE") {
-            firebase.initializeApp(firebaseConfig);
-            db = firebase.database();
-            messagesRef = db.ref('chat_v2');
-        }
-
-        // --- 2. FILTRO DE PALAVRAS ---
-        const proibidas = ["palavrao1", "ofensa1", "burro", "idiota"];
-
-        // --- 3. CONTROLE DE USUÁRIO ---
-        let userData = JSON.parse(localStorage.getItem('user_rn_shop'));
-        let userPhoto = localStorage.getItem('user_photo_rn');
-
-        window.onload = () => {
-            if(userData && userPhoto) {
-                document.getElementById('modal-cadastro').style.display = 'none';
-                document.getElementById('my-avatar').src = userPhoto;
-                document.getElementById('my-avatar').classList.remove('hidden');
-                document.getElementById('chat-title').innerText = "Olá, " + userData.nome;
-                iniciarChat();
-            }
+            apiKey: "AIzaSyCf6_DCNSh4a3IiOtTv5Uf_N8YaxQtBczw",
+            authDomain: "loja-a33e1.firebaseapp.com",
+            databaseURL: "https://loja-a33e1-default-rtdb.firebaseio.com",
+            projectId: "loja-a33e1",
+            storageBucket: "loja-a33e1.firebasestorage.app",
+            messagingSenderId: "304798626706",
+            appId: "1:304798626706:web:23a0672e6a98ae432c474b"
         };
 
-        function previewImage(input) {
-            if (input.files && input.files[0]) {
-                const reader = new FileReader();
-                reader.onload = (e) => {
-                    userPhoto = e.target.result;
-                    document.getElementById('preview-avatar').innerHTML = `<img src="${userPhoto}" class="w-full h-full object-cover">`;
-                };
-                reader.readAsDataURL(input.files[0]);
-            }
-        }
+        firebase.initializeApp(firebaseConfig);
+        const db = firebase.database();
 
-        function salvarCadastro() {
-            const nome = document.getElementById('reg-nome').value.trim();
-            const cpf = document.getElementById('reg-cpf').value.trim();
-            const whats = document.getElementById('reg-whats').value.trim();
+        let products = []; // Lista global que será preenchida pelo Firebase
+        let cart = [];
 
-            if(!nome || !cpf || !whats || !userPhoto) {
-                alert("Jadir, preencha todos os campos e coloque sua foto!");
-                return;
-            }
-
-            userData = { nome, cpf, whats };
-            localStorage.setItem('user_rn_shop', JSON.stringify(userData));
-            localStorage.setItem('user_photo_rn', userPhoto);
-            
-            // Fecha modal e libera chat
-            document.getElementById('modal-cadastro').style.display = 'none';
-            location.reload(); 
-        }
-
-        function iniciarChat() {
-            if(!messagesRef) return; // Se não tem Firebase, para aqui.
-
-            messagesRef.limitToLast(50).on('child_added', (snapshot) => {
+        // FUNÇÃO QUE LÊ O FIREBASE EM TEMPO REAL
+        function startSync() {
+            db.ref('produtos').on('value', (snapshot) => {
                 const data = snapshot.val();
-                renderizarMensagem(data);
+                products = [];
+                
+                // Converte o objeto do Firebase em Array
+                if (data) {
+                    Object.keys(data).forEach(key => {
+                        products.push({ id_firebase: key, ...data[key] });
+                    });
+                }
+                
+                renderStore(); // Desenha os produtos na tela
             });
         }
 
-        function renderizarMensagem(data) {
-            const chatWindow = document.getElementById('chat-window');
-            const isMe = data.nome === userData.nome;
-
-            const div = document.createElement('div');
-            div.className = `msg-box ${isMe ? 'msg-out' : 'msg-in'}`;
-            
-            div.innerHTML = `
-                <img src="${data.foto || 'https://via.placeholder.com/40'}" class="w-8 h-8 rounded-full object-cover border border-slate-600">
-                <div class="flex flex-col">
-                    <span class="text-[9px] font-bold ${isMe ? 'text-green-300' : 'text-blue-400'} uppercase">${data.nome}</span>
-                    <p class="text-sm">${data.texto}</p>
-                </div>
-            `;
-
-            chatWindow.appendChild(div);
-            chatWindow.scrollTop = chatWindow.scrollHeight;
-        }
-
-        document.getElementById('chat-form').addEventListener('submit', (e) => {
-            e.preventDefault();
-            if(!messagesRef) return alert("Configure o Firebase para enviar mensagens!");
-
-            const input = document.getElementById('msg-input');
-            let text = input.value.trim();
-
-            if(text) {
-                // Filtro
-                proibidas.forEach(p => {
-                    const r = new RegExp(p, "gi");
-                    text = text.replace(r, "****");
-                });
-
-                messagesRef.push().set({
-                    nome: userData.nome,
-                    foto: userPhoto,
-                    texto: text,
-                    timestamp: Date.now()
-                });
-                input.value = "";
+        function renderStore() {
+            const grid = document.getElementById('productGrid');
+            if (products.length === 0) {
+                grid.innerHTML = "<p class='col-span-full text-center text-gray-400 italic'>Nenhum produto cadastrado na nuvem.</p>";
+                return;
             }
-        });
 
-        function logout() {
-            localStorage.removeItem('user_rn_shop');
-            localStorage.removeItem('user_photo_rn');
-            location.reload();
+            grid.innerHTML = products.map(p => {
+                const emEstoque = p.estoque > 0;
+                return `
+                <div class="product-box p-3 flex flex-col ${!emEstoque ? 'out-of-stock' : ''}">
+                    <div class="relative overflow-hidden rounded mb-2">
+                        <img src="${p.img}" onclick="openZoom('${p.img}')" class="w-full aspect-square object-cover cursor-zoom-in hover:scale-105 transition-transform duration-500">
+                        ${!emEstoque ? '<div class="absolute inset-0 bg-black/40 flex items-center justify-center text-white font-bold text-xs uppercase">Esgotado</div>' : ''}
+                    </div>
+                    <h3 class="product-title font-bold text-blue-900 leading-tight">${p.nome}</h3>
+                    <p class="text-blue-500 text-[9px] md:text-[10px] font-bold mb-1">${p.desc || 'PRONTA ENTREGA'}</p>
+                    <span class="text-blue-700 font-bold text-base md:text-lg mb-2">R$ ${parseFloat(p.preco).toFixed(2)}</span>
+                    <button onclick="openDesc('${p.id_firebase}')" class="text-[10px] text-blue-500 hover:text-blue-700 underline mb-3 text-left">Ver detalhes</button>
+                    ${emEstoque 
+                        ? `<button onclick="addToCart('${p.id_firebase}')" class="mt-auto bg-blue-600 text-white py-2 rounded-full font-bold text-xs md:text-sm hover:bg-blue-700 shadow-sm">Adicionar</button>`
+                        : `<button onclick="avisarEstoque('${p.nome}')" class="mt-auto bg-gray-500 text-white py-2 rounded-full font-bold text-[10px] hover:bg-gray-600 shadow-sm">Avise-me</button>`
+                    }
+                </div>`;
+            }).join('');
         }
+
+        // --- FUNÇÕES DE INTERAÇÃO (Carrinho, Zoom, etc) ---
+
+        function openZoom(src) {
+            document.getElementById('imgZoomed').src = src;
+            document.getElementById('modalZoom').style.display = 'flex';
+        }
+
+        function openDesc(idFirebase) {
+            const p = products.find(prod => prod.id_firebase === idFirebase);
+            const btn = document.getElementById('btnDescAdd');
+            document.getElementById('descTitle').innerText = p.nome;
+            document.getElementById('descContent').innerText = p.detalhes || "Pronta entrega em Rio Negrinho.";
+            
+            if (p.estoque > 0) {
+                btn.innerText = "ADICIONAR AO CARRINHO";
+                btn.className = "w-full bg-blue-600 text-white font-bold py-3 rounded-xl hover:bg-blue-700";
+                btn.onclick = () => { addToCart(idFirebase); closeDesc(); };
+            } else {
+                btn.innerText = "AVISE-ME QUANDO CHEGAR";
+                btn.className = "w-full bg-gray-500 text-white font-bold py-3 rounded-xl";
+                btn.onclick = () => { avisarEstoque(p.nome); closeDesc(); };
+            }
+            document.getElementById('modalDesc').style.display = 'block';
+            document.getElementById('overlay').classList.add('active');
+        }
+
+        function closeDesc() {
+            document.getElementById('modalDesc').style.display = 'none';
+            document.getElementById('overlay').classList.remove('active');
+        }
+
+        function toggleCart() {
+            document.getElementById('cartSidebar').classList.toggle('active');
+            document.getElementById('overlay').classList.toggle('active');
+        }
+
+        function addToCart(idFirebase) {
+            const product = products.find(p => p.id_firebase === idFirebase);
+            cart.push(product);
+            updateCartUI();
+        }
+
+        function updateCartUI() {
+            const list = document.getElementById('cartItems');
+            list.innerHTML = cart.map((item, index) => `
+                <div class="flex justify-between items-center bg-blue-50 p-2 rounded border border-blue-100">
+                    <span class="font-bold text-blue-900 text-[10px] truncate mr-2">${item.nome}</span>
+                    <button onclick="removeFromCart(${index})" class="text-red-500">×</button>
+                </div>`).join('');
+            const total = cart.reduce((acc, curr) => acc + parseFloat(curr.preco), 0);
+            document.getElementById('cartTotal').innerText = `R$ ${total.toFixed(2)}`;
+            document.getElementById('cartCount').innerText = cart.length;
+        }
+
+        function removeFromCart(index) {
+            cart.splice(index, 1);
+            updateCartUI();
+        }
+
+        function filterProducts() {
+            const term = document.getElementById('searchBar').value.toLowerCase();
+            document.querySelectorAll('.product-box').forEach(box => {
+                const text = box.innerText.toLowerCase();
+                box.style.display = text.includes(term) ? 'flex' : 'none';
+            });
+        }
+
+        function finalizePurchase() {
+            if (cart.length === 0) return alert("Carrinho vazio!");
+            const nome = document.getElementById('nome').value;
+            const rua = document.getElementById('rua').value;
+            if (!nome || !rua) return alert("Preencha Nome e Endereço!");
+
+            const total = document.getElementById('cartTotal').innerText;
+            const itensMsg = cart.map(i => `- ${i.nome}`).join('%0A');
+            const mensagem = `*NOVO PEDIDO - RIO NEGRINHO SHOP*%0A*CLIENTE:* ${nome}%0A*ENDEREÇO:* ${rua}%0A*ITENS:*%0A${itensMsg}%0A*TOTAL:* ${total}`;
+            window.open(`https://api.whatsapp.com/send?phone=5547988771313&text=${mensagem}`, '_blank');
+        }
+
+        function avisarEstoque(nome) {
+            window.open(`https://api.whatsapp.com/send?phone=5547988771313&text=Aviso de estoque: ${nome}`, '_blank');
+        }
+
+        // INICIA A SINCRONIZAÇÃO QUANDO A PÁGINA CARREGA
+        window.onload = startSync;
     </script>
 </body>
 </html>
