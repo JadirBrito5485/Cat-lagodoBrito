@@ -1,0 +1,204 @@
+<!DOCTYPE html>
+<html lang="pt-br">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>SORTEIO VIP - RIO NEGRINHO SHOP</title>
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0/css/all.min.css">
+    <style>
+        :root {
+            --gold: #d4af37;
+            --dark-bg: #0a0a0a;
+            --glass: rgba(255, 255, 255, 0.1);
+        }
+
+        body {
+            font-family: 'Inter', sans-serif;
+            background-color: var(--dark-bg);
+            background-image: radial-gradient(circle at center, #1a1a1a 0%, #000 100%);
+            color: white;
+            margin: 0;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            min-height: 100vh;
+            overflow-x: hidden;
+        }
+
+        .card {
+            width: 90%;
+            max-width: 450px;
+            background: rgba(20, 20, 20, 0.95);
+            border: 1px solid #333;
+            border-radius: 20px;
+            padding: 25px;
+            text-align: center;
+            box-shadow: 0 0 50px rgba(0,0,0,0.8);
+            position: relative;
+        }
+
+        .product-img {
+            width: 100%;
+            border-radius: 15px;
+            box-shadow: 0 10px 30px rgba(0, 123, 255, 0.3);
+            margin-bottom: 20px;
+            border: 2px solid #222;
+        }
+
+        .badge {
+            background: var(--gold);
+            color: black;
+            padding: 5px 15px;
+            border-radius: 50px;
+            font-weight: 900;
+            text-transform: uppercase;
+            font-size: 12px;
+            display: inline-block;
+            margin-bottom: 10px;
+            letter-spacing: 1px;
+        }
+
+        h1 {
+            font-size: 26px;
+            margin: 0 0 10px 0;
+            text-transform: uppercase;
+            letter-spacing: -1px;
+            background: linear-gradient(to bottom, #fff 0%, #888 100%);
+            -webkit-background-clip: text;
+            -webkit-text-fill-color: transparent;
+        }
+
+        p.call {
+            color: #ccc;
+            font-size: 16px;
+            line-height: 1.4;
+            margin-bottom: 25px;
+        }
+
+        .date-box {
+            border-top: 1px solid #333;
+            border-bottom: 1px solid #333;
+            padding: 15px 0;
+            margin-bottom: 25px;
+        }
+
+        .date-box span {
+            display: block;
+            font-size: 20px;
+            color: var(--gold);
+            font-weight: bold;
+        }
+
+        input {
+            width: 100%;
+            background: #111;
+            border: 1px solid #444;
+            padding: 15px;
+            margin-bottom: 15px;
+            border-radius: 10px;
+            color: white;
+            font-size: 16px;
+            box-sizing: border-box;
+            outline: none;
+        }
+
+        input:focus {
+            border-color: var(--gold);
+        }
+
+        .btn-action {
+            background: linear-gradient(45deg, #d4af37, #f9e29c);
+            color: #000;
+            width: 100%;
+            padding: 18px;
+            border: none;
+            border-radius: 10px;
+            font-size: 18px;
+            font-weight: 900;
+            cursor: pointer;
+            text-transform: uppercase;
+            transition: 0.3s;
+            box-shadow: 0 5px 15px rgba(212, 175, 55, 0.3);
+        }
+
+        .btn-action:hover {
+            transform: scale(1.02);
+            box-shadow: 0 8px 20px rgba(212, 175, 55, 0.5);
+        }
+
+        .store-link {
+            display: block;
+            margin-top: 25px;
+            color: #666;
+            text-decoration: none;
+            font-size: 14px;
+            transition: 0.3s;
+        }
+
+        .store-link:hover {
+            color: var(--gold);
+        }
+
+        .glow {
+            position: absolute;
+            top: -50px;
+            left: 50%;
+            transform: translateX(-50%);
+            width: 200px;
+            height: 100px;
+            background: rgba(212, 175, 55, 0.1);
+            filter: blur(50px);
+            z-index: -1;
+        }
+    </style>
+</head>
+<body>
+
+<div class="card">
+    <div class="glow"></div>
+    <span class="badge">Oportunidade Única</span>
+    <img src="https://down-br.img.susercontent.com/file/br-11134207-7r98o-loh4miq61d8n7a.webp" class="product-img" alt="Fone M10">
+    
+    <h1>Este fone pode ser seu</h1>
+    <p class="call">Faça seu cadastro agora e participe do sorteio oficial da Rio Negrinho Shop.</p>
+
+    <div class="date-box">
+        <span>10 DE MAIO DE 2026</span>
+        <small style="color: #666; text-transform: uppercase; font-size: 11px;">Ao meio-dia (12:00h)</small>
+    </div>
+
+    <form id="formSorteio">
+        <input type="text" id="nome" placeholder="Seu Nome Completo" required>
+        <input type="tel" id="whatsapp" placeholder="Seu WhatsApp (DDD)" required>
+        
+        <button type="button" class="btn-action" onclick="participar()">
+            <i class="fab fa-whatsapp"></i> Quero Ganhar!
+        </button>
+    </form>
+
+    <a href="https://rionegrinho.shop" target="_blank" class="store-link">
+        🛒 Visitar rionegrinho.shop
+    </a>
+</div>
+
+<script>
+    function participar() {
+        const nome = document.getElementById('nome').value;
+        const whats = document.getElementById('whatsapp').value;
+
+        if(!nome || !whats) {
+            alert("Preencha os dados para garantir sua vaga!");
+            return;
+        }
+
+        // --- SEU NÚMERO AQUI ---
+        const foneDono = "5547999999999"; 
+        
+        const texto = `💎 *QUERO PARTICIPAR DO SORTEIO!* 💎%0A%0AEstou me cadastrando para o sorteio do *Fone M10* que acontece dia 10 de Maio.%0A%0A👤 *Nome:* ${nome}%0A📱 *WhatsApp:* ${whats}%0A%0A🚀 Boa sorte para mim!`;
+
+        window.open(`https://api.whatsapp.com/send?phone=${foneDono}&text=${texto}`, '_blank');
+    }
+</script>
+
+</body>
+</html>
