@@ -3,371 +3,424 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Rio Negrinho Shop - Oficial</title>
-    <script src="https://cdn.tailwindcss.com"></script>
-    <script src="https://www.gstatic.com/firebasejs/8.10.0/firebase-app.js"></script>
-    <script src="https://www.gstatic.com/firebasejs/8.10.0/firebase-database.js"></script>
+    <title>BRITO TEM - Catálogo</title>
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0/css/all.min.css">
     <style>
-        body { background-color: #f0f7ff; font-family: sans-serif; overflow-x: hidden; }
-        .product-box { transition: transform 0.2s; border: 1px solid #cce0ff; background: white; border-radius: 8px; overflow: hidden; display: flex; flex-direction: column; }
-        .product-box:hover { transform: translateY(-5px); box-shadow: 0 10px 15px -3px rgba(37, 99, 235, 0.1); }
-        .cart-sidebar { position: fixed; right: -100%; top: 0; width: 100%; max-width: 450px; height: 100%; background: white; box-shadow: -5px 0 15px rgba(0,0,0,0.1); transition: 0.3s; z-index: 1000; overflow-y: auto; }
-        .cart-sidebar.active { right: 0; }
-        .modal-desc { position: fixed; top: 50%; left: 50%; transform: translate(-50%, -50%); width: 95%; max-width: 500px; background: white; border-radius: 20px; padding: 20px; display: none; z-index: 1500; box-shadow: 0 20px 25px -5px rgba(0,0,0,0.2); }
-        .overlay { position: fixed; top: 0; left: 0; width: 100%; height: 100%; background: rgba(30, 58, 138, 0.4); display: none; z-index: 999; }
-        .overlay.active { display: block; }
-        .top-promo-banner { background: #1e3a8a; color: #fff; font-size: 0.7rem; font-weight: bold; text-align: center; padding: 6px; text-transform: uppercase; letter-spacing: 1px; }
-        .delivery-banner { background: #dbeafe; color: #1e40af; font-size: 0.8rem; font-weight: 700; text-align: center; padding: 8px; border-bottom: 1px solid #bfdbfe; }
-        .product-title { font-size: 0.875rem; line-height: 1.25rem; height: 2.5rem; display: -webkit-box; -webkit-line-clamp: 2; -webkit-box-orient: vertical; overflow: hidden; }
-        .cart-input { width: 100%; padding: 0.6rem; border: 1px solid #e2e8f0; border-radius: 0.5rem; font-size: 0.85rem; outline: none; transition: border-color 0.2s; background: #f8fafc; }
-        .cart-input:focus { border-color: #3b82f6; background: #fff; }
-        .out-of-stock { filter: grayscale(1); opacity: 0.7; }
-        .qty-btn { background: #dbeafe; color: #1e40af; width: 24px; height: 24px; border-radius: 6px; font-weight: bold; display: flex; align-items: center; justify-content: center; }
-        .delivery-tag { background: #dcfce7; color: #166534; font-size: 10px; padding: 2px 6px; border-radius: 4px; margin-bottom: 5px; display: inline-block; }
+        :root {
+            --azul-brito: #004aad;
+            --azul-claro: #00a8ff;
+            --bg: #f0f2f5;
+            --white: #ffffff;
+            --shadow: 0 10px 30px rgba(0,0,0,0.1);
+        }
+
+        * { box-sizing: border-box; font-family: 'Segoe UI', sans-serif; transition: 0.3s; }
+        body { background: var(--bg); margin: 0; color: #333; overflow-x: hidden; }
+
+        /* HEADER */
+        header { background: linear-gradient(135deg, #001f3f, var(--azul-brito)); color: white; padding: 20px; position: sticky; top: 0; z-index: 1000; box-shadow: var(--shadow); }
+        .header-content { display: flex; flex-direction: column; max-width: 1200px; margin: 0 auto; }
+        .logo { font-size: 26px; font-weight: 800; align-self: flex-start; margin-bottom: 10px; }
+        .search-box { position: relative; width: 100%; max-width: 500px; margin: 0 auto; }
+        #searchBar { width: 100%; padding: 14px 25px; border-radius: 50px; border: none; outline: none; font-size: 16px; box-shadow: inset 0 2px 4px rgba(0,0,0,0.2); }
+
+        /* CARRINHO MODERNO (SÓ ÍCONE) */
+        .cart-trigger { background: var(--white); padding: 15px; text-align: center; cursor: pointer; border-bottom: 2px solid var(--azul-claro); color: var(--azul-brito); font-size: 32px; display: flex; justify-content: center; align-items: center; }
+
+        /* GRID E BOXES */
+        .container { display: grid; grid-template-columns: repeat(auto-fit, minmax(280px, 1fr)); gap: 25px; padding: 30px; max-width: 1300px; margin: 0 auto; }
+        .box-loja { background: var(--white); border-radius: 20px; padding: 20px; text-align: center; border: 1px solid #e1e8ed; position: relative; box-shadow: 0 4px 6px rgba(0,0,0,0.05); }
+        .box-loja img { width: 100%; height: 260px; object-fit: cover; border-radius: 15px; cursor: zoom-in; }
         
-        #adminModal { position: fixed; top: 0; left: 0; width: 100%; height: 100%; background: #f8fafc; display: none; z-index: 3000; overflow-y: auto; }
+        /* LED FRETE */
+        .led-frete { background: #000; color: #00ff00; padding: 6px 12px; font-size: 11px; font-weight: bold; border-radius: 6px; display: inline-block; margin: 12px 0; border: 1px solid #00ff00; box-shadow: 0 0 12px rgba(0,255,0,0.4); text-transform: uppercase; }
 
-        /* Estilo para Zoom da Imagem */
-        .zoom-overlay { position: fixed; top: 0; left: 0; width: 100%; height: 100%; background: rgba(0,0,0,0.8); display: none; z-index: 5000; justify-content: center; align-items: center; cursor: zoom-out; }
-        .zoom-overlay img { max-width: 90%; max-height: 90%; border-radius: 10px; box-shadow: 0 0 20px rgba(0,0,0,0.5); }
+        /* BOTÕES */
+        .btn { border: none; padding: 14px; border-radius: 10px; cursor: pointer; font-weight: 700; width: 100%; margin-top: 10px; }
+        .btn-add { background: var(--azul-brito); color: white; }
+        .btn-desc { background: #f0f7ff; color: var(--azul-brito); border: 1px solid var(--azul-claro); }
 
-        /* Botão Flutuante WhatsApp */
-        .whatsapp-float { position: fixed; bottom: 20px; right: 20px; background-color: #25d366; color: #FFF; border-radius: 50px; text-align: center; font-size: 30px; box-shadow: 2px 2px 10px rgba(0,0,0,0.2); z-index: 2500; width: 60px; height: 60px; display: flex; justify-content: center; align-items: center; transition: transform 0.3s; }
-        .whatsapp-float:hover { transform: scale(1.1); background-color: #128c7e; }
+        /* WHATSAPP FLUTUANTE */
+        .whatsapp-float { position: fixed; width: 60px; height: 60px; bottom: 30px; right: 30px; background-color: #25d366; color: #FFF; border-radius: 50px; text-align: center; font-size: 30px; box-shadow: 2px 2px 5px rgba(0,0,0,0.3); z-index: 1500; display: flex; align-items: center; justify-content: center; text-decoration: none; }
+
+        /* ZOOM IMAGEM */
+        .zoom-overlay { display: none; position: fixed; top:0; left:0; width: 100%; height: 100%; background: rgba(0,0,0,0.9); z-index: 5000; justify-content: center; align-items: center; cursor: zoom-out; }
+        .zoom-overlay img { max-width: 90%; max-height: 90%; border-radius: 10px; box-shadow: 0 0 20px rgba(255,255,255,0.2); }
+
+        /* CARRINHO LATERAL */
+        #cart-sidebar { position: fixed; right: -450px; top: 0; width: 400px; height: 100%; background: white; z-index: 2000; box-shadow: -10px 0 30px rgba(0,0,0,0.15); padding: 30px; overflow-y: auto; }
+        #cart-sidebar.active { right: 0; }
+        .item-carrinho { display: flex; align-items: center; gap: 10px; margin-bottom: 15px; background: #fff; border: 1px solid #eee; padding: 10px; border-radius: 12px; }
+        .item-carrinho img { width: 50px; height: 50px; object-fit: cover; border-radius: 8px; }
+        .qtd-ctrl { display: flex; align-items: center; gap: 8px; margin-top: 5px; }
+        .qtd-ctrl button { background: var(--azul-brito); color: white; border: none; width: 24px; border-radius: 5px; cursor: pointer; }
+
+        /* FORMULÁRIO MODERNO */
+        .modern-form { margin-top: 25px; }
+        .modern-form h3 { border-left: 5px solid var(--azul-brito); padding-left: 10px; color: var(--azul-brito); font-size: 18px; margin-bottom: 20px; }
+        .modern-form input, .modern-form textarea, .modern-form select { width: 100%; padding: 15px; margin-bottom: 12px; border: 1px solid #e0e0e0; border-radius: 12px; background: #fdfdfd; outline: none; font-size: 15px; }
+
+        /* MODAL DESCRIÇÃO */
+        .modal { display: none; position: fixed; z-index: 3000; left: 0; top: 0; width: 100%; height: 100%; background: rgba(0,0,0,0.7); backdrop-filter: blur(4px); }
+        .modal-content { background: white; margin: 5% auto; padding: 30px; width: 90%; max-width: 600px; border-radius: 20px; max-height: 80vh; overflow-y: auto; }
+
+        /* PEDIDO NÃO ACHOU */
+        .missing-section { background: #fff; padding: 35px; text-align: center; margin: 30px auto; max-width: 800px; border-radius: 25px; border: 2px dashed var(--azul-claro); }
+        .missing-box { display: flex; gap: 10px; max-width: 500px; margin: 20px auto; }
+        .missing-box input { flex: 1; padding: 12px 20px; border-radius: 12px; border: 1px solid #ddd; background: #f9f9f9; }
+        .missing-box button { background: var(--azul-brito); color: white; border: none; padding: 0 25px; border-radius: 12px; cursor: pointer; font-weight: bold; }
+
+        /* ADMIN */
+        .admin-prod-row { display: flex; align-items: center; background: #fff; margin-bottom: 12px; padding: 12px; border-radius: 12px; border: 1px solid #ddd; justify-content: space-between; }
+        .admin-prod-row img { width: 45px; height: 45px; border-radius: 8px; object-fit: cover; }
+        .stock-edit-box { width: 80px; padding: 8px; border-radius: 8px; border: 1px solid #ccc; text-align: center; font-weight: bold; }
+
+        /* SPA PAGES */
+        .section-page { display: none; padding: 40px 20px; min-height: 80vh; background: white; max-width: 1000px; margin: 20px auto; border-radius: 25px; }
+        .section-page.active { display: block; }
+
+        /* FOOTER */
+        footer { background: #001f3f; color: white; padding: 50px 20px; text-align: center; margin-top: 50px; }
+        .footer-nav a { color: var(--azul-claro); margin: 0 15px; text-decoration: none; cursor: pointer; font-weight: 600; font-size: 14px; }
+
+        @media (max-width: 600px) { #cart-sidebar { width: 100%; } }
     </style>
 </head>
 <body>
 
-    <div class="top-promo-banner">🔥 APROVEITE: FRETE GRÁTIS RIO NEGRINHO! 🔥</div>
-    <div class="delivery-banner">COMPRE HOJE, RECEBA AMANHÃ 🚚</div>
+<a href="https://wa.me/5547988771313" class="whatsapp-float" target="_blank">
+    <i class="fab fa-whatsapp"></i>
+</a>
 
-    <header class="shadow-sm sticky top-0 z-50 p-4 bg-white">
-        <div class="container mx-auto flex flex-col md:flex-row justify-between items-center gap-4">
-            <h1 class="text-xl md:text-2xl font-bold text-blue-900 tracking-tighter uppercase">RIO NEGRINHO SHOP</h1>
-            <input type="text" id="searchBar" onkeyup="filterProducts()" placeholder="O que você procura?" class="w-full md:w-1/2 p-2 border-2 border-blue-100 rounded-lg outline-none focus:border-blue-500 transition-colors">
-            <button onclick="toggleCart()" class="relative bg-blue-700 text-white p-3 rounded-full shadow-md hover:bg-blue-800 transition-colors">
-                <svg xmlns="http://www.w3.org/2000/svg" class="h-6 w-6" fill="none" viewBox="0 0 24 24" stroke="currentColor"><path d="M3 3h2l.4 2M7 13h10l4-8H5.4M7 13L5.4 5M7 13l-2.293 2.293c-.63.63-.184 1.707.707 1.707H17m0 0a2 2 0 100 4 2 2 0 000-4zm-8 2a2 2 0 11-4 0 2 2 0 014 0z" stroke-width="2"/></svg>
-                <span id="cartCount" class="absolute -top-1 -right-1 bg-red-500 text-white text-[10px] font-bold rounded-full h-5 w-5 flex items-center justify-center border-2 border-white">0</span>
-            </button>
+<div id="imgZoom" class="zoom-overlay" onclick="closeZoom()">
+    <img id="zoomContent" src="">
+</div>
+
+<div id="home-view" class="section-page active" style="max-width: 100%; background: transparent; margin: 0; padding: 0;">
+    <header>
+        <div class="header-content">
+            <span class="logo">BRITO TEM</span>
+            <div class="search-box">
+                <input type="text" id="searchBar" placeholder="Pesquisar no catálogo..." onkeyup="search()">
+            </div>
         </div>
     </header>
 
-    <main class="container mx-auto p-2 grid grid-cols-2 md:grid-cols-4 gap-2 md:gap-4 mt-4" id="productGrid"></main>
-
-    <div class="container mx-auto px-2 mt-8">
-        <div class="bg-blue-50 border-2 border-dashed border-blue-200 rounded-2xl p-6 text-center">
-            <h3 class="text-blue-900 font-bold mb-2">Não achou o que procurava?</h3>
-            <p class="text-sm text-blue-700 mb-4">Escreva o produto abaixo e nós buscaremos pra você!</p>
-            <div class="flex flex-col md:flex-row gap-2 max-w-xl mx-auto">
-                <input type="text" id="inputBuscaEspecial" placeholder="Qual produto você procura?" class="cart-input flex-1">
-                <button id="btnBuscaEspecial" onclick="enviarBuscaMista()" class="bg-blue-600 text-white px-6 py-2 rounded-lg font-bold hover:bg-blue-700 transition">Enviar Pedido</button>
-            </div>
-        </div>
+    <div class="cart-trigger" onclick="toggleCart()">
+        <i class="fas fa-shopping-cart"></i>
     </div>
 
-    <footer class="bg-gradient-to-b from-blue-950 to-blue-900 text-white py-12 px-4 text-center mt-8">
-        <div class="container mx-auto max-w-4xl bg-white/10 rounded-3xl p-6 md:p-10 backdrop-blur-sm mb-6 border border-white/10 shadow-2xl">
-            <h2 class="text-2xl font-bold mb-4 italic uppercase tracking-tighter">Rio Negrinho Shop</h2>
-            <div class="grid grid-cols-1 md:grid-cols-3 gap-3 text-sm pt-4">
-                <div class="bg-blue-900/50 p-3 rounded-lg border border-blue-800 uppercase text-[10px] font-bold">💳 Pix ou Cartão</div>
-                <div class="bg-blue-900/50 p-3 rounded-lg border border-blue-800 uppercase text-[10px] font-bold">🚚 Frete Grátis Local</div>
-                <div class="bg-blue-900/50 p-3 rounded-lg border border-blue-800 uppercase text-[10px] font-bold">📍 Rio Negrinho/SC</div>
-            </div>
+    <div class="container" id="grid"></div>
+
+    <div class="missing-section">
+        <h3>Não achou o produto?</h3>
+        <p>digite e envie, logo ele aparece na loja </p>
+        <div class="missing-box">
+            <input type="text" id="missingItem" placeholder="Ex: Produto X...">
+            <button onclick="sendMissing()">ENVIAR PEDIDO</button>
         </div>
-        <p class="text-blue-400 text-xs font-medium tracking-widest uppercase mb-4">© 2026 RIO NEGRINHO SHOP - Rio Negrinho/SC</p>
-        <button onclick="openAdmin()" class="text-[9px] opacity-20 hover:opacity-100 uppercase tracking-widest">CENTRAL</button>
-    </footer>
-
-    <a href="https://wa.me/5547988771313" class="whatsapp-float" target="_blank">
-        <svg xmlns="http://www.w3.org/2000/svg" width="35" height="35" fill="currentColor" viewBox="0 0 16 16">
-            <path d="M13.601 2.326A7.854 7.854 0 0 0 7.994 0C3.627 0 .068 3.558.064 7.926c0 1.399.366 2.76 1.057 3.965L0 16l4.204-1.102a7.933 7.933 0 0 0 3.79.965h.004c4.368 0 7.926-3.558 7.93-7.93A7.898 7.898 0 0 0 13.6 2.326zM7.994 14.521a6.573 6.573 0 0 1-3.356-.92l-.24-.144-2.494.654.666-2.433-.156-.251a6.56 6.56 0 0 1-1.007-3.505c0-3.626 2.957-6.584 6.591-6.584a6.56 6.56 0 0 1 4.66 1.931 6.557 6.557 0 0 1 1.928 4.66c-.004 3.639-2.961 6.592-6.592 6.592zm3.615-4.934c-.197-.099-1.17-.578-1.353-.646-.182-.065-.315-.099-.445.099-.133.197-.513.646-.627.775-.114.133-.232.148-.43.05-.197-.1-.836-.308-1.592-.985-.59-.525-.985-1.175-1.103-1.372-.114-.198-.011-.304.088-.403.087-.088.197-.232.296-.346.1-.114.133-.198.198-.33.065-.134.034-.248-.015-.347-.05-.099-.445-1.076-.612-1.47-.16-.389-.323-.335-.445-.34-.114-.007-.247-.007-.38-.007a.729.729 0 0 0-.529.247c-.182.198-.691.677-.691 1.654 0 .977.71 1.916.81 2.049.098.133 1.394 2.132 3.383 2.992.47.205.84.326 1.129.418.475.152.904.129 1.246.08.38-.058 1.171-.48 1.338-.943.164-.464.164-.86.114-.943-.049-.084-.182-.133-.38-.232z"/>
-        </svg>
-    </a>
-
-    <div class="zoom-overlay" id="zoomOverlay" onclick="this.style.display='none'">
-        <img id="zoomedImg" src="" alt="Zoom">
     </div>
+</div>
 
-    <div class="overlay" id="overlay" onclick="closeAll()"></div>
+<div id="quem-somos" class="section-page">
+    <button onclick="goHome()" class="btn btn-desc" style="width: 130px;">← VOLTAR</button>
+    <h1>Quem Somos</h1>
+    <p>Bem-vindo ao nosso portal de compras, onde a qualidade e a agilidade se encontram para servir a nossa comunidade. Somos um projeto dedicado exclusivamente aos moradores de Rio Negrinho, focado em transformar a forma como você adquire produtos essenciais, garantindo uma experiência de compra moderna, segura e extremamente próxima de cada cliente.
+
+Nossa missão é clara: oferecer produtos selecionados com garantia total, eliminando as esperas intermináveis do comércio eletrônico tradicional. Por isso, trabalhamos com uma logística própria e eficiente: se você realizar sua compra hoje, o seu pedido chegará amanhã, sem falta, trazendo a praticidade que o seu dia a dia exige.
+
+Acreditamos que o frete não deve ser um obstáculo para quem busca excelência, por isso, a entrega em Rio Negrinho é sempre gratuita. Nosso compromisso vai além da venda; buscamos construir um relacionamento real com nossos vizinhos, tratando cada pedido com o cuidado e o respeito que a nossa gente merece.
+
+Queremos que você sinta a diferença de comprar com quem conhece a sua realidade e valoriza o seu tempo. Este projeto nasceu para ser a sua melhor escolha local, unindo a confiança do aperto de mão à eficiência do clique digital. Conte conosco para uma experiência de compra única, rápida e totalmente garantida..</p>
+</div>
+
+<div id="suporte" class="section-page">
+    <button onclick="goHome()" class="btn btn-desc" style="width: 130px;">← VOLTAR</button>
+    <h1>Suporte e Garantia</h1>
+    <p>Nossa prioridade é a sua tranquilidade e a segurança de que você fez a melhor escolha. Entendemos que um relacionamento de confiança se constrói com transparência, por isso oferecemos um suporte humanizado e direto, pronto para resolver qualquer dúvida ou necessidade que surja após a sua compra.
+
+Todos os nossos produtos passam por uma curadoria rigorosa para garantir a máxima qualidade aos moradores de Rio Negrinho. Caso o item apresente qualquer defeito de fabricação ou não atenda às especificações prometidas, nossa garantia assegura a troca ou a devolução de forma rápida, sem burocracias desnecessárias.
+
+Para acionar o nosso suporte, basta entrar em contato através dos nossos canais oficiais de atendimento. Como estamos localizados aqui na cidade, conseguimos oferecer uma resposta muito mais ágil que as lojas convencionais, garantindo que você nunca fique na mão e receba a assistência que merece.
+
+Acreditamos que o pós-venda é a parte mais importante da sua experiência conosco, reforçando nosso compromisso com a satisfação total. Compre com a certeza de que estamos ao seu lado, cuidando de cada detalhe para que sua única preocupação seja aproveitar a qualidade superior dos nossos produtos selecionados.</p>
+</div>
+
+<div id="adm-page" class="section-page">
+    <button onclick="goHome()" class="btn btn-desc" style="width: 130px;">← SAIR</button>
+    <h1>Painel Administrativo</h1>
     
-    <div class="cart-sidebar p-5" id="cartSidebar">
-        <div class="flex justify-between items-center mb-4 border-b pb-2">
-            <h2 class="text-xl font-bold text-blue-900">Meu Pedido</h2>
-            <button onclick="toggleCart()" class="text-gray-400 text-2xl">&times;</button>
-        </div>
-        <div id="cartItems" class="space-y-4 mb-6 max-h-[30vh] overflow-y-auto pr-2"></div>
-        <div class="pt-2 space-y-3">
-            <div class="flex justify-between items-center bg-blue-50 p-3 rounded-lg">
-                <span class="text-blue-900 font-bold text-sm uppercase">Total:</span>
-                <span id="cartTotal" class="text-xl font-black text-blue-700">R$ 0,00</span>
-            </div>
-            <div class="space-y-2">
-                <div class="grid grid-cols-2 gap-2">
-                    <input type="text" id="nome" placeholder="Nome" class="cart-input">
-                    <input type="text" id="sobrenome" placeholder="Sobrenome" class="cart-input">
-                </div>
-                <input type="text" id="cpf" placeholder="CPF" class="cart-input">
-                <div class="grid grid-cols-3 gap-2">
-                    <input type="text" id="rua" placeholder="Rua" class="cart-input col-span-2">
-                    <input type="text" id="numero" placeholder="Nº" class="cart-input">
-                </div>
-                <input type="text" id="bairro" placeholder="Bairro" class="cart-input">
-                <textarea id="obs" placeholder="Observação (opcional)" class="cart-input h-14 resize-none"></textarea>
-            </div>
-            <button onclick="finalizePurchase()" class="w-full bg-green-600 hover:bg-green-700 text-white font-extrabold py-4 rounded-xl shadow-lg transition-all uppercase text-sm">Finalizar Compra</button>
-        </div>
+    <div class="modern-form" style="background: #f4f7f6; padding: 25px; border-radius: 20px; margin-bottom: 40px;">
+        <h3>Cadastrar Novo Item</h3>
+        <input type="hidden" id="edit-id">
+        <input type="text" id="p_title" placeholder="Título do Produto">
+        <input type="text" id="p_price" placeholder="Preço (Ex: 99.90)">
+        <input type="text" id="p_img" placeholder="Link da Imagem (URL)">
+        <input type="number" id="p_stock" placeholder="Estoque Inicial">
+        <textarea id="p_desc" style="height:100px" placeholder="Descrição Detalhada"></textarea>
+        <button class="btn btn-add" onclick="handleSave()">CADASTRAR PRODUTO</button>
     </div>
 
-    <div id="modalDesc" class="modal-desc">
-        <div class="flex justify-between items-start mb-4">
-            <h3 id="descTitle" class="text-lg font-bold text-blue-900"></h3>
-            <button onclick="closeDesc()" class="text-2xl text-gray-400">&times;</button>
-        </div>
-        <div class="max-h-[250px] overflow-y-auto mb-6">
-            <p id="descContent" class="text-sm text-gray-600 whitespace-pre-line"></p>
-        </div>
-        <button id="btnDescAdd" class="w-full font-bold py-3 rounded-xl transition uppercase"></button>
+    <div id="admin-list-display">
+        <h3>Lista Profissional e Edição de Estoque</h3>
     </div>
+</div>
 
-    <div id="adminModal">
-        <div class="bg-blue-900 text-white p-4 flex justify-between items-center sticky top-0 shadow-lg">
-            <h2 class="text-lg font-bold">PAINEL ADMINISTRATIVO - RIO NEGRINHO SHOP</h2>
-            <button onclick="closeAll()" class="bg-red-500 px-4 py-2 rounded-lg font-bold text-sm">SAIR DO PAINEL</button>
-        </div>
+<div id="cart-sidebar">
+    <div style="display: flex; justify-content: space-between; align-items: center; border-bottom: 2px solid #eee; padding-bottom: 10px;">
+        <h2 style="margin:0; color: var(--azul-brito)">Carrinho</h2>
+        <i class="fas fa-times" onclick="toggleCart()" style="cursor: pointer; font-size: 24px; color:#999"></i>
+    </div>
+    <div id="cart-items" style="margin: 20px 0;"></div>
+    <div style="font-size: 24px; font-weight: 800; margin: 20px 0; color: var(--azul-brito);">Total: R$ <span id="cart-total">0,00</span></div>
+    
+    <div class="modern-form">
+        <h3>Finalizar Pedido</h3>
+        <input type="text" id="u_nome" placeholder="Seu Nome Completo">
+        <input type="text" id="u_cpf" placeholder="Seu CPF">
+        <input type="text" id="u_rua" placeholder="Endereço (Rua)">
+        <input type="text" id="u_num" placeholder="Número da Casa">
+        <input type="text" id="u_bairro" placeholder="Bairro">
+        <select id="u_pagamento">
+            <option value="" disabled selected>Forma de Pagamento?</option>
+            <option value="Pix">Pix</option>
+            <option value="Dinheiro">Dinheiro</option>
+            <option value="Cartão">Cartão</option>
+        </select>
+        <textarea id="u_obs" placeholder="Observações"></textarea>
+    </div>
+    <button class="btn btn-add" style="background: #2ecc71; font-size: 16px;" onclick="checkout()">FINALIZAR COMPRA</button>
+    <button class="btn btn-desc" onclick="toggleCart()">CONTINUAR COMPRANDO</button>
+</div>
 
-        <div class="container mx-auto p-4 md:p-8">
-            <div class="grid grid-cols-1 lg:grid-cols-3 gap-8">
-                <div class="lg:col-span-1">
-                    <div class="bg-white p-6 rounded-2xl shadow-md border border-slate-200 sticky top-24">
-                        <h3 class="text-blue-900 font-bold mb-4 uppercase text-sm border-b pb-2">Cadastrar Produto</h3>
-                        <div class="space-y-4">
-                            <input type="text" id="admNome" class="cart-input" placeholder="Nome do Produto">
-                            <input type="text" id="admImg" class="cart-input" placeholder="Link da Imagem (URL)">
-                            <div class="grid grid-cols-2 gap-4">
-                                <input type="number" id="admPreco" class="cart-input" placeholder="Preço R$">
-                                <input type="number" id="admEstoque" class="cart-input" placeholder="Estoque">
-                            </div>
-                            <textarea id="admDesc" class="cart-input h-24" placeholder="Descrição detalhada"></textarea>
-                            <button onclick="salvarNoFirebase()" class="w-full bg-blue-600 text-white py-4 rounded-xl font-bold shadow-lg">SALVAR NO FIREBASE</button>
+<div id="descModal" class="modal">
+    <div class="modal-content">
+        <h2 id="m_title" style="color: var(--azul-brito); margin-top:0"></h2>
+        <hr>
+        <div id="m_desc" style="white-space: pre-wrap; line-height: 1.8; padding: 15px 0; max-height: 400px; overflow-y: auto; color:#555"></div>
+        <button class="btn btn-add" onclick="closeModal()">FECHAR</button>
+    </div>
+</div>
+
+<footer>
+    <div class="footer-nav">
+        <a onclick="showPage('quem-somos')">QUEM SOMOS</a>
+        <a onclick="showPage('suporte')">SUPORTE E GARANTIA</a>
+        <a onclick="authAdmin()">ADM</a>
+    </div>
+    <p style="margin-top: 30px; opacity: 0.5; font-size: 12px;">BRITO TEM &copy; 2026 - Rio Negrinho/SC</p>
+</footer>
+
+<script type="module">
+    import { initializeApp } from "https://www.gstatic.com/firebasejs/10.7.1/firebase-app.js";
+    import { getDatabase, ref, push, onValue, update, remove } from "https://www.gstatic.com/firebasejs/10.7.1/firebase-database.js";
+
+    const firebaseConfig = {
+        apiKey: "AIzaSyCf6_DCNSh4a3IiOtTv5Uf_N8YaxQtBczw",
+        authDomain: "loja-a33e1.firebaseapp.com",
+        databaseURL: "https://loja-a33e1-default-rtdb.firebaseio.com",
+        projectId: "loja-a33e1",
+        storageBucket: "loja-a33e1.firebasestorage.app",
+        messagingSenderId: "304798626706",
+        appId: "1:304798626706:web:23a0672e6a98ae432c474b"
+    };
+
+    const app = initializeApp(firebaseConfig);
+    const db = getDatabase(app);
+    let cart = [];
+    let products = [];
+
+    window.onload = () => {
+        const saved = JSON.parse(localStorage.getItem('brito_user') || '{}');
+        Object.keys(saved).forEach(key => {
+            const el = document.getElementById('u_'+key);
+            if(el) el.value = saved[key];
+        });
+        syncProducts();
+    };
+
+    function syncProducts() {
+        onValue(ref(db, 'produtos'), (snapshot) => {
+            const data = snapshot.val();
+            const grid = document.getElementById('grid');
+            const admList = document.getElementById('admin-list-display');
+            grid.innerHTML = '';
+            admList.innerHTML = '<h3>Produtos Cadastrados</h3>';
+            products = [];
+
+            for (let id in data) {
+                const p = { id, ...data[id] };
+                products.push(p);
+
+                grid.innerHTML += `
+                    <div class="box-loja">
+                        <img src="${p.img}" onclick="openZoom('${p.img}')">
+                        <div class="led-frete">Frete Grátis - Chega amanhã 🚚</div>
+                        <h3 style="color:var(--azul-brito); margin:10px 0;">${p.title}</h3>
+                        <div style="font-size:22px; font-weight:bold; color:var(--azul-claro);">R$ ${parseFloat(p.price).toFixed(2)}</div>
+                        <button class="btn btn-desc" onclick="openModal('${p.id}')">DESCRIÇÃO</button>
+                        <button class="btn btn-add" onclick="addToCart('${p.id}')">ADICIONAR AO CARRINHO</button>
+                    </div>
+                `;
+
+                admList.innerHTML += `
+                    <div class="admin-prod-row">
+                        <div style="display:flex; align-items:center; gap:12px">
+                            <img src="${p.img}">
+                            <span><b>${p.title}</b></span>
+                        </div>
+                        <div style="display:flex; align-items:center; gap:10px">
+                            <input type="number" value="${p.stock}" id="stk-${p.id}" class="stock-edit-box">
+                            <button onclick="quickStock('${p.id}')" style="background:#2ecc71; color:white; border:none; padding:8px 10px; border-radius:8px; cursor:pointer"><i class="fas fa-save"></i></button>
+                            <button onclick="edit('${p.id}')" style="background:var(--azul-brito); color:white; border:none; padding:8px 10px; border-radius:8px; cursor:pointer"><i class="fas fa-edit"></i></button>
+                            <button onclick="del('${p.id}')" style="background:red; color:white; border:none; padding:8px 10px; border-radius:8px; cursor:pointer"><i class="fas fa-trash"></i></button>
                         </div>
                     </div>
-                </div>
+                `;
+            }
+        });
+    }
 
-                <div class="lg:col-span-2">
-                    <div class="bg-white rounded-2xl shadow-md border border-slate-200 overflow-hidden">
-                        <table class="w-full text-left">
-                            <thead class="bg-slate-50 text-[10px] uppercase text-slate-400">
-                                <tr>
-                                    <th class="p-4">Foto</th>
-                                    <th class="p-4">Produto</th>
-                                    <th class="p-4">Preço</th>
-                                    <th class="p-4 text-center">Estoque</th>
-                                    <th class="p-4 text-center">Ação</th>
-                                </tr>
-                            </thead>
-                            <tbody id="adminProductList" class="divide-y divide-slate-100"></tbody>
-                        </table>
+    // ZOOM IMAGEM
+    window.openZoom = (url) => {
+        document.getElementById('zoomContent').src = url;
+        document.getElementById('imgZoom').style.display = 'flex';
+    };
+    window.closeZoom = () => document.getElementById('imgZoom').style.display = 'none';
+
+    window.quickStock = (id) => {
+        const newVal = document.getElementById(`stk-${id}`).value;
+        update(ref(db, 'produtos/' + id), { stock: newVal }).then(() => alert("Estoque Atualizado!"));
+    };
+
+    window.addToCart = (id) => {
+        const p = products.find(x => x.id === id);
+        const inCart = cart.find(x => x.id === id);
+        if(inCart) inCart.qtd += 1;
+        else cart.push({...p, qtd: 1});
+        updateCartUI();
+        toggleCart(true);
+    };
+
+    window.updateCartUI = () => {
+        const container = document.getElementById('cart-items');
+        let total = 0;
+        container.innerHTML = '';
+        cart.forEach((item, idx) => {
+            total += parseFloat(item.price) * item.qtd;
+            container.innerHTML += `
+                <div class="item-carrinho">
+                    <img src="${item.img}">
+                    <div style="flex:1">
+                        <div style="font-weight:bold; font-size:14px">${item.title}</div>
+                        <div class="qtd-ctrl">
+                            <button onclick="changeQtd(${idx}, -1)">-</button>
+                            <span>${item.qtd}</span>
+                            <button onclick="changeQtd(${idx}, 1)">+</button>
+                        </div>
                     </div>
-                </div>
-            </div>
-        </div>
-    </div>
-
-    <script>
-        const firebaseConfig = {
-            apiKey: "AIzaSyCf6_DCNSh4a3IiOtTv5Uf_N8YaxQtBczw",
-            authDomain: "loja-a33e1.firebaseapp.com",
-            databaseURL: "https://loja-a33e1-default-rtdb.firebaseio.com",
-            projectId: "loja-a33e1",
-            storageBucket: "loja-a33e1.firebasestorage.app",
-            messagingSenderId: "304798626706",
-            appId: "1:304798626706:web:23a0672e6a98ae432c474b"
-        };
-        firebase.initializeApp(firebaseConfig);
-        const db = firebase.database();
-        let products = [];
-        let cart = [];
-
-        function startSync() {
-            db.ref('produtos').on('value', (snapshot) => {
-                const data = snapshot.val();
-                products = [];
-                if (data) Object.keys(data).forEach(key => products.push({ id_firebase: key, ...data[key] }));
-                renderStore();
-                renderAdminList();
-            });
-        }
-
-        function openZoom(src) {
-            document.getElementById('zoomedImg').src = src;
-            document.getElementById('zoomOverlay').style.display = 'flex';
-        }
-
-        function renderStore() {
-            const grid = document.getElementById('productGrid');
-            grid.innerHTML = products.map(p => {
-                const emEstoque = p.estoque > 0;
-                return `<div class="product-box p-3 ${!emEstoque ? 'out-of-stock' : ''}">
-                    <img src="${p.img}" onclick="openZoom('${p.img}')" class="w-full aspect-square object-cover rounded mb-2 cursor-zoom-in">
-                    <div class="delivery-tag"><b>Frete Gratis - chega amanha</b></div>
-                    <h3 class="product-title font-bold text-blue-900 text-sm">${p.nome}</h3>
-                    <p class="text-blue-500 text-[10px] font-bold">Estoque: ${p.estoque}</p>
-                    <span class="text-blue-700 font-bold text-lg">R$ ${parseFloat(p.preco).toFixed(2)}</span>
-                    <button onclick="openDesc('${p.id_firebase}')" class="text-xs text-blue-600 font-bold mt-2 border border-blue-200 px-2 py-1 rounded-md hover:bg-blue-50 transition">Ver detalhes</button>
-                    ${emEstoque ? `<button onclick="addToCart('${p.id_firebase}')" class="mt-4 bg-blue-600 text-white py-2 rounded-full font-bold text-xs">Adicionar</button>` : `<button class="mt-4 bg-gray-400 text-white py-2 rounded-full font-bold text-xs cursor-not-allowed">Esgotado</button>`}
+                    <div style="font-weight:bold; font-size:14px">R$ ${(item.price * item.qtd).toFixed(2)}</div>
+                    <i class="fas fa-trash" onclick="removeCart(${idx})" style="color:red; cursor:pointer; margin-left:10px"></i>
                 </div>`;
-            }).join('');
-        }
+        });
+        document.getElementById('cart-total').innerText = total.toFixed(2);
+    };
 
-        function renderAdminList() {
-            const list = document.getElementById('adminProductList');
-            list.innerHTML = products.map(p => `
-                <tr class="hover:bg-slate-50 transition">
-                    <td class="p-4"><img src="${p.img}" onclick="openZoom('${p.img}')" class="w-10 h-10 object-cover rounded shadow-sm cursor-zoom-in"></td>
-                    <td class="p-4 font-bold text-slate-700 text-sm">${p.nome}</td>
-                    <td class="p-4 text-blue-600 font-bold">R$ ${parseFloat(p.preco).toFixed(2)}</td>
-                    <td class="p-4 text-center">
-                        <div class="flex items-center justify-center gap-2">
-                            <button onclick="updateStock('${p.id_firebase}', -1)" class="w-6 h-6 bg-gray-200 rounded">-</button>
-                            <span class="w-6 font-bold">${p.estoque}</span>
-                            <button onclick="updateStock('${p.id_firebase}', 1)" class="w-6 h-6 bg-gray-200 rounded">+</button>
-                        </div>
-                    </td>
-                    <td class="p-4 text-center">
-                        <button onclick="deleteProduct('${p.id_firebase}')" class="text-red-500 text-[10px] font-bold uppercase">Excluir</button>
-                    </td>
-                </tr>
-            `).join('');
-        }
+    window.changeQtd = (idx, delta) => {
+        cart[idx].qtd += delta;
+        if(cart[idx].qtd <= 0) cart.splice(idx, 1);
+        updateCartUI();
+    };
 
-        function updateStock(id, delta) {
-            const p = products.find(prod => prod.id_firebase === id);
-            db.ref('produtos/' + id).update({ estoque: Math.max(0, p.estoque + delta) });
-        }
+    window.removeCart = (idx) => { cart.splice(idx, 1); updateCartUI(); };
+    window.toggleCart = (f = null) => {
+        const s = document.getElementById('cart-sidebar');
+        if(f === true) s.classList.add('active');
+        else s.classList.toggle('active');
+    };
 
-        function deleteProduct(id) {
-            if(confirm("Deseja apagar este produto?")) db.ref('produtos/' + id).remove();
-        }
+    window.openModal = (id) => {
+        const p = products.find(x => x.id === id);
+        document.getElementById('m_title').innerText = p.title;
+        document.getElementById('m_desc').innerText = p.desc;
+        document.getElementById('descModal').style.display = 'block';
+    };
+    window.closeModal = () => document.getElementById('descModal').style.display = 'none';
 
-        function salvarNoFirebase() {
-            const prod = {
-                nome: document.getElementById('admNome').value,
-                img: document.getElementById('admImg').value,
-                preco: document.getElementById('admPreco').value,
-                estoque: parseInt(document.getElementById('admEstoque').value) || 0,
-                detalhes: document.getElementById('admDesc').value
-            };
-            if(!prod.nome || !prod.preco) return alert("Preencha Nome e Preço!");
-            db.ref('produtos').push(prod).then(() => {
-                alert("Cadastrado!");
-                document.querySelectorAll('#adminModal input, #adminModal textarea').forEach(i => i.value = '');
-            });
-        }
+    window.checkout = () => {
+        const u = {
+            nome: document.getElementById('u_nome').value,
+            cpf: document.getElementById('u_cpf').value,
+            rua: document.getElementById('u_rua').value,
+            num: document.getElementById('u_num').value,
+            bairro: document.getElementById('u_bairro').value,
+            pagamento: document.getElementById('u_pagamento').value,
+            obs: document.getElementById('u_obs').value
+        };
+        if(!u.nome || cart.length === 0 || !u.pagamento) return alert("Preencha todos os dados!");
+        localStorage.setItem('brito_user', JSON.stringify(u));
 
-        async function enviarBuscaMista() {
-            const busca = document.getElementById('inputBuscaEspecial').value;
-            if(!busca) return alert("Digite o que busca.");
-            try {
-                await db.ref('pedidos_especiais').push({ produto: busca, data: new Date().toLocaleString() });
-                await fetch("https://formspree.io/f/brito302022@gmail.com", {
-                    method: "POST", headers: { "Content-Type": "application/json" },
-                    body: JSON.stringify({ pedido: busca })
-                });
-                alert("Recebemos sua solicitação!");
-                document.getElementById('inputBuscaEspecial').value = "";
-            } catch (e) { alert("Erro ao enviar."); }
-        }
+        let txt = `*PEDIDO: BRITO TEM*\n\n*Cliente:* ${u.nome}\n*Pagamento:* ${u.pagamento}\n*Endereço:* ${u.rua}, ${u.num} - ${u.bairro}\n\n*ITENS:*\n`;
+        let total = 0;
+        cart.forEach(i => { txt += `- ${i.qtd}x ${i.title} (R$ ${i.price} un)\n`; total += parseFloat(i.price) * i.qtd; });
+        txt += `\n*TOTAL: R$ ${total.toFixed(2)}*\n*Obs:* ${u.obs}`;
+        window.open(`https://wa.me/5547988771313?text=${encodeURIComponent(txt)}`);
+    };
 
-        function openAdmin() {
-            if(prompt("Senha:") === "j08167820912") {
-                document.getElementById('adminModal').style.display = 'block';
-                document.body.style.overflow = 'hidden';
-            }
-        }
+    window.authAdmin = () => {
+        if(prompt("Senha ADM:") === "848218") showPage('adm-page');
+        else alert("Negado");
+    };
 
-        function closeAll() {
-            document.getElementById('adminModal').style.display = 'none';
-            document.getElementById('cartSidebar').classList.remove('active');
-            document.getElementById('overlay').classList.remove('active');
-            document.getElementById('modalDesc').style.display = 'none';
-            document.body.style.overflow = 'auto';
-        }
+    window.handleSave = () => {
+        const id = document.getElementById('edit-id').value;
+        const data = {
+            title: document.getElementById('p_title').value,
+            price: document.getElementById('p_price').value.replace(',','.'),
+            img: document.getElementById('p_img').value,
+            stock: document.getElementById('p_stock').value,
+            desc: document.getElementById('p_desc').value
+        };
+        if(id) update(ref(db, 'produtos/' + id), data);
+        else push(ref(db, 'produtos'), data);
+        document.getElementById('edit-id').value = '';
+        document.querySelectorAll('#adm-page input, #adm-page textarea').forEach(i => i.value = '');
+        alert("Sucesso!");
+    };
 
-        function toggleCart() { document.getElementById('cartSidebar').classList.toggle('active'); document.getElementById('overlay').classList.toggle('active'); }
-        
-        function addToCart(id) {
-            const prod = products.find(p => p.id_firebase === id);
-            const inCart = cart.find(i => i.id_firebase === id);
-            if (inCart) { if (inCart.qtd < prod.estoque) inCart.qtd++; } 
-            else cart.push({ ...prod, qtd: 1 });
-            updateCartUI();
-        }
+    window.edit = (id) => {
+        const p = products.find(x => x.id === id);
+        document.getElementById('edit-id').value = p.id;
+        document.getElementById('p_title').value = p.title;
+        document.getElementById('p_price').value = p.price;
+        document.getElementById('p_img').value = p.img;
+        document.getElementById('p_stock').value = p.stock;
+        document.getElementById('p_desc').value = p.desc;
+        window.scrollTo(0,0);
+    };
 
-        function updateCartUI() {
-            const list = document.getElementById('cartItems');
-            list.innerHTML = cart.map((item, idx) => `
-                <div class="flex items-center gap-3 bg-blue-50 p-2 rounded-xl border border-blue-100">
-                    <img src="${item.img}" class="w-10 h-10 object-cover rounded">
-                    <div class="flex-1 min-w-0 text-[11px]"><p class="font-bold text-blue-900 truncate">${item.nome}</p></div>
-                    <div class="flex items-center gap-2">
-                        <button onclick="changeQty(${idx}, -1)" class="qty-btn">-</button>
-                        <span class="text-xs font-bold">${item.qtd}</span>
-                        <button onclick="changeQty(${idx}, 1)" class="qty-btn">+</button>
-                    </div>
-                </div>`).join('');
-            const total = cart.reduce((a, c) => a + (c.preco * c.qtd), 0);
-            document.getElementById('cartTotal').innerText = `R$ ${total.toFixed(2)}`;
-            document.getElementById('cartCount').innerText = cart.reduce((a, b) => a + b.qtd, 0);
+    window.del = (id) => { if(confirm("Apagar produto?")) remove(ref(db, 'produtos/' + id)); };
+    window.sendMissing = () => {
+        const v = document.getElementById('missingItem').value;
+        if(v) {
+            push(ref(db, 'pedidos_vazio'), { item: v, data: new Date().toISOString() });
+            alert("Enviado ao Brito!");
+            document.getElementById('missingItem').value = '';
         }
-
-        function changeQty(idx, delta) {
-            const item = cart[idx];
-            const prod = products.find(p => p.id_firebase === item.id_firebase);
-            if (item.qtd + delta > 0 && item.qtd + delta <= prod.estoque) item.qtd += delta;
-            else if (item.qtd + delta <= 0) cart.splice(idx, 1);
-            updateCartUI();
-        }
-
-        function finalizePurchase() {
-            const d = { 
-                nome: document.getElementById('nome').value, 
-                sobrenome: document.getElementById('sobrenome').value,
-                cpf: document.getElementById('cpf').value,
-                rua: document.getElementById('rua').value, 
-                num: document.getElementById('numero').value, 
-                bairro: document.getElementById('bairro').value,
-                obs: document.getElementById('obs').value
-            };
-            if (!d.nome || !d.rua || cart.length === 0) return alert("Preencha os dados e adicione itens!");
-            const itens = cart.map(i => `- ${i.qtd}x ${i.nome}`).join('%0A');
-            const msg = `*NOVO PEDIDO*%0A*CLIENTE:* ${d.nome} ${d.sobrenome}%0A*CPF:* ${d.cpf}%0A*ENDEREÇO:* ${d.rua}, ${d.num} - ${d.bairro}%0A*OBS:* ${d.obs}%0A*ITENS:*%0A${itens}%0A*TOTAL:* ${document.getElementById('cartTotal').innerText}`;
-            window.open(`https://api.whatsapp.com/send?phone=5547988771313&text=${msg}`, '_blank');
-        }
-
-        function openDesc(id) {
-            const p = products.find(prod => prod.id_firebase === id);
-            document.getElementById('descTitle').innerText = p.nome;
-            document.getElementById('descContent').innerText = p.detalhes || "Pronta entrega.";
-            const btn = document.getElementById('btnDescAdd');
-            if(p.estoque > 0) { 
-                btn.innerText = "ADICIONAR"; 
-                btn.onclick = () => { addToCart(id); closeDesc(); }; 
-                btn.className = "w-full bg-blue-600 text-white font-bold py-3 rounded-xl"; 
-            } else { 
-                btn.innerText = "ESGOTADO"; 
-                btn.className = "w-full bg-gray-400 text-white font-bold py-3 rounded-xl cursor-not-allowed"; 
-            }
-            document.getElementById('modalDesc').style.display = 'block'; 
-            document.getElementById('overlay').classList.add('active');
-        }
-
-        function closeDesc() { document.getElementById('modalDesc').style.display = 'none'; document.getElementById('overlay').classList.remove('active'); }
-        
-        function filterProducts() {
-            const term = document.getElementById('searchBar').value.toLowerCase();
-            document.querySelectorAll('.product-box').forEach(box => box.style.display = box.innerText.toLowerCase().includes(term) ? 'flex' : 'none');
-        }
-        window.onload = startSync;
-    </script>
+    };
+    window.showPage = (id) => {
+        document.querySelectorAll('.section-page').forEach(s => s.classList.remove('active'));
+        document.getElementById(id).classList.add('active');
+        window.scrollTo(0,0);
+    };
+    window.goHome = () => showPage('home-view');
+    window.search = () => {
+        const q = document.getElementById('searchBar').value.toLowerCase();
+        document.querySelectorAll('.box-loja').forEach(box => {
+            const t = box.querySelector('h3').innerText.toLowerCase();
+            box.style.display = t.includes(q) ? 'block' : 'none';
+        });
+    };
+</script>
 </body>
 </html>
