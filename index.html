@@ -11,406 +11,430 @@
             --azul-claro: #00a8ff;
             --bg: #f5f5f5;
             --white: #ffffff;
-            --shadow: 0 2px 10px rgba(0,0,0,0.05);
+            --shadow: 0 2px 10px rgba(0,0,0,0.1);
         }
 
-        /* Blindagem Básica */
+        /* Blindagem de Código */
         html { -webkit-touch-callout: none; -webkit-user-select: none; user-select: none; }
-        input, textarea { user-select: text; }
+        input, textarea { user-select: text !important; }
 
-        * { box-sizing: border-box; font-family: 'Segoe UI', Roboto, Helvetica, Arial, sans-serif; transition: 0.2s; }
+        * { box-sizing: border-box; font-family: 'Segoe UI', Roboto, sans-serif; transition: 0.3s; }
         body { background: var(--bg); margin: 0; color: #333; overflow-x: hidden; }
 
-        /* HEADER ESTILO APP */
+        /* Header */
         header { background: linear-gradient(135deg, #001f3f, var(--azul-brito)); color: white; padding: 15px; position: sticky; top: 0; z-index: 1000; box-shadow: var(--shadow); }
-        .header-content { max-width: 1200px; margin: 0 auto; display: flex; flex-direction: column; gap: 10px; }
-        .logo { font-size: 20px; font-weight: 800; letter-spacing: -0.5px; }
-        .search-box { width: 100%; }
-        #searchBar { width: 100%; padding: 10px 20px; border-radius: 4px; border: none; outline: none; font-size: 14px; background: #fff; }
+        .header-top { display: flex; justify-content: space-between; align-items: center; max-width: 1200px; margin: 0 auto; margin-bottom: 10px; }
+        .logo { font-size: 22px; font-weight: 800; }
+        .cart-icon-top { position: relative; cursor: pointer; font-size: 24px; }
+        .cart-badge { position: absolute; top: -8px; right: -8px; background: #ee4d2d; color: white; font-size: 10px; padding: 2px 6px; border-radius: 10px; border: 2px solid #fff; }
+        
+        .search-box { max-width: 1200px; margin: 0 auto; }
+        #searchBar { width: 100%; padding: 12px 20px; border-radius: 8px; border: none; outline: none; font-size: 15px; }
 
-        /* CARRINHO FLUTUANTE À ESQUERDA (ESTILO PEDIDO) */
-        .cart-float-left { position: fixed; left: 15px; bottom: 20px; background: var(--azul-brito); width: 55px; height: 55px; border-radius: 50%; display: flex; align-items: center; justify-content: center; cursor: pointer; color: white; font-size: 22px; z-index: 5000; box-shadow: 0 4px 15px rgba(0,0,0,0.3); border: 2px solid #fff; }
-        .cart-count { position: absolute; top: -2px; right: -2px; background: #ee4d2d; color: white; font-size: 11px; font-weight: bold; width: 20px; height: 20px; border-radius: 50%; display: flex; align-items: center; justify-content: center; border: 1px solid white; }
+        /* Carrinho Flutuante Esquerda */
+        .cart-float-left { position: fixed; left: 15px; bottom: 80px; background: var(--azul-brito); width: 60px; height: 60px; border-radius: 50%; display: flex; align-items: center; justify-content: center; cursor: pointer; color: white; font-size: 24px; z-index: 2000; box-shadow: 0 4px 15px rgba(0,0,0,0.3); }
 
-        /* GRID ESTILO SHOPEE (2 COLUNAS NO MOBILE) */
-        .container { 
-            display: grid; 
-            grid-template-columns: repeat(auto-fill, minmax(180px, 1fr)); 
-            gap: 8px; 
-            padding: 8px; 
-            max-width: 1200px; 
-            margin: 0 auto; 
-        }
+        /* Vitrine Style Shopee */
+        .container { display: grid; grid-template-columns: repeat(auto-fill, minmax(180px, 1fr)); gap: 10px; padding: 10px; max-width: 1200px; margin: 0 auto; }
+        .box-loja { background: var(--white); border-radius: 8px; overflow: hidden; box-shadow: var(--shadow); display: flex; flex-direction: column; }
+        .box-loja img { width: 100%; aspect-ratio: 1/1; object-fit: cover; cursor: zoom-in; }
+        .info-p { padding: 10px; flex-grow: 1; display: flex; flex-direction: column; }
+        .led-frete { background: #000; color: #00ff00; padding: 4px; font-size: 9px; font-weight: bold; border-radius: 4px; margin-bottom: 8px; text-align: center; }
+        .prod-title { font-size: 13px; font-weight: 600; height: 36px; overflow: hidden; margin-bottom: 5px; }
+        .price { color: #ee4d2d; font-size: 18px; font-weight: 800; margin-bottom: 10px; }
+        .btn-add { background: var(--azul-brito); color: white; border: none; padding: 8px; border-radius: 4px; cursor: pointer; font-weight: 700; font-size: 11px; margin-bottom: 5px; width: 100%; }
+        .btn-detalhes { background: #f0f0f0; color: #555; border: none; padding: 6px; border-radius: 4px; cursor: pointer; font-size: 10px; width: 100%; }
 
-        .box-loja { 
-            background: var(--white); 
-            border-radius: 4px; 
-            overflow: hidden; 
-            display: flex; 
-            flex-direction: column; 
-            box-shadow: var(--shadow);
-            position: relative;
-        }
-
-        .box-loja img { 
-            width: 100%; 
-            aspect-ratio: 1/1; 
-            object-fit: cover; 
-            cursor: zoom-in; 
-        }
-
-        .info-container { padding: 8px; display: flex; flex-direction: column; flex-grow: 1; }
-
-        .prod-title { 
-            font-size: 13px; 
-            color: #333; 
-            margin: 0 0 8px 0; 
-            height: 36px; 
-            overflow: hidden; 
-            display: -webkit-box; 
-            -webkit-line-clamp: 2; 
-            -webkit-box-orient: vertical; 
-            line-height: 18px;
-        }
-
-        /* LED FRETE */
-        .led-frete { 
-            background: #000; 
-            color: #00ff00; 
-            padding: 3px 6px; 
-            font-size: 9px; 
-            font-weight: bold; 
-            border-radius: 2px; 
-            display: inline-block; 
-            margin-bottom: 8px; 
-            box-shadow: 0 0 5px rgba(0,255,0,0.3);
-            text-align: center;
-        }
-
-        .price { font-size: 16px; font-weight: 700; color: #ee4d2d; margin-bottom: 10px; }
-
-        .btn-group { display: flex; flex-direction: column; gap: 5px; margin-top: auto; }
-        .btn-desc { background: #f0f7ff; color: var(--azul-brito); border: 1px solid #d0e7ff; padding: 6px; font-size: 11px; font-weight: 600; border-radius: 2px; cursor: pointer; }
-        .btn-add { background: var(--azul-brito); color: white; border: none; padding: 8px; font-size: 12px; font-weight: 700; border-radius: 2px; cursor: pointer; }
-
-        /* CARRINHO LATERAL */
-        #cart-sidebar { position: fixed; right: -100%; top: 0; width: 100%; max-width: 400px; height: 100%; background: white; z-index: 8000; box-shadow: -5px 0 20px rgba(0,0,0,0.1); display: flex; flex-direction: column; transition: 0.4s cubic-bezier(0.4, 0, 0.2, 1); }
+        /* Carrinho Lateral */
+        #cart-sidebar { position: fixed; right: -100%; top: 0; width: 100%; max-width: 450px; height: 100%; background: white; z-index: 5000; box-shadow: -5px 0 20px rgba(0,0,0,0.2); display: flex; flex-direction: column; transition: 0.4s; }
         #cart-sidebar.active { right: 0; }
-        .cart-header { padding: 15px; background: #fff; border-bottom: 1px solid #eee; display: flex; justify-content: space-between; align-items: center; }
+        .cart-header { padding: 20px; border-bottom: 1px solid #eee; display: flex; justify-content: space-between; align-items: center; }
+        #cart-items-list { flex-grow: 1; overflow-y: auto; padding: 15px; }
+        .item-carrinho { display: flex; align-items: center; gap: 10px; margin-bottom: 15px; border-bottom: 1px solid #f9f9f9; padding-bottom: 10px; }
+        .item-carrinho img { width: 50px; height: 50px; border-radius: 5px; object-fit: cover; }
+        .cart-footer { padding: 20px; background: #fdfdfd; border-top: 1px solid #eee; }
+        .cart-input { width: 100%; padding: 10px; margin-bottom: 8px; border: 1px solid #ddd; border-radius: 5px; font-size: 14px; }
 
-        /* MODAL DESCRIÇÃO (FOCO NO TEXTO INFINITO) */
-        .modal { display: none; position: fixed; top: 0; left: 0; width: 100%; height: 100%; background: rgba(0,0,0,0.6); z-index: 9000; padding: 20px; }
-        .modal-content { background: white; width: 100%; max-width: 500px; margin: 40px auto; border-radius: 8px; padding: 20px; position: relative; max-height: 80vh; overflow-y: auto; }
-        .desc-text { line-height: 1.6; color: #666; white-space: pre-wrap; word-wrap: break-word; }
+        /* Zoom e Modal */
+        .zoom-overlay { display: none; position: fixed; top: 0; left: 0; width: 100%; height: 100%; background: rgba(0,0,0,0.95); z-index: 9999; justify-content: center; align-items: center; cursor: zoom-out; }
+        .zoom-overlay img { max-width: 95%; max-height: 95%; }
+        .modal-desc { display: none; position: fixed; top: 0; left: 0; width: 100%; height: 100%; background: rgba(0,0,0,0.7); z-index: 6000; justify-content: center; align-items: center; padding: 20px; }
+        .modal-content { background: white; padding: 25px; border-radius: 12px; max-width: 600px; width: 100%; max-height: 80vh; overflow-y: auto; position: relative; }
 
-        /* WHATSAPP FLOAT RIGHT */
-        .whatsapp-float { position: fixed; width: 55px; height: 55px; bottom: 20px; right: 15px; background-color: #25d366; color: #FFF; border-radius: 50px; display: flex; align-items: center; justify-content: center; font-size: 28px; z-index: 1500; text-decoration: none; box-shadow: 0 4px 10px rgba(0,0,0,0.2); }
+        /* WhatsApp Chat */
+        .wa-chat { position: fixed; right: 15px; bottom: 20px; background: #25d366; width: 55px; height: 55px; border-radius: 50%; display: flex; align-items: center; justify-content: center; color: white; font-size: 30px; z-index: 2000; text-decoration: none; box-shadow: 0 4px 10px rgba(0,0,0,0.2); }
 
-        /* ZOOM */
-        .zoom-overlay { display: none; position: fixed; top: 0; left: 0; width: 100%; height: 100%; background: rgba(0,0,0,0.9); z-index: 9999; justify-content: center; align-items: center; }
-        .zoom-overlay img { max-width: 95%; max-height: 90%; object-fit: contain; }
-
-        /* ADAPTATIVO MOBILE */
-        @media (max-width: 600px) {
-            .container { 
-                grid-template-columns: repeat(2, 1fr); 
-                gap: 4px; 
-                padding: 4px; 
-            }
-            .logo { font-size: 18px; }
-            .prod-title { font-size: 12px; }
-            .price { font-size: 14px; }
-        }
-
-        /* ADMIN E SPA */
-        .section-page { display: none; padding: 20px; background: white; min-height: 100vh; }
+        /* Admin Page */
+        .section-page { display: none; padding: 20px; max-width: 1200px; margin: 0 auto; background: #fff; min-height: 100vh; }
         .section-page.active { display: block; }
-        .admin-row { display: flex; align-items: center; gap: 10px; border-bottom: 1px solid #eee; padding: 10px 0; }
-        .admin-row img { width: 40px; height: 40px; border-radius: 4px; }
+        .admin-grid { display: grid; grid-template-columns: 1fr 1fr; gap: 20px; }
+        .admin-card { background: #f9f9f9; padding: 20px; border-radius: 8px; border: 1px solid #eee; }
+        .admin-item-row { display: flex; align-items: center; gap: 10px; padding: 10px; border-bottom: 1px solid #eee; background: white; margin-bottom: 5px; }
+
+        footer { text-align: center; padding: 40px 20px; background: #fff; margin-top: 20px; border-top: 1px solid #eee; }
+        .footer-links { display: flex; justify-content: center; gap: 20px; margin-bottom: 20px; flex-wrap: wrap; }
+        .footer-links a { color: var(--azul-brito); text-decoration: none; font-size: 14px; font-weight: bold; cursor: pointer; }
+
+        @media (max-width: 600px) {
+            .container { grid-template-columns: 1fr 1fr; gap: 6px; padding: 6px; }
+            .admin-grid { grid-template-columns: 1fr; }
+        }
     </style>
 </head>
 <body oncontextmenu="return false;">
 
+    <div id="zoomOverlay" class="zoom-overlay" onclick="closeZoom()">
+        <img id="zoomImg" src="">
+    </div>
+
     <div class="cart-float-left" onclick="toggleCart(true)">
         <i class="fas fa-shopping-basket"></i>
-        <div class="cart-count" id="cart-badge">0</div>
+        <div class="cart-badge" id="badge-float">0</div>
     </div>
 
-    <div id="imgZoom" class="zoom-overlay" onclick="closeZoom()">
-        <img id="zoomContent" src="">
-    </div>
-
-    <div id="home-view" class="section-page active" style="background: transparent; padding: 0;">
+    <div id="main-view" class="active-page">
         <header>
-            <div class="header-content">
-                <span class="logo">Rio Negrinho Shop</span>
-                <div class="search-box">
-                    <input type="text" id="searchBar" placeholder="Estou buscando por..." onkeyup="search()">
+            <div class="header-top">
+                <div class="logo">Rio Negrinho Shop</div>
+                <div class="cart-icon-top" onclick="toggleCart(true)">
+                    <i class="fas fa-shopping-cart"></i>
+                    <div class="cart-badge" id="badge-top">0</div>
                 </div>
+            </div>
+            <div class="search-box">
+                <input type="text" id="searchBar" placeholder="Pesquisar produtos..." onkeyup="search()">
             </div>
         </header>
 
         <div class="container" id="grid"></div>
 
-        <div style="background: #fff; margin: 10px; padding: 20px; border-radius: 4px; text-align: center; border: 1px dashed var(--azul-claro);">
-            <h4 style="margin-top: 0; color: var(--azul-brito);">Não achou o que queria?</h4>
-            <input type="text" id="missingItem" style="width: 100%; padding: 12px; border: 1px solid #ddd; border-radius: 4px;" placeholder="Digite o nome do produto...">
-            <button onclick="sendMissing()" style="background: var(--azul-brito); color: white; border: none; padding: 12px; width: 100%; margin-top: 10px; font-weight: bold; border-radius: 4px;"> ENVIAR </button>
+        <div style="max-width: 600px; margin: 30px auto; padding: 20px; background: #fff; border-radius: 10px; text-align: center; box-shadow: var(--shadow);">
+            <h3 style="color: var(--azul-brito);">Não achou o que procurava?</h3>
+            <p style="font-size: 13px; color: #666;">Diga-nos o que você precisa e tentaremos trazer para a loja!</p>
+            <input type="text" id="missingInput" class="cart-input" placeholder="Nome do produto...">
+            <button onclick="sendMissing()" style="background: var(--azul-brito); color:white; border:none; padding:12px 30px; border-radius:5px; cursor:pointer; font-weight:bold;">ENVIAR</button>
         </div>
-    </div>
-
-    <div id="quem-somos" class="section-page">
-        <button onclick="goHome()" class="btn-desc">← VOLTAR</button>
-        <h2>Quem Somos</h2>
-        <div class="desc-text">
-            <p>Bem-vindo a Rio Negriho Shopde, onde a qualidade e a agilidade se encontram para servir a nossa comunidade. Somos um projeto dedicado exclusivamente aos moradores de Rio Negrinho, focado em transformar a forma como você adquire produtos essenciais, garantindo uma experiência de compra moderna, segura e extremamente próxima de cada cliente.</p>
-            <p>Nossa missão é clara: oferecer produtos selecionados com garantia total, eliminando as esperas intermináveis do comércio eletrônico tradicional. Por isso, trabalhamos com uma logística própria e eficiente: se você realizar sua compra hoje, o seu pedido chegará amanhã, sem falta, trazendo a praticidade que o seu dia a dia exige.</p>
-            <p>Acreditamos que o frete não deve ser um obstáculo para quem busca excelência, por isso, a entrega em Rio Negrinho é sempre gratuita. Nosso compromisso vai além da venda; buscamos construir um relacionamento real com nossos vizinhos, tratando cada pedido com o cuidado e o respeito que a nossa gente merece.</p>
-            <p>Queremos que você sinta a diferença de comprar com quem conhece a sua realidade e valoriza o seu tempo. Este projeto nasceu para ser a sua melhor escolha local, unindo a confiança do aperto de mão à eficiência do clique digital. Conte conosco para uma experiência de compra única, rápida e totalmente garantida.</p>
-        </div>
-    </div>
-
-    <div id="suporte" class="section-page">
-        <button onclick="goHome()" class="btn-desc">← VOLTAR</button>
-        <h2>Suporte</h2>
-        <div class="desc-text">
-            <p>Nossa prioridade é a sua tranquilidade e a segurança de que você fez a melhor escolha. Entendemos que um relacionamento de confiança se constrói com transparência, por isso oferecemos um suporte humanizado e direto, pronto para resolver qualquer dúvida ou necessidade que surja após a sua compra.</p>
-            <p>Todos os nossos produtos passam por uma curadoria rigorosa para garantir a máxima qualidade aos moradores de Rio Negrinho. Caso o item apresente qualquer defeito de fabricação ou não atenda às especificações prometidas, nossa garantia assegura a troca ou a devolução de forma rápida, sem burocracias desnecessárias.</p>
-            <p>Para acionar o nosso suporte, basta entrar em contato através dos nossos canais oficiais de atendimento. Como estamos localizados aqui na cidade, conseguimos oferecer uma resposta muito mais ágil que as lojas convencionais, garantindo que você nunca fique na mão e receba a assistência que merece.</p>
-            <p>Acreditamos que o pós-venda é a parte mais importante da sua experiência conosco, reforçando nosso compromisso com a satisfação total. Compre com a certeza de que estamos ao seu lado, cuidando de cada detalhe para que sua única preocupação seja aproveitar a qualidade superior dos nossos produtos selecionados.</p>
-        </div>
-    </div>
-
-    <div id="adm-page" class="section-page">
-        <button onclick="goHome()" class="btn-desc">← SAIR ADM</button>
-        <h2>Painel Admin</h2>
-        <div style="background: #f9f9f9; padding: 15px; border-radius: 8px;">
-            <input type="hidden" id="edit-id">
-            <input type="text" id="p_title" style="width:100%; margin-bottom:10px; padding:10px;" placeholder="Título">
-            <input type="text" id="p_price" style="width:100%; margin-bottom:10px; padding:10px;" placeholder="Preço">
-            <input type="text" id="p_img" style="width:100%; margin-bottom:10px; padding:10px;" placeholder="URL Imagem">
-            <input type="number" id="p_stock" style="width:100%; margin-bottom:10px; padding:10px;" placeholder="Estoque">
-            <textarea id="p_desc" style="width:100%; height:100px; margin-bottom:10px; padding:10px;" placeholder="Descrição"></textarea>
-            <button onclick="handleSave()" style="width:100%; background: var(--azul-brito); color:white; padding:15px; border:none; font-weight:bold;">SALVAR PRODUTO</button>
-        </div>
-        <div id="admin-list-display" style="margin-top: 20px;"></div>
     </div>
 
     <div id="cart-sidebar">
         <div class="cart-header">
-            <h3 style="margin:0; font-size: 16px;">Carrinho de Compras</h3>
-            <i class="fas fa-times" onclick="toggleCart(false)" style="cursor:pointer; font-size: 20px; color: #999;"></i>
+            <h2 style="margin:0; font-size: 18px;">Meu Carrinho</h2>
+            <i class="fas fa-times" onclick="toggleCart(false)" style="cursor:pointer; font-size: 22px;"></i>
         </div>
-        <div id="cart-items" style="flex-grow: 1; overflow-y: auto; padding: 15px;"></div>
-        <div style="padding: 15px; border-top: 1px solid #eee;">
-            <div style="display:flex; justify-content:space-between; font-weight:bold; font-size:18px; margin-bottom:15px; color: #ee4d2d;">
-                <span>Total</span>
-                <span>R$ <span id="cart-total">0,00</span></span>
+        <div id="cart-items-list"></div>
+        <div class="cart-footer">
+            <div style="display:flex; justify-content:space-between; font-weight:800; font-size:20px; color:#ee4d2d; margin-bottom:15px;">
+                <span>TOTAL:</span>
+                <span>R$ <span id="cart-total">0.00</span></span>
             </div>
-            <div id="cart-form">
-                <input type="text" id="u_nome" style="width:100%; margin-bottom:8px; padding:10px; border:1px solid #ddd;" placeholder="Nome Completo">
-                <input type="text" id="u_cpf" style="width:100%; margin-bottom:8px; padding:10px; border:1px solid #ddd;" placeholder="CPF">
-                <input type="text" id="u_rua" style="width:100%; margin-bottom:8px; padding:10px; border:1px solid #ddd;" placeholder="Rua e Número">
-                <input type="text" id="u_bairro" style="width:100%; margin-bottom:8px; padding:10px; border:1px solid #ddd;" placeholder="Bairro">
-                <select id="u_pagamento" style="width:100%; margin-bottom:8px; padding:10px; border:1px solid #ddd;">
-                    <option value="" disabled selected>Forma de Pagamento?</option>
-                    <option value="Pix">Pix</option>
-                    <option value="Dinheiro">Dinheiro</option>
-                    <option value="Cartão">Cartão</option>
-                </select>
-                <textarea id="u_obs" style="width:100%; height:60px; margin-bottom:10px; padding:10px; border:1px solid #ddd;" placeholder="Observações..."></textarea>
-            </div>
-            <button onclick="checkout()" style="width:100%; background: #27ae60; color:white; padding:15px; border:none; font-weight:bold; border-radius:4px;">FINALIZAR PEDIDO</button>
-            <button onclick="toggleCart(false)" style="width:100%; background: transparent; color:#666; padding:10px; border:none; margin-top:5px; font-size:12px;">Continuar Comprando</button>
+            <input type="text" id="c-nome" class="cart-input" placeholder="Nome Completo">
+            <input type="text" id="c-cpf" class="cart-input" placeholder="CPF">
+            <input type="text" id="c-rua" class="cart-input" placeholder="Rua e Número">
+            <input type="text" id="c-bairro" class="cart-input" placeholder="Escreva seu Bairro">
+            
+            <select id="c-pag" class="cart-input" onchange="toggleTroco(this.value)">
+                <option value="">Forma de Pagamento?</option>
+                <option value="Pix">Pix</option>
+                <option value="Dinheiro">Dinheiro</option>
+                <option value="Cartão">Cartão</option>
+            </select>
+            <input type="text" id="c-troco" class="cart-input" style="display:none;" placeholder="Troco para quanto?">
+            
+            <textarea id="c-obs" class="cart-input" style="height:60px" placeholder="Alguma observação?"></textarea>
+            
+            <button onclick="finalize()" style="width:100%; background: #27ae60; color:white; border:none; padding:15px; border-radius:6px; font-weight:800; font-size:16px; cursor:pointer;">FINALIZAR PEDIDO</button>
+            <button onclick="toggleCart(false)" style="width:100%; background:none; border:none; color:#999; margin-top:10px; cursor:pointer; font-size:12px;">CONTINUAR COMPRANDO</button>
         </div>
     </div>
 
-    <div id="descModal" class="modal">
+    <div id="detailsModal" class="modal-desc">
         <div class="modal-content">
-            <h3 id="m_title" style="color: var(--azul-brito); margin-top: 0;"></h3>
-            <div id="m_desc" class="desc-text"></div>
-            <button onclick="closeModal()" style="width:100%; background: var(--azul-brito); color:white; padding:12px; border:none; margin-top:20px; border-radius:4px;">FECHAR</button>
+            <h2 id="det-title" style="color: var(--azul-brito); margin-top:0;"></h2>
+            <div id="det-text" style="line-height:1.6; color:#555; white-space: pre-wrap;"></div>
+            <button onclick="closeDetails()" style="width:100%; margin-top:20px; background:var(--azul-brito); color:white; border:none; padding:12px; border-radius:6px; cursor:pointer;">FECHAR DETALHES</button>
         </div>
     </div>
 
-    <a href="https://wa.me/5547988771313" class="whatsapp-float" target="_blank"><i class="fab fa-whatsapp"></i></a>
+    <div id="quem-somos" class="section-page">
+        <button onclick="showPage('main-view')" style="border:none; background:none; color:var(--azul-brito); font-weight:bold; cursor:pointer;">← VOLTAR</button>
+        <div id="qs-content"></div>
+    </div>
+
+    <div id="suporte" class="section-page">
+        <button onclick="showPage('main-view')" style="border:none; background:none; color:var(--azul-brito); font-weight:bold; cursor:pointer;">← VOLTAR</button>
+        <div id="sup-content"></div>
+    </div>
+
+    <div id="sorteios" class="section-page">
+        <button onclick="showPage('main-view')" style="border:none; background:none; color:var(--azul-brito); font-weight:bold; cursor:pointer;">← VOLTAR PARA LOJA</button>
+        <h1>Sorteios Rio Negrinho Shop</h1>
+        <p>Em breve novidades aqui!</p>
+    </div>
+
+    <div id="adm-view" class="section-page">
+        <div style="display:flex; justify-content:space-between; align-items:center;">
+            <h1>Painel Administrativo</h1>
+            <button onclick="showPage('main-view')" style="background:#333; color:white; border:none; padding:8px 15px; border-radius:5px;">SAIR</button>
+        </div>
+        
+        <div class="admin-grid">
+            <div class="admin-card">
+                <h3>Cadastrar Novo Produto</h3>
+                <input type="hidden" id="edit-id">
+                <input type="text" id="adm-title" class="cart-input" placeholder="Título do Produto">
+                <input type="text" id="adm-img" class="cart-input" placeholder="Link da Imagem (URL)">
+                <input type="number" id="adm-price" class="cart-input" placeholder="Valor (Ex: 49.90)">
+                <input type="number" id="adm-stock" class="cart-input" placeholder="Estoque Atual">
+                <textarea id="adm-desc" class="cart-input" style="height:100px" placeholder="Descrição Completa"></textarea>
+                <button onclick="saveProduct()" style="width:100%; background:var(--azul-brito); color:white; border:none; padding:12px; border-radius:5px; font-weight:bold;">SALVAR PRODUTO</button>
+            </div>
+
+            <div class="admin-card">
+                <h3>Configurações de Páginas</h3>
+                <textarea id="adm-qs" class="cart-input" style="height:80px" placeholder="Texto Quem Somos"></textarea>
+                <button onclick="saveCMS('quem_somos', 'adm-qs')" style="width:100%; margin-bottom:15px; background:#444; color:white; border:none; padding:8px; border-radius:4px;">SALVAR QUEM SOMOS</button>
+                
+                <textarea id="adm-sup" class="cart-input" style="height:80px" placeholder="Texto Suporte e Garantia"></textarea>
+                <button onclick="saveCMS('suporte', 'adm-sup')" style="width:100%; margin-bottom:15px; background:#444; color:white; border:none; padding:8px; border-radius:4px;">SALVAR SUPORTE</button>
+
+                <h3>Afiliados (4 Dígitos)</h3>
+                <input type="text" id="adm-aff-code" class="cart-input" placeholder="Código (Ex: 1234)">
+                <button onclick="saveAffiliate()" style="width:100%; background:#444; color:white; border:none; padding:8px; border-radius:4px;">CADASTRAR AFILIADO</button>
+            </div>
+        </div>
+
+        <div class="admin-card" style="margin-top:20px;">
+            <h3>Lista de Produtos e Estoque</h3>
+            <div id="adm-list"></div>
+        </div>
+    </div>
+
+    <a href="https://wa.me/5547988771313" class="wa-chat" target="_blank"><i class="fab fa-whatsapp"></i></a>
 
     <footer>
-        <div style="display:flex; justify-content:center; gap:15px; margin-bottom:15px;">
-            <a onclick="showPage('quem-somos')" style="cursor:pointer; font-size:12px; color:var(--azul-claro)">Quem Somos</a>
-            <a onclick="showPage('suporte')" style="cursor:pointer; font-size:12px; color:var(--azul-claro)">Suporte</a>
-            <a onclick="authAdmin()" style="cursor:pointer; font-size:12px; color:var(--azul-claro)">ADM</a>
+        <div class="footer-links">
+            <a onclick="showPage('quem-somos')">Quem Somos</a>
+            <a onclick="showPage('suporte')">Suporte e Garantia</a>
+            <a onclick="showPage('sorteios')">Sorteios</a>
+            <a onclick="loginAdm()">ADM</a>
         </div>
-        <p style="font-size:10px; opacity:0.6;">RIO NEGRINHO SHOP &copy; 2026</p>
+        <p>Rio Negrinho Shop 2026</p>
     </footer>
 
     <script type="module">
         import { initializeApp } from "https://www.gstatic.com/firebasejs/10.7.1/firebase-app.js";
-        import { getDatabase, ref, push, onValue, update, remove } from "https://www.gstatic.com/firebasejs/10.7.1/firebase-database.js";
+        import { getDatabase, ref, push, onValue, update, remove, set } from "https://www.gstatic.com/firebasejs/10.7.1/firebase-database.js";
 
         const firebaseConfig = {
             apiKey: "AIzaSyCf6_DCNSh4a3IiOtTv5Uf_N8YaxQtBczw",
             authDomain: "loja-a33e1.firebaseapp.com",
             databaseURL: "https://loja-a33e1-default-rtdb.firebaseio.com",
-            projectId: "loja-a33e1",
-            storageBucket: "loja-a33e1.firebasestorage.app",
-            messagingSenderId: "304798626706",
-            appId: "1:304798626706:web:23a0672e6a98ae432c474b"
+            projectId: "loja-a33e1"
         };
 
         const app = initializeApp(firebaseConfig);
         const db = getDatabase(app);
-        let cart = [];
         let products = [];
+        let cart = [];
+        let affCode = localStorage.getItem('rn_aff') || "";
+
+        // Capturar Afiliado na URL (?ref=1234)
+        const urlParams = new URLSearchParams(window.location.search);
+        if(urlParams.get('ref')) {
+            affCode = urlParams.get('ref');
+            localStorage.setItem('rn_aff', affCode);
+        }
+
+        // Permissão Notificação
+        if (Notification.permission !== "granted") Notification.requestPermission();
 
         window.onload = () => {
-            const saved = JSON.parse(localStorage.getItem('brito_v4') || '{}');
-            Object.keys(saved).forEach(k => { if(document.getElementById('u_'+k)) document.getElementById('u_'+k).value = saved[k]; });
-            syncProducts();
+            loadUserData();
+            syncData();
         };
 
-        function syncProducts() {
+        function syncData() {
             onValue(ref(db, 'produtos'), (snap) => {
-                const data = snap.val();
+                const data = snap.val() || {};
                 const grid = document.getElementById('grid');
-                const admList = document.getElementById('admin-list-display');
-                grid.innerHTML = ''; admList.innerHTML = '<h4>Produtos Ativos</h4>';
-                products = [];
+                const admList = document.getElementById('adm-list');
+                
+                const oldLen = products.length;
+                const keys = Object.keys(data);
+                
+                if(oldLen > 0 && keys.length > oldLen) {
+                    new Notification("Rio Negrinho Shop", { body: "Novo produto cadastrado!", icon: "https://cdn-icons-png.flaticon.com/512/1162/1162499.png" });
+                }
 
-                for (let id in data) {
+                products = [];
+                grid.innerHTML = ''; 
+                admList.innerHTML = '';
+
+                keys.forEach(id => {
                     const p = { id, ...data[id] };
                     products.push(p);
 
                     grid.innerHTML += `
                         <div class="box-loja">
-                            <img src="${p.img}" onclick="openZoom('${p.img}')">
-                            <div class="info-container">
-                                <div class="led-frete">FRETE GRÁTIS - CHEGA AMANHÃ 🚚</div>
+                            <img src="${p.img}" onclick="zoom('${p.img}')">
+                            <div class="info-p">
+                                <div class="led-frete">Frete Grátis - Chega amanhã 🚚</div>
                                 <div class="prod-title">${p.title}</div>
                                 <div class="price">R$ ${parseFloat(p.price).toFixed(2)}</div>
-                                <div class="btn-group">
-                                    <button class="btn-desc" onclick="openModal('${p.id}')">DESCRIÇÃO</button>
-                                    <button class="btn-add" onclick="addToCart('${p.id}')">ADICIONAR</button>
-                                </div>
+                                <button class="btn-add" onclick="addToCart('${p.id}')">ADICIONAR AO CARRINHO</button>
+                                <button class="btn-detalhes" onclick="openDetails('${p.id}')">DETALHES DO PRODUTO</button>
                             </div>
                         </div>`;
-
+                    
                     admList.innerHTML += `
-                        <div class="admin-row">
-                            <img src="${p.img}">
-                            <div style="flex:1; font-size:12px;"><b>${p.title}</b></div>
-                            <input type="number" value="${p.stock}" id="stk-${p.id}" style="width:50px; text-align:center;">
-                            <button onclick="quickStock('${p.id}')" style="border:none; background:#27ae60; color:white; padding:5px; border-radius:3px;">💾</button>
-                            <button onclick="edit('${p.id}')" style="border:none; background:var(--azul-brito); color:white; padding:5px; border-radius:3px;">✏️</button>
-                            <button onclick="del('${p.id}')" style="border:none; background:#e74c3c; color:white; padding:5px; border-radius:3px;">🗑️</button>
+                        <div class="admin-item-row">
+                            <img src="${p.img}" style="width:40px;height:40px;object-fit:cover;">
+                            <div style="flex:1">
+                                <input type="text" value="${p.title}" id="edit-t-${p.id}" style="width:100%; border:none; font-weight:bold;">
+                                <input type="text" value="${p.img}" id="edit-img-${p.id}" style="width:100%; font-size:10px; border:none; color:blue;">
+                            </div>
+                            <input type="number" value="${p.stock}" id="stk-${p.id}" style="width:60px; padding:5px;">
+                            <button onclick="quickSave('${p.id}')" style="background:#27ae60; color:white; border:none; padding:5px 10px; border-radius:4px; cursor:pointer;">SALVAR</button>
+                            <button onclick="editProd('${p.id}')" style="background:#eee; border:none; padding:5px;"><i class="fas fa-edit"></i></button>
+                            <button onclick="delProd('${p.id}')" style="background:#ffeded; border:none; padding:5px; color:red;"><i class="fas fa-trash"></i></button>
                         </div>`;
-                }
+                });
+            });
+
+            onValue(ref(db, 'paginas'), (snap) => {
+                const pgs = snap.val() || {};
+                document.getElementById('qs-content').innerText = pgs.quem_somos || "";
+                document.getElementById('sup-content').innerText = pgs.suporte || "";
             });
         }
+
+        window.quickSave = (id) => {
+            const updates = {
+                title: document.getElementById('edit-t-'+id).value,
+                img: document.getElementById('edit-img-'+id).value,
+                stock: parseInt(document.getElementById('stk-'+id).value)
+            };
+            update(ref(db, 'produtos/'+id), updates).then(() => alert("Alteração rápida salva!"));
+        };
 
         window.addToCart = (id) => {
             const p = products.find(x => x.id === id);
             const inCart = cart.find(x => x.id === id);
-            if(inCart) inCart.qtd++; else cart.push({...p, qtd: 1});
+            if(inCart) inCart.qty++; else cart.push({...p, qty: 1});
             updateCartUI();
         };
 
         window.updateCartUI = () => {
-            const container = document.getElementById('cart-items');
-            let total = 0; let totalItems = 0; container.innerHTML = '';
+            const list = document.getElementById('cart-items-list');
+            let total = 0, count = 0; list.innerHTML = '';
             cart.forEach((item, idx) => {
-                total += item.price * item.qtd;
-                totalItems += item.qtd;
-                container.innerHTML += `
-                    <div style="display:flex; align-items:center; gap:10px; margin-bottom:12px; padding-bottom:12px; border-bottom:1px solid #eee;">
-                        <img src="${item.img}" style="width:45px; height:45px; border-radius:4px; object-fit:cover;">
+                total += item.price * item.qty;
+                count += item.qty;
+                list.innerHTML += `
+                    <div class="item-carrinho">
+                        <img src="${item.img}">
                         <div style="flex:1">
-                            <div style="font-size:12px; font-weight:bold">${item.title}</div>
-                            <div style="display:flex; align-items:center; gap:8px; margin-top:4px">
-                                <button onclick="changeQtd(${idx},-1)" style="border:none; width:22px; height:22px;">-</button>
-                                <span style="font-size:12px">${item.qtd}</span>
-                                <button onclick="changeQtd(${idx},1)" style="border:none; width:22px; height:22px;">+</button>
+                            <div style="font-size:12px; font-weight:bold;">${item.title}</div>
+                            <div style="display:flex; align-items:center; gap:10px; margin-top:5px;">
+                                <button onclick="changeQty(${idx},-1)" style="border:none; width:25px; height:25px;">-</button>
+                                <span style="font-size:14px">${item.qty}</span>
+                                <button onclick="changeQty(${idx},1)" style="border:none; width:25px; height:25px;">+</button>
                             </div>
                         </div>
-                        <div style="font-size:12px; font-weight:bold; color:#ee4d2d">R$ ${(item.price * item.qtd).toFixed(2)}</div>
+                        <div style="font-weight:bold; color:#ee4d2d">R$ ${(item.price * item.qty).toFixed(2)}</div>
                     </div>`;
             });
             document.getElementById('cart-total').innerText = total.toFixed(2);
-            document.getElementById('cart-badge').innerText = totalItems;
+            document.getElementById('badge-top').innerText = count;
+            document.getElementById('badge-float').innerText = count;
         };
 
-        window.changeQtd = (idx, d) => {
-            cart[idx].qtd += d;
-            if(cart[idx].qtd <= 0) cart.splice(idx, 1);
-            updateCartUI();
-        };
-
-        window.toggleCart = (st) => document.getElementById('cart-sidebar').classList.toggle('active', st);
-        window.openZoom = (u) => { document.getElementById('zoomContent').src = u; document.getElementById('imgZoom').style.display = 'flex'; };
-        window.closeZoom = () => document.getElementById('imgZoom').style.display = 'none';
-
-        window.openModal = (id) => {
-            const p = products.find(x => x.id === id);
-            document.getElementById('m_title').innerText = p.title;
-            document.getElementById('m_desc').innerText = p.desc;
-            document.getElementById('descModal').style.display = 'block';
-        };
-        window.closeModal = () => document.getElementById('descModal').style.display = 'none';
-
-        window.checkout = () => {
+        window.finalize = () => {
             const u = {
-                nome: document.getElementById('u_nome').value,
-                cpf: document.getElementById('u_cpf').value,
-                rua: document.getElementById('u_rua').value,
-                bairro: document.getElementById('u_bairro').value,
-                pagamento: document.getElementById('u_pagamento').value,
-                obs: document.getElementById('u_obs').value
+                nome: document.getElementById('c-nome').value,
+                cpf: document.getElementById('c-cpf').value,
+                rua: document.getElementById('c-rua').value,
+                bairro: document.getElementById('c-bairro').value,
+                pag: document.getElementById('c-pag').value,
+                troco: document.getElementById('c-troco').value,
+                obs: document.getElementById('c-obs').value
             };
-            if(!u.nome || cart.length === 0) return alert("Preencha os dados básicos!");
-            localStorage.setItem('brito_v4', JSON.stringify(u));
-            let msg = `*NOVO PEDIDO - RIO NEGRINHO SHOP*\n\n*Cliente:* ${u.nome}\n*Endereço:* ${u.rua} - ${u.bairro}\n*Pagamento:* ${u.pagamento}\n\n*ITENS:*\n`;
-            let t = 0; cart.forEach(i => { msg += `• ${i.qtd}x ${i.title} (R$ ${i.price.toFixed(2)} un)\n`; t += i.price * i.qtd; });
-            msg += `\n*TOTAL: R$ ${t.toFixed(2)}*\n*Obs:* ${u.obs}`;
+            
+            if(!u.nome || !u.bairro || cart.length === 0) return alert("Por favor, preencha seus dados e o Bairro.");
+            localStorage.setItem('rn_user', JSON.stringify(u));
+
+            let msg = `*RIO NEGRINHO SHOP 2026*\n\n`;
+            msg += `*Cliente:* ${u.nome}\n*CPF:* ${u.cpf}\n*Endereço:* ${u.rua}, ${u.bairro}\n*Pagamento:* ${u.pag} ${u.troco ? '(Troco: '+u.troco+')' : ''}\n`;
+            if(affCode) msg += `*Cód. Afiliado:* ${affCode}\n`;
+            msg += `\n*PRODUTOS:*\n`;
+            
+            let total = 0;
+            cart.forEach(i => {
+                msg += `• ${i.qty}x ${i.title} - R$ ${(i.price * i.qty).toFixed(2)}\n`;
+                total += i.price * i.qty;
+                update(ref(db, `produtos/${i.id}`), { stock: i.stock - i.qty });
+            });
+
+            msg += `\n*VALOR TOTAL: R$ ${total.toFixed(2)}*\n*Obs:* ${u.obs}`;
             window.open(`https://wa.me/5547988771313?text=${encodeURIComponent(msg)}`);
         };
 
-        window.authAdmin = () => { if(prompt("Senha ADM:") === "848218") showPage('adm-page'); };
-        window.handleSave = () => {
-            const id = document.getElementById('edit-id').value;
-            const data = {
-                title: document.getElementById('p_title').value,
-                price: parseFloat(document.getElementById('p_price').value.replace(',','.')),
-                img: document.getElementById('p_img').value,
-                stock: document.getElementById('p_stock').value,
-                desc: document.getElementById('p_desc').value
-            };
-            if(id) update(ref(db, 'produtos/'+id), data); else push(ref(db, 'produtos'), data);
-            document.querySelectorAll('#adm-page input, #adm-page textarea').forEach(i => i.value = '');
-            alert("Sucesso!");
+        window.changeQty = (idx, v) => {
+            cart[idx].qty += v;
+            if(cart[idx].qty <= 0) cart.splice(idx, 1);
+            updateCartUI();
         };
 
-        window.quickStock = (id) => update(ref(db, 'produtos/'+id), { stock: document.getElementById('stk-'+id).value }).then(() => alert("Estoque Salvo"));
-        window.edit = (id) => {
+        window.zoom = (src) => { document.getElementById('zoomImg').src = src; document.getElementById('zoomOverlay').style.display='flex'; };
+        window.closeZoom = () => document.getElementById('zoomOverlay').style.display='none';
+        
+        window.openDetails = (id) => {
+            const p = products.find(x => x.id === id);
+            document.getElementById('det-title').innerText = p.title;
+            document.getElementById('det-text').innerText = p.desc;
+            document.getElementById('detailsModal').style.display='flex';
+        };
+        window.closeDetails = () => document.getElementById('detailsModal').style.display='none';
+
+        window.showPage = (id) => {
+            document.querySelectorAll('.section-page, #main-view').forEach(p => p.style.display='none');
+            document.getElementById(id).style.display='block';
+            window.scrollTo(0,0);
+        };
+
+        window.toggleCart = (st) => document.getElementById('cart-sidebar').classList.toggle('active', st);
+        window.toggleTroco = (v) => document.getElementById('c-troco').style.display = (v === 'Dinheiro' ? 'block' : 'none');
+        window.loginAdm = () => { if(prompt("Senha ADM:") === "848218") showPage('adm-view'); };
+
+        window.saveProduct = () => {
+            const id = document.getElementById('edit-id').value;
+            const p = {
+                title: document.getElementById('adm-title').value,
+                img: document.getElementById('adm-img').value,
+                price: parseFloat(document.getElementById('adm-price').value),
+                stock: parseInt(document.getElementById('adm-stock').value),
+                desc: document.getElementById('adm-desc').value
+            };
+            if(id) update(ref(db, 'produtos/'+id), p); else push(ref(db, 'produtos'), p);
+            alert("Produto Salvo!");
+            document.querySelectorAll('#adm-view input, #adm-view textarea').forEach(i => i.value="");
+        };
+
+        window.editProd = (id) => {
             const p = products.find(x => x.id === id);
             document.getElementById('edit-id').value = p.id;
-            document.getElementById('p_title').value = p.title;
-            document.getElementById('p_price').value = p.price;
-            document.getElementById('p_img').value = p.img;
-            document.getElementById('p_stock').value = p.stock;
-            document.getElementById('p_desc').value = p.desc;
+            document.getElementById('adm-title').value = p.title;
+            document.getElementById('adm-img').value = p.img;
+            document.getElementById('adm-price').value = p.price;
+            document.getElementById('adm-stock').value = p.stock;
+            document.getElementById('adm-desc').value = p.desc;
             window.scrollTo(0,0);
         };
-        window.del = (id) => { if(confirm("Apagar?")) remove(ref(db, 'produtos/'+id)); };
-        window.sendMissing = () => {
-            const v = document.getElementById('missingItem').value;
-            if(v) { push(ref(db, 'pedidos_vazio'), { item: v, data: new Date().toLocaleString() }); alert("Avisamos o Brito!"); document.getElementById('missingItem').value = ''; }
-        };
-        window.showPage = (id) => {
-            document.querySelectorAll('.section-page').forEach(s => s.classList.remove('active'));
-            document.getElementById(id).classList.add('active');
-            window.scrollTo(0,0);
-        };
-        window.goHome = () => showPage('home-view');
+
+        window.delProd = (id) => { if(confirm("Deseja apagar este produto?")) remove(ref(db, 'produtos/'+id)); };
+        window.saveCMS = (path, id) => set(ref(db, 'paginas/'+path), document.getElementById(id).value).then(() => alert("Conteúdo atualizado!"));
+        window.saveAffiliate = () => set(ref(db, 'afiliados/'+document.getElementById('adm-aff-code').value), true).then(() => alert("Afiliado Cadastrado!"));
+
         window.search = () => {
             const q = document.getElementById('searchBar').value.toLowerCase();
             document.querySelectorAll('.box-loja').forEach(box => {
@@ -418,6 +442,21 @@
                 box.style.display = t.includes(q) ? 'flex' : 'none';
             });
         };
+
+        window.sendMissing = () => {
+            const val = document.getElementById('missingInput').value;
+            if(val) { push(ref(db, 'faltantes'), { item: val, data: new Date().toLocaleString() }); alert("Enviado ao Brito!"); document.getElementById('missingInput').value=""; }
+        };
+
+        function loadUserData() {
+            const saved = JSON.parse(localStorage.getItem('rn_user') || '{}');
+            if(saved.nome) {
+                document.getElementById('c-nome').value = saved.nome || "";
+                document.getElementById('c-cpf').value = saved.cpf || "";
+                document.getElementById('c-rua').value = saved.rua || "";
+                document.getElementById('c-bairro').value = saved.bairro || "";
+            }
+        }
     </script>
 </body>
 </html>
