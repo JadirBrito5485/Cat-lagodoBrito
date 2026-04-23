@@ -3,202 +3,196 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>SORTEIO VIP - RIO NEGRINHO SHOP</title>
+    <title>Sorteio R$300 - Rio Negrinho Shop</title>
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0/css/all.min.css">
+    <link rel="stylesheet" type="text/css" href="https://cdn.jsdelivr.net/npm/slick-carousel@1.8.1/slick/slick.css"/>
+    <link rel="stylesheet" type="text/css" href="https://cdn.jsdelivr.net/npm/slick-carousel@1.8.1/slick/slick-theme.css"/>
+    
     <style>
         :root {
-            --gold: #d4af37;
-            --dark-bg: #0a0a0a;
-            --glass: rgba(255, 255, 255, 0.1);
+            --azul-brito: #004aad;
+            --azul-claro: #00a8ff;
+            --tiktok: #000000;
+            --shopee-orange: #ee4d2d;
+            --bg: #f8f9fa;
         }
 
-        body {
-            font-family: 'Inter', sans-serif;
-            background-color: var(--dark-bg);
-            background-image: radial-gradient(circle at center, #1a1a1a 0%, #000 100%);
-            color: white;
-            margin: 0;
-            display: flex;
-            justify-content: center;
-            align-items: center;
-            min-height: 100vh;
-            overflow-x: hidden;
-        }
+        body { font-family: 'Segoe UI', sans-serif; background: var(--bg); margin: 0; }
+        .nav-header { padding: 15px; background: #fff; box-shadow: 0 2px 5px rgba(0,0,0,0.1); position: sticky; top: 0; z-index: 1000; }
+        .btn-loja { text-decoration: none; color: var(--azul-brito); font-weight: bold; font-size: 14px; display: flex; align-items: center; gap: 8px; }
 
-        .card {
-            width: 90%;
-            max-width: 450px;
-            background: rgba(20, 20, 20, 0.95);
-            border: 1px solid #333;
-            border-radius: 20px;
-            padding: 25px;
-            text-align: center;
-            box-shadow: 0 0 50px rgba(0,0,0,0.8);
-            position: relative;
-        }
+        .container { max-width: 600px; margin: 0 auto; padding: 20px; }
 
-        .product-img {
-            width: 100%;
-            border-radius: 15px;
-            box-shadow: 0 10px 30px rgba(0, 123, 255, 0.3);
-            margin-bottom: 20px;
-            border: 2px solid #222;
-        }
+        .banner-box { background: #fff; border-radius: 20px 20px 0 0; overflow: hidden; box-shadow: 0 10px 25px rgba(0,0,0,0.05); }
+        .banner-box img { width: 100%; height: auto; display: block; }
+        
+        .header-content { padding: 20px; text-align: center; }
+        .modern-title { font-size: 26px; font-weight: 900; text-transform: uppercase; color: var(--azul-brito); margin: 0; }
+        .data-info { display: block; margin-top: 5px; font-weight: bold; color: #d63031; }
 
-        .badge {
-            background: var(--gold);
-            color: black;
-            padding: 5px 15px;
-            border-radius: 50px;
-            font-weight: 900;
-            text-transform: uppercase;
-            font-size: 12px;
-            display: inline-block;
-            margin-bottom: 10px;
-            letter-spacing: 1px;
-        }
+        .card-form { background: #fff; padding: 25px; border-radius: 0 0 20px 20px; box-shadow: 0 4px 15px rgba(0,0,0,0.05); margin-bottom: 20px; }
+        
+        .input-group { margin-bottom: 15px; }
+        label { display: block; font-size: 12px; font-weight: bold; color: var(--azul-brito); margin-bottom: 5px; }
+        input { width: 100%; padding: 12px; border: 1px solid #ddd; border-radius: 8px; box-sizing: border-box; font-size: 16px; }
 
-        h1 {
-            font-size: 26px;
-            margin: 0 0 10px 0;
-            text-transform: uppercase;
-            letter-spacing: -1px;
-            background: linear-gradient(to bottom, #fff 0%, #888 100%);
-            -webkit-background-clip: text;
-            -webkit-text-fill-color: transparent;
-        }
+        .btn-enviar { width: 100%; padding: 18px; background: var(--azul-brito); color: white; border: none; border-radius: 10px; font-size: 18px; font-weight: bold; cursor: pointer; transition: 0.3s; }
+        .btn-enviar:hover { background: var(--azul-claro); }
 
-        p.call {
-            color: #ccc;
-            font-size: 16px;
-            line-height: 1.4;
-            margin-bottom: 25px;
-        }
+        /* MENU DE TRANSPARÊNCIA (ACORDEON) */
+        .transparency-menu { background: #fff; border-radius: 15px; overflow: hidden; margin-bottom: 30px; border: 1px solid #eee; }
+        .menu-item { border-bottom: 1px solid #eee; }
+        .menu-header { padding: 15px; background: #f9f9f9; cursor: pointer; display: flex; justify-content: space-between; font-weight: bold; font-size: 14px; color: #444; }
+        .menu-content { padding: 15px; display: none; font-size: 13px; line-height: 1.6; color: #666; }
+        .menu-content b { color: #333; }
 
-        .date-box {
-            border-top: 1px solid #333;
-            border-bottom: 1px solid #333;
-            padding: 15px 0;
-            margin-bottom: 25px;
-        }
-
-        .date-box span {
-            display: block;
-            font-size: 20px;
-            color: var(--gold);
-            font-weight: bold;
-        }
-
-        input {
-            width: 100%;
-            background: #111;
-            border: 1px solid #444;
-            padding: 15px;
-            margin-bottom: 15px;
-            border-radius: 10px;
-            color: white;
-            font-size: 16px;
-            box-sizing: border-box;
-            outline: none;
-        }
-
-        input:focus {
-            border-color: var(--gold);
-        }
-
-        .btn-action {
-            background: linear-gradient(45deg, #d4af37, #f9e29c);
-            color: #000;
-            width: 100%;
-            padding: 18px;
-            border: none;
-            border-radius: 10px;
-            font-size: 18px;
-            font-weight: 900;
-            cursor: pointer;
-            text-transform: uppercase;
-            transition: 0.3s;
-            box-shadow: 0 5px 15px rgba(212, 175, 55, 0.3);
-        }
-
-        .btn-action:hover {
-            transform: scale(1.02);
-            box-shadow: 0 8px 20px rgba(212, 175, 55, 0.5);
-        }
-
-        .store-link {
-            display: block;
-            margin-top: 25px;
-            color: #666;
-            text-decoration: none;
-            font-size: 14px;
-            transition: 0.3s;
-        }
-
-        .store-link:hover {
-            color: var(--gold);
-        }
-
-        .glow {
-            position: absolute;
-            top: -50px;
-            left: 50%;
-            transform: translateX(-50%);
-            width: 200px;
-            height: 100px;
-            background: rgba(212, 175, 55, 0.1);
-            filter: blur(50px);
-            z-index: -1;
-        }
+        /* VITRINE */
+        .vitrine-section { margin-top: 40px; padding-bottom: 50px; }
+        .prod-item { background: #fff; margin: 10px; border-radius: 12px; border: 1px solid #eee; cursor: pointer; text-align: center; }
+        .prod-item img { width: 100%; aspect-ratio: 1/1; object-fit: cover; }
+        .prod-price { color: var(--shopee-orange); font-weight: bold; padding: 10px; display: block; }
     </style>
 </head>
 <body>
 
-<div class="card">
-    <div class="glow"></div>
-    <span class="badge">Oportunidade Única</span>
-    <img src="https://down-br.img.susercontent.com/file/br-11134207-7r98o-loh4miq61d8n7a.webp" class="product-img" alt="Fone M10">
-    
-    <h1>Este fone pode ser seu</h1>
-    <p class="call">Faça seu cadastro agora e participe do sorteio oficial da Rio Negrinho Shop.</p>
-
-    <div class="date-box">
-        <span>10 DE MAIO DE 2026</span>
-        <small style="color: #666; text-transform: uppercase; font-size: 11px;">Ao meio-dia (12:00h)</small>
+    <div class="nav-header">
+        <a href="https://rionegrinho.shop" class="btn-loja"><i class="fas fa-chevron-left"></i> RIONEGRINHO.SHOP</a>
     </div>
 
-    <form id="formSorteio">
-        <input type="text" id="nome" placeholder="Seu Nome Completo" required>
-        <input type="tel" id="whatsapp" placeholder="Seu WhatsApp (DDD)" required>
-        
-        <button type="button" class="btn-action" onclick="participar()">
-            <i class="fab fa-whatsapp"></i> Quero Ganhar!
-        </button>
-    </form>
+    <div class="container">
+        <div class="banner-box">
+            <img src="https://investidorsardinha.r7.com/wp-content/uploads/2024/01/como-ganhar-r-300-por-mes-sem-trabalhar.png" alt="Sorteio">
+            <div class="header-content">
+                <h1 class="modern-title">Sorteio de R$ 300,00</h1>
+                <span class="data-info">SORTEIO: 25/05/2026 ÀS 12:00h</span>
+            </div>
+        </div>
 
-    <a href="https://rionegrinho.shop" target="_blank" class="store-link">
-        🛒 Visitar rionegrinho.shop
-    </a>
-</div>
+        <div class="card-form">
+            <form action="https://formsubmit.co/brito302022@gmail.com" method="POST" id="mainForm">
+                <input type="hidden" name="_next" value="https://rionegrinho.shop">
+                <input type="hidden" name="_captcha" value="false">
 
-<script>
-    function participar() {
-        const nome = document.getElementById('nome').value;
-        const whats = document.getElementById('whatsapp').value;
+                <div class="input-group">
+                    <label>Nome Completo</label>
+                    <input type="text" name="Nome" id="f_nome" required>
+                </div>
+                <div class="input-group">
+                    <label>CPF (Para conferência do ganhador)</label>
+                    <input type="text" name="CPF" id="f_cpf" placeholder="000.000.000-00" required>
+                </div>
+                <div class="input-group">
+                    <label>Seu WhatsApp</label>
+                    <input type="tel" name="WhatsApp" id="f_whats" placeholder="(47) 9..." required>
+                </div>
+                <div class="input-group">
+                    <label>WhatsApp de um amigo (Rio Negrinho)</label>
+                    <input type="tel" name="WhatsApp_Amigo" id="f_amigo" required>
+                </div>
 
-        if(!nome || !whats) {
-            alert("Preencha os dados para garantir sua vaga!");
-            return;
-        }
+                <p style="font-size: 11px; color: #999; text-align: center;">
+                    Ao clicar em participar, você concorda com nosso regulamento e política de privacidade de dados.
+                </p>
+                <button type="submit" class="btn-enviar">PARTICIPAR DO SORTEIO</button>
+            </form>
+        </div>
 
-        // --- SEU NÚMERO AQUI ---
-        const foneDono = "5547999999999"; 
-        
-        const texto = `💎 *QUERO PARTICIPAR DO SORTEIO!* 💎%0A%0AEstou me cadastrando para o sorteio do *Fone M10* que acontece dia 10 de Maio.%0A%0A👤 *Nome:* ${nome}%0A📱 *WhatsApp:* ${whats}%0A%0A🚀 Boa sorte para mim!`;
+        <div class="transparency-menu">
+            <div class="menu-item">
+                <div class="menu-header" onclick="toggleMenu(0)">
+                    REGULAMENTO DO SORTEIO <i class="fas fa-chevron-down"></i>
+                </div>
+                <div class="menu-content" id="m0">
+                    <b>1. Participação:</b> Sorteio gratuito e exclusivo para residentes de Rio Negrinho - SC. <br>
+                    <b>2. Como Participar:</b> Preencher todos os campos do formulário oficial no site rionegrinho.shop.<br>
+                    <b>3. O Prêmio:</b> Valor de R$ 300,00 pago via PIX ou em mãos conforme escolha do organizador.<br>
+                    <b>4. Data e Local:</b> O sorteio ocorrerá dia 25/05/2026 às 12h, anunciado ao vivo no TikTok <b>@falabritooficial</b>.<br>
+                    <b>5. Entrega:</b> O ganhador será contatado via WhatsApp. Caso não responda em 24h, um novo sorteio será realizado.
+                </div>
+            </div>
 
-        window.open(`https://api.whatsapp.com/send?phone=${foneDono}&text=${texto}`, '_blank');
-    }
-</script>
+            <div class="menu-item">
+                <div class="menu-header" onclick="toggleMenu(1)">
+                    PRIVACIDADE E DADOS (LGPD) <i class="fas fa-chevron-down"></i>
+                </div>
+                <div class="menu-content" id="m1">
+                    <b>Coleta de Dados:</b> Coletamos seu Nome, CPF e WhatsApp exclusivamente para identificar o ganhador e evitar fraudes (várias inscrições da mesma pessoa).<br>
+                    <b>Segurança:</b> Seus dados não serão vendidos ou compartilhados com terceiros. <br>
+                    <b>Armazenamento:</b> Os dados serão excluídos de nossa base 30 dias após a entrega do prêmio.
+                </div>
+            </div>
 
+            <div class="menu-item">
+                <div class="menu-header" onclick="toggleMenu(2)">
+                    DÚVIDAS E SUPORTE <i class="fas fa-chevron-down"></i>
+                </div>
+                <div class="menu-content" id="m2">
+                    Para dúvidas sobre o sorteio, entre em contato via WhatsApp oficial da Rio Negrinho Shop ou através do Portal Fala Brito no TikTok.
+                </div>
+            </div>
+        </div>
+
+        <div class="vitrine-section">
+            <h3 style="text-align:center; font-size: 14px; color: #888;">VISITE NOSSA LOJA</h3>
+            <div id="carousel-prods"></div>
+        </div>
+    </div>
+
+    <script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
+    <script src="https://cdn.jsdelivr.net/npm/slick-carousel@1.8.1/slick/slick.min.js"></script>
+
+    <script type="module">
+        import { initializeApp } from "https://www.gstatic.com/firebasejs/10.7.1/firebase-app.js";
+        import { getDatabase, ref, onValue, push } from "https://www.gstatic.com/firebasejs/10.7.1/firebase-database.js";
+
+        const firebaseConfig = {
+            apiKey: "AIzaSyCf6_DCNSh4a3IiOtTv5Uf_N8YaxQtBczw",
+            authDomain: "loja-a33e1.firebaseapp.com",
+            databaseURL: "https://loja-a33e1-default-rtdb.firebaseio.com",
+            projectId: "loja-a33e1",
+            storageBucket: "loja-a33e1.firebasestorage.app",
+            messagingSenderId: "304798626706",
+            appId: "1:304798626706:web:23a0672e6a98ae432c474b"
+        };
+
+        const app = initializeApp(firebaseConfig);
+        const db = getDatabase(app);
+
+        // Funções do Menu
+        window.toggleMenu = (id) => {
+            $(`#m${id}`).slideToggle();
+        };
+
+        // Carregar Vitrine
+        onValue(ref(db, 'produtos'), (snap) => {
+            const data = snap.val();
+            const carousel = $('#carousel-prods');
+            if (carousel.hasClass('slick-initialized')) carousel.slick('unslick');
+            carousel.empty();
+            for (let id in data) {
+                if(data[id].stock > 0) {
+                    carousel.append(`
+                        <div class="prod-item" onclick="window.location.href='https://rionegrinho.shop'">
+                            <img src="${data[id].img}">
+                            <span class="prod-price">R$ ${parseFloat(data[id].price).toFixed(2)}</span>
+                        </div>
+                    `);
+                }
+            }
+            carousel.slick({ autoplay: true, autoplaySpeed: 2000, slidesToShow: 3, arrows: false, dots: true });
+        });
+
+        // Backup Firebase
+        document.getElementById('mainForm').onsubmit = function() {
+            const data = {
+                nome: document.getElementById('f_nome').value,
+                cpf: document.getElementById('f_cpf').value,
+                whatsapp: document.getElementById('f_whats').value,
+                amigo: document.getElementById('f_amigo').value,
+                data: new Date().toLocaleString()
+            };
+            push(ref(db, 'sorteio_registros'), data);
+        };
+    </script>
 </body>
 </html>
