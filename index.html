@@ -3,368 +3,124 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no">
-    <title>Rio Negrinho Shop - Oficial 2026</title>
+    <title>Rio Negrinho Shop 2026</title>
+    <link rel="stylesheet" href="style.css">
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0/css/all.min.css">
-    <style>
-        :root {
-            --azul-brito: #004aad;
-            --azul-claro: #00a8ff;
-            --bg: #f0f2f5;
-            --white: #ffffff;
-            --shopee-orange: #ee4d2d;
-        }
-
-        /* Blindagem de Código */
-        html { -webkit-touch-callout: none; -webkit-user-select: none; user-select: none; }
-        input, textarea { user-select: text !important; }
-
-        * { box-sizing: border-box; font-family: 'Segoe UI', sans-serif; transition: 0.3s; }
-        body { background: var(--bg); margin: 0; overflow-x: hidden; }
-
-        /* Header Moderno */
-        header { background: var(--azul-brito); color: white; padding: 15px; position: sticky; top: 0; z-index: 1000; box-shadow: 0 2px 10px rgba(0,0,0,0.2); }
-        .header-top { display: flex; justify-content: space-between; align-items: center; max-width: 1200px; margin: 0 auto; margin-bottom: 10px; }
-        .logo { font-size: 22px; font-weight: 900; color: #fff; text-decoration: none; }
-        
-        .search-container { position: relative; max-width: 1200px; margin: 0 auto; display: flex; flex-direction: column; align-items: center; gap: 10px; }
-        #searchBar { width: 100%; padding: 12px 15px; border-radius: 8px; border: none; outline: none; font-size: 14px; }
-        .cart-icon-header { position: relative; font-size: 24px; cursor: pointer; color: white; margin-top: 10px; }
-
-        /* Carrinho Flutuante Arrastável */
-        #cart-float { 
-            position: fixed; left: 20px; bottom: 80px; 
-            background: var(--azul-brito); width: 60px; height: 60px; 
-            border-radius: 50%; display: flex; align-items: center; justify-content: center; 
-            cursor: move; color: white; font-size: 25px; z-index: 5000; 
-            box-shadow: 0 5px 20px rgba(0,0,0,0.3); border: 3px solid #fff;
-            touch-action: none;
-        }
-        .badge-red { position: absolute; top: -5px; right: -5px; background: red; color: white; font-size: 12px; min-width: 22px; height: 22px; border-radius: 50%; display: flex; align-items: center; justify-content: center; font-weight: bold; }
-
-        /* Grid Estilo Shopee */
-        .container { display: grid; grid-template-columns: repeat(auto-fill, minmax(170px, 1fr)); gap: 8px; padding: 10px; max-width: 1200px; margin: 0 auto; }
-        .box-loja { background: white; border-radius: 8px; overflow: hidden; display: flex; flex-direction: column; position: relative; box-shadow: 0 2px 5px rgba(0,0,0,0.08); }
-        .box-loja img { width: 100%; aspect-ratio: 1/1; object-fit: cover; cursor: zoom-in; }
-        .box-loja.esgotado { opacity: 0.6; filter: grayscale(1); }
-        .box-loja.esgotado::after { content: "ESGOTADO"; position: absolute; top: 40%; left: 0; width: 100%; background: rgba(0,0,0,0.8); color: white; text-align: center; padding: 5px 0; font-weight: bold; }
-
-        .led-frete { background: #000; color: #00ff00; padding: 4px; font-size: 10px; font-weight: bold; text-align: center; animation: glow 1.5s infinite; }
-        @keyframes glow { 0% { box-shadow: 0 0 5px #00ff00; } 50% { box-shadow: 0 0 15px #00ff00; } 100% { box-shadow: 0 0 5px #00ff00; } }
-
-        .info { padding: 10px; flex-grow: 1; display: flex; flex-direction: column; }
-        .p-title { font-size: 13px; height: 36px; overflow: hidden; margin-bottom: 8px; font-weight: 500; }
-        .p-price { color: var(--shopee-orange); font-size: 18px; font-weight: bold; margin-bottom: 10px; }
-        
-        .btn-add { background: var(--azul-brito); color: white; border: none; padding: 10px; border-radius: 4px; font-weight: bold; font-size: 11px; cursor: pointer; width: 100%; }
-        .btn-details { background: #f0f7ff; color: var(--azul-brito); border: none; padding: 8px; margin-top: 5px; border-radius: 4px; font-size: 11px; cursor: pointer; }
-
-        /* Sidebar Carrinho Lateral */
-        #cart-sidebar { position: fixed; right: -100%; top: 0; width: 100%; max-width: 450px; height: 100%; background: white; z-index: 9000; box-shadow: -5px 0 30px rgba(0,0,0,0.2); display: flex; flex-direction: column; transition: 0.4s; }
-        #cart-sidebar.active { right: 0; }
-        .cart-content { flex-grow: 1; overflow-y: auto; padding: 20px; }
-        .cart-item { display: flex; align-items: center; gap: 15px; padding: 15px 0; border-bottom: 1px solid #eee; }
-        .cart-img { width: 50px; height: 50px; object-fit: cover; border-radius: 4px; }
-        
-        /* Modal Detalhes (Texto Infinito) */
-        .modal-desc { display: none; position: fixed; top: 0; left: 0; width: 100%; height: 100%; background: rgba(0,0,0,0.8); z-index: 10000; }
-        .modal-body { background: white; width: 90%; max-width: 600px; margin: 50px auto; border-radius: 12px; padding: 25px; max-height: 80vh; overflow-y: auto; position: relative; }
-
-        /* Zoom */
-        .zoom-overlay { display: none; position: fixed; top: 0; left: 0; width: 100%; height: 100%; background: rgba(0,0,0,0.95); z-index: 11000; justify-content: center; align-items: center; cursor: zoom-out; }
-        .zoom-overlay img { max-width: 95%; max-height: 95%; object-fit: contain; }
-
-        /* WhatsApp Chat */
-        .wa-chat { position: fixed; bottom: 20px; right: 20px; background: #25d366; width: 55px; height: 55px; border-radius: 50%; display: flex; align-items: center; justify-content: center; color: white; font-size: 30px; text-decoration: none; z-index: 4000; box-shadow: 0 4px 10px rgba(0,0,0,0.3); }
-
-        /* Admin */
-        .admin-section { display: none; padding: 20px; background: white; min-height: 100vh; }
-        .admin-section.active { display: block; }
-        .admin-row { border: 1px solid #eee; padding: 10px; margin-bottom: 5px; border-radius: 6px; display: grid; grid-template-columns: 50px 1fr 80px 80px 80px; gap: 10px; align-items: center; font-size: 12px; }
-
-        footer { text-align: center; padding: 40px 20px; background: #fff; margin-top: 20px; border-top: 1px solid #eee; }
-        .footer-links { display: flex; justify-content: center; gap: 20px; margin-bottom: 20px; flex-wrap: wrap; }
-        .footer-links a { color: var(--azul-brito); text-decoration: none; font-weight: bold; cursor: pointer; }
-    </style>
 </head>
 <body oncontextmenu="return false;">
 
-    <div id="cart-float" onmousedown="dragStart(event)" ontouchstart="dragStart(event)">
+    <div id="cart-float">
         <i class="fas fa-shopping-cart"></i>
-        <div class="badge-red" id="badge-total">0</div>
-    </div>
-
-    <div id="zoomLayer" class="zoom-overlay" onclick="this.style.display='none'">
-        <img id="zoomImg" src="">
+        <div class="badge-red" id="badge-count">0</div>
     </div>
 
     <div id="main-view">
         <header>
-            <div class="header-top">
-                <a href="#" class="logo">Rio Negrinho Shop</a>
-                <div class="cart-icon-header" onclick="toggleCart(true)"><i class="fas fa-shopping-basket"></i></div>
-            </div>
-            <div class="search-container">
-                <input type="text" id="searchBar" placeholder="Pesquisar produtos..." onkeyup="search()">
+            <div class="header-container">
+                <div class="logo">Rio Negrinho Shop</div>
+                <div class="search-box">
+                    <input type="text" id="searchBar" placeholder="Pesquisar na loja..." onkeyup="filterProducts()">
+                </div>
+                <div class="cart-icon-top" onclick="toggleCart(true)">
+                    <i class="fas fa-shopping-basket"></i>
+                </div>
             </div>
         </header>
 
         <div class="container" id="product-grid"></div>
 
-        <div style="background: white; margin: 15px; padding: 25px; border-radius: 12px; text-align: center; border: 2px dashed var(--azul-claro);">
-            <h3 style="color: var(--azul-brito);">Não achou o que procurava?</h3>
-            <input type="text" id="missingItem" style="width: 100%; padding: 15px; border: 1px solid #ddd; border-radius: 8px; margin-bottom: 10px;" placeholder="Diga o que você quer...">
-            <button onclick="sendMissing()" style="background: var(--azul-brito); color: white; border: none; padding: 15px; width: 100%; border-radius: 8px; font-weight: bold; cursor: pointer;">ENVIAR</button>
-            <p id="missingFeedback" style="display:none; color: green; font-weight: bold; margin-top: 10px;">Obrigado</p>
-        </div>
-    </div>
-
-    <div id="adm-panel" class="admin-section">
-        <div style="display: flex; justify-content: space-between; align-items: center;">
-            <h2>ADM - Rio Negrinho Shop</h2>
-            <button onclick="goHome()" style="background: #e74c3c; color: white; border: none; padding: 10px 20px; border-radius: 4px;">SAIR ADM</button>
-        </div>
-
-        <div style="background: #f0f7ff; padding: 20px; border-radius: 8px; margin-bottom: 30px;">
-            <h3>Cadastrar Produto</h3>
-            <div style="display: grid; grid-template-columns: 1fr 1fr; gap: 10px;">
-                <input type="text" id="p_title" placeholder="Título">
-                <input type="text" id="p_price" placeholder="Preço (9.90)">
-                <input type="text" id="p_img" placeholder="Link da Imagem">
-                <input type="number" id="p_stock" placeholder="Estoque">
-                <textarea id="p_desc" style="grid-column: span 2;" placeholder="Descrição"></textarea>
-                <button onclick="saveProduct()" style="grid-column: span 2; background: var(--azul-brito); color: white; padding: 15px;">SALVAR PRODUTO NO FIREBASE</button>
+        <section class="not-found-section">
+            <h4>Não achou o que procurava?</h4>
+            <div class="not-found-form">
+                <input type="text" id="missingInput" placeholder="Nome do produto...">
+                <button onclick="sendMissing()">ENVIAR</button>
             </div>
-        </div>
+        </section>
 
-        <h3>Edição Rápida de Estoque e Links</h3>
-        <div id="adm-product-list"></div>
-
-        <h3>Avisos: Produtos que faltam</h3>
-        <div id="missing-list" style="background: #fff3cd; padding: 10px;"></div>
-    </div>
-
-    <div id="page-content" class="admin-section">
-        <button onclick="goHome()" style="margin-bottom: 20px;">← VOLTAR PARA LOJA</button>
-        <h1 id="page-title"></h1>
-        <div id="page-body" style="line-height: 1.8;"></div>
+        <footer>
+            <div class="footer-links">
+                <span onclick="loadInfo('quem_somos')">Quem Somos</span>
+                <span onclick="loadInfo('suporte')">Suporte e Garantia</span>
+                <a href="sorteio.html">Sorteios</a>
+                <span onclick="enterAdmin()">ADM</span>
+            </div>
+            <p>Rio Negrinho Shop 2026</p>
+        </footer>
     </div>
 
     <div id="cart-sidebar">
-        <div style="padding: 20px; background: var(--azul-brito); color: white; display: flex; justify-content: space-between;">
+        <div class="cart-sidebar-header">
             <h3>Meu Carrinho</h3>
-            <i class="fas fa-times" onclick="toggleCart(false)" style="cursor: pointer;"></i>
+            <i class="fas fa-times" onclick="toggleCart(false)"></i>
         </div>
-        <div class="cart-content" id="cart-items-list"></div>
-        <div style="padding: 20px; border-top: 1px solid #eee;">
-            <div style="display: flex; justify-content: space-between; font-size: 20px; font-weight: bold; margin-bottom: 15px; color: var(--shopee-orange);">
-                <span>TOTAL:</span>
-                <span id="cart-total-value">R$ 0,00</span>
-            </div>
-            <div id="customer-form">
-                <input type="text" id="c_nome" placeholder="Nome Completo" style="width: 100%; margin-bottom: 5px; padding: 10px;">
-                <input type="text" id="c_cpf" placeholder="CPF" style="width: 100%; margin-bottom: 5px; padding: 10px;">
-                <input type="text" id="c_rua" placeholder="Rua e Número" style="width: 100%; margin-bottom: 5px; padding: 10px;">
-                <input type="text" id="c_bairro" placeholder="Bairro" style="width: 100%; margin-bottom: 5px; padding: 10px;">
-                <select id="c_pag" onchange="checkMoney(this.value)" style="width: 100%; margin-bottom: 5px; padding: 10px;">
+        <div id="cart-items-list" class="cart-items-container"></div>
+        <div class="cart-sidebar-footer">
+            <h3 class="total-text">Total: <span id="cart-total">R$ 0,00</span></h3>
+            <div class="checkout-form">
+                <input type="text" id="u_nome" placeholder="Nome Completo">
+                <input type="text" id="u_cpf" placeholder="CPF">
+                <input type="text" id="u_rua" placeholder="Rua e Nº da Casa">
+                <input type="text" id="u_bairro" placeholder="Bairro">
+                <select id="u_pag" onchange="checkTroco(this.value)">
                     <option value="">Forma de Pagamento?</option>
                     <option value="Pix">Pix</option>
                     <option value="Cartão">Cartão</option>
                     <option value="Dinheiro">Dinheiro</option>
                 </select>
-                <input type="text" id="c_troco" placeholder="Troco para quanto?" style="display: none; width: 100%; margin-bottom: 5px; padding: 10px;">
-                <textarea id="c_obs" placeholder="Alguma observação?" style="width: 100%; padding: 10px;"></textarea>
+                <input type="text" id="u_troco" placeholder="Troco para quanto?" style="display:none">
+                <textarea id="u_obs" placeholder="Observações..."></textarea>
             </div>
-            <button onclick="finishOrder()" style="width: 100%; background: #27ae60; color: white; border: none; padding: 18px; border-radius: 8px; font-weight: bold; margin-top: 10px;">FINALIZAR COMPRA</button>
-            <button onclick="toggleCart(false)" style="width: 100%; background: transparent; color: #666; border: none; margin-top: 10px;">Continuar Comprando</button>
+            <button class="btn-finalize" onclick="finalizeOrder()">FINALIZAR COMPRA</button>
+            <button class="btn-continue" onclick="toggleCart(false)">Continuar Comprando</button>
         </div>
     </div>
 
-    <div id="detailsModal" class="modal-desc">
+    <div id="admin-panel" class="admin-view">
+        <header class="adm-header">
+            <h2>Painel Administrativo</h2>
+            <button onclick="exitAdmin()">SAIR ADM</button>
+        </header>
+        <div class="adm-body">
+            <div class="adm-card">
+                <h3>Cadastrar Novo Produto</h3>
+                <input type="text" id="p_title" placeholder="Título do Produto">
+                <input type="text" id="p_price" placeholder="Preço (ex: 99.90)">
+                <input type="text" id="p_img" placeholder="URL da Imagem (Link)">
+                <input type="number" id="p_stock" placeholder="Quantidade em Estoque">
+                <textarea id="p_desc" placeholder="Descrição Detalhada"></textarea>
+                <button onclick="saveNewProduct()">CADASTRAR NO SERVIDOR</button>
+            </div>
+
+            <div class="adm-card">
+                <h3>Editar Textos Institucionais</h3>
+                <textarea id="edit_quem" placeholder="Texto da página Quem Somos"></textarea>
+                <button onclick="saveStaticText('quem_somos')">Salvar Quem Somos</button>
+                <textarea id="edit_suporte" placeholder="Texto da página Suporte"></textarea>
+                <button onclick="saveStaticText('suporte')">Salvar Suporte</button>
+            </div>
+
+            <h3>Gerenciar Produtos Ativos</h3>
+            <div id="adm-product-list">
+                </div>
+        </div>
+    </div>
+
+    <div id="modalDetails" class="modal">
         <div class="modal-body">
-            <span style="float: right; cursor: pointer; font-size: 20px;" onclick="closeModal()">&times;</span>
-            <h2 id="det-title"></h2>
-            <div id="det-desc"></div>
+            <h2 id="modal-title"></h2>
+            <div id="modal-desc" style="max-height: 400px; overflow-y: auto;"></div>
+            <button onclick="closeModal()">FECHAR</button>
         </div>
     </div>
 
-    <a href="https://wa.me/5547988771313" class="wa-chat" target="_blank"><i class="fab fa-whatsapp"></i></a>
+    <div id="zoomLayer" class="zoom-overlay" onclick="this.style.display='none'">
+        <img id="zoomImg" src="" alt="Imagem ampliada">
+    </div>
 
-    <footer>
-        <div class="footer-links">
-            <a onclick="loadStatic('quem_somos')">Quem Somos</a>
-            <a onclick="loadStatic('suporte')">Suporte e Garantia</a>
-            <a href="sorteio.html">Sorteios</a>
-            <a onclick="loginAdmin()">ADM</a>
-        </div>
-        <p>Rio Negrinho Shop 2026</p>
-    </footer>
+    <a href="https://wa.me/5547988771313" class="wa-float" target="_blank" aria-label="Falar no WhatsApp">
+        <i class="fab fa-whatsapp"></i>
+    </a>
 
-    <script type="module">
-        import { initializeApp } from "https://www.gstatic.com/firebasejs/10.7.1/firebase-app.js";
-        import { getDatabase, ref, push, onValue, update, remove, set } from "https://www.gstatic.com/firebasejs/10.7.1/firebase-database.js";
-
-        const firebaseConfig = {
-            apiKey: "AIzaSyCf6_DCNSh4a3IiOtTv5Uf_N8YaxQtBczw",
-            authDomain: "loja-a33e1.firebaseapp.com",
-            databaseURL: "https://loja-a33e1-default-rtdb.firebaseio.com",
-            projectId: "loja-a33e1",
-            storageBucket: "loja-a33e1.firebasestorage.app",
-            messagingSenderId: "304798626706",
-            appId: "1:304798626706:web:23a0672e6a98ae432c474b"
-        };
-
-        const app = initializeApp(firebaseConfig);
-        const db = getDatabase(app);
-        let cart = [];
-        let globalProducts = [];
-
-        window.onload = () => {
-            const saved = JSON.parse(localStorage.getItem('rn_user_data') || '{}');
-            if(saved.nome) {
-                document.getElementById('c_nome').value = saved.nome;
-                document.getElementById('c_cpf').value = saved.cpf;
-                document.getElementById('c_rua').value = saved.rua;
-                document.getElementById('c_bairro').value = saved.bairro;
-            }
-            loadProducts();
-            loadMissingReports();
-        };
-
-        function loadProducts() {
-            onValue(ref(db, 'produtos'), (snapshot) => {
-                const data = snapshot.val();
-                const grid = document.getElementById('product-grid');
-                const admList = document.getElementById('adm-product-list');
-                grid.innerHTML = ''; admList.innerHTML = ''; globalProducts = [];
-                
-                for (let id in data) {
-                    const p = { id, ...data[id] };
-                    globalProducts.push(p);
-                    const isOut = parseInt(p.stock) <= 0;
-                    
-                    grid.innerHTML += `
-                        <div class="box-loja ${isOut ? 'esgotado' : ''}">
-                            <div class="led-frete"><span>🚚 Frete Grátis - Chega amanhã</span></div>
-                            <img src="${p.img}" onclick="openZoom('${p.img}')">
-                            <div class="info">
-                                <div class="p-title">${p.title}</div>
-                                <div class="p-price">R$ ${parseFloat(p.price).toFixed(2)}</div>
-                                <button class="btn-add" onclick="addToCart('${p.id}')">ADICIONAR AO CARRINHO</button>
-                                <button class="btn-details" onclick="openDetails('${p.id}')">DETALHES DO PRODUTO</button>
-                            </div>
-                        </div>`;
-
-                    admList.innerHTML += `
-                        <div class="admin-row">
-                            <img src="${p.img}" style="width:40px">
-                            <input type="text" value="${p.title}" id="edit-t-${p.id}">
-                            <input type="text" value="${p.price}" id="edit-p-${p.id}" style="width:60px">
-                            <input type="number" value="${p.stock}" id="edit-s-${p.id}" style="width:50px">
-                            <button onclick="quickSave('${p.id}')" style="background:green; color:white; border:none;">💾</button>
-                        </div>`;
-                }
-            });
-        }
-
-        window.addToCart = (id) => {
-            const p = globalProducts.find(x => x.id === id);
-            if(parseInt(p.stock) <= 0) return alert("Esgotado!");
-            const exists = cart.find(x => x.id === id);
-            if(exists) exists.qtd++; else cart.push({...p, qtd: 1});
-            updateCartUI();
-        };
-
-        window.updateCartUI = () => {
-            const list = document.getElementById('cart-items-list');
-            let total = 0; let count = 0; list.innerHTML = '';
-            cart.forEach((item, idx) => {
-                total += item.price * item.qtd;
-                count += item.qtd;
-                list.innerHTML += `
-                    <div class="cart-item">
-                        <img src="${item.img}" class="cart-img">
-                        <div style="flex:1; font-size:12px"><b>${item.title}</b><br>R$ ${item.price.toFixed(2)}</div>
-                        <div style="display:flex; gap:5px">
-                            <button onclick="changeQtd(${idx},-1)">-</button>
-                            <span>${item.qtd}</span>
-                            <button onclick="changeQtd(${idx},1)">+</button>
-                        </div>
-                    </div>`;
-            });
-            document.getElementById('cart-total-value').innerText = "R$ " + total.toFixed(2);
-            document.getElementById('badge-total').innerText = count;
-        };
-
-        window.changeQtd = (i, v) => { cart[i].qtd += v; if(cart[i].qtd <= 0) cart.splice(i, 1); updateCartUI(); };
-        window.toggleCart = (s) => document.getElementById('cart-sidebar').classList.toggle('active', s);
-
-        window.finishOrder = () => {
-            const u = {
-                nome: document.getElementById('c_nome').value,
-                cpf: document.getElementById('c_cpf').value,
-                rua: document.getElementById('c_rua').value,
-                bairro: document.getElementById('c_bairro').value,
-                pag: document.getElementById('c_pag').value,
-                troco: document.getElementById('c_troco').value,
-                obs: document.getElementById('c_obs').value
-            };
-            if(!u.nome || cart.length === 0) return alert("Preencha os dados!");
-            localStorage.setItem('rn_user_data', JSON.stringify(u));
-            
-            let msg = `*PEDIDO RIO NEGRINHO SHOP*\nCliente: ${u.nome}\nCPF: ${u.cpf}\nEndereço: ${u.rua}, ${u.bairro}\nPagamento: ${u.pag}\n\n*ITENS:*\n`;
-            let total = 0;
-            cart.forEach(i => {
-                msg += `• ${i.qtd}x ${i.title} - R$ ${(i.price * i.qtd).toFixed(2)}\n`;
-                total += i.price * i.qtd;
-                update(ref(db, 'produtos/' + i.id), { stock: i.stock - i.qtd });
-            });
-            msg += `\n*TOTAL: R$ ${total.toFixed(2)}*\nObs: ${u.obs}`;
-            window.open(`https://wa.me/5547988771313?text=${encodeURIComponent(msg)}`);
-        };
-
-        window.loginAdmin = () => { if(prompt("Senha:") === "848218") { document.getElementById('main-view').style.display='none'; document.getElementById('adm-panel').classList.add('active'); } };
-        window.goHome = () => { document.getElementById('adm-panel').classList.remove('active'); document.getElementById('page-content').classList.remove('active'); document.getElementById('main-view').style.display='block'; };
-        window.saveProduct = () => {
-            const p = { title: document.getElementById('p_title').value, price: parseFloat(document.getElementById('p_price').value), img: document.getElementById('p_img').value, stock: parseInt(document.getElementById('p_stock').value), desc: document.getElementById('p_desc').value };
-            push(ref(db, 'produtos'), p).then(() => {
-                alert("Cadastrado!");
-                // Notificação Simples
-                if(Notification.permission === "granted") new Notification("Rio Negrinho Shop", { body: "Novo produto: " + p.title });
-            });
-        };
-        window.quickSave = (id) => update(ref(db, 'produtos/'+id), { title: document.getElementById('edit-t-'+id).value, price: parseFloat(document.getElementById('edit-p-'+id).value), stock: parseInt(document.getElementById('edit-s-'+id).value) }).then(()=>alert("Salvo!"));
-        window.sendMissing = () => { const v = document.getElementById('missingItem').value; if(v) { push(ref(db, 'vazio'), { item: v, data: new Date().toLocaleString() }); document.getElementById('missingFeedback').style.display='block'; } };
-        function loadMissingReports() { onValue(ref(db, 'vazio'), (s) => { const d = s.val(); const l = document.getElementById('missing-list'); l.innerHTML = ''; for(let k in d) l.innerHTML += `<p>• ${d[k].item} (${d[k].data})</p>`; }); }
-        
-        window.openZoom = (u) => { document.getElementById('zoomImg').src = u; document.getElementById('zoomLayer').style.display = 'flex'; };
-        window.openDetails = (id) => { const p = globalProducts.find(x => x.id === id); document.getElementById('det-title').innerText = p.title; document.getElementById('det-desc').innerText = p.desc; document.getElementById('detailsModal').style.display='block'; };
-        window.closeModal = () => document.getElementById('detailsModal').style.display='none';
-        window.checkMoney = (v) => document.getElementById('c_troco').style.display = v === 'Dinheiro' ? 'block' : 'none';
-        window.search = () => { const q = document.getElementById('searchBar').value.toLowerCase(); document.querySelectorAll('.box-loja').forEach(el => { el.style.display = el.innerText.toLowerCase().includes(q) ? 'flex' : 'none'; }); };
-    </script>
-
-    <script>
-        // Arrastar Carrinho
-        let dragItem = document.getElementById("cart-float");
-        let active = false, currentX, currentY, initialX, initialY, xOffset = 0, yOffset = 0;
-        function dragStart(e) {
-            initialX = (e.type === "touchstart" ? e.touches[0].clientX : e.clientX) - xOffset;
-            initialY = (e.type === "touchstart" ? e.touches[0].clientY : e.clientY) - yOffset;
-            if (e.target === dragItem) active = true;
-        }
-        function dragEnd() { initialX = currentX; initialY = currentY; active = false; }
-        function drag(e) {
-            if (active) {
-                e.preventDefault();
-                currentX = (e.type === "touchmove" ? e.touches[0].clientX : e.clientX) - initialX;
-                currentY = (e.type === "touchmove" ? e.touches[0].clientY : e.clientY) - initialY;
-                xOffset = currentX; yOffset = currentY;
-                dragItem.style.transform = "translate3d(" + currentX + "px, " + currentY + "px, 0)";
-            }
-        }
-        document.addEventListener("touchstart", dragStart, false); document.addEventListener("touchend", dragEnd, false); document.addEventListener("touchmove", drag, false);
-        document.addEventListener("mousedown", dragStart, false); document.addEventListener("mouseup", dragEnd, false); document.addEventListener("mousemove", drag, false);
-        dragItem.addEventListener('click', () => { if(!active) toggleCart(true); });
-    </script>
+    <script type="module" src="script.js"></script>
 </body>
 </html>
