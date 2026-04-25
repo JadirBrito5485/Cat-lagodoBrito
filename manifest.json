@@ -1,0 +1,12 @@
+{
+  "name": "Rio Negrinho Shop",
+  "short_name": "RN Shop",
+  "start_url": "./index.html",
+  "display": "standalone",
+  "background_color": "#1565C0",
+  "theme_color": "#1565C0",
+  "icons": [
+    { "src": "https://via.placeholder.com/192x192/1565C0/ffffff?text=RN", "sizes": "192x192", "type": "image/png" },
+    { "src": "https://via.placeholder.com/512x512/1565C0/ffffff?text=RN", "sizes": "512x512", "type": "image/png" }
+  ]
+}
