@@ -377,8 +377,9 @@ onValue(ref(db,'paginas/suporte'), snap => {
   document.getElementById('pgSupBody').innerHTML = t.replace(/\n/g,'<br/>');
 });
 
-// Filiado por URL
-const urlCode = location.pathname.replace(/\//g,'').trim();
+// Filiado por URL (?ref=1234)
+const urlParams = new URLSearchParams(location.search);
+const urlCode = urlParams.get('ref');
 if(urlCode && /^\d{4}$/.test(urlCode)){
   get(ref(db,'filiados')).then(snap => {
     const d = snap.val();
