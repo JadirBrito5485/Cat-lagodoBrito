@@ -1,0 +1,308 @@
+<!DOCTYPE html>
+<html lang="pt-BR">
+<head>
+<meta charset="UTF-8"/>
+<meta name="viewport" content="width=device-width, initial-scale=1.0"/>
+<title>Painel ADM - Rio Negrinho Shop</title>
+<link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700;800&display=swap" rel="stylesheet"/>
+<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.0/css/all.min.css"/>
+<style>
+*{margin:0;padding:0;box-sizing:border-box}
+:root{--blue:#1565C0;--blue2:#1976D2;--gray:#F4F6FB;--white:#fff;--red:#E53935;--green:#43A047;--shadow:0 4px 24px rgba(21,101,192,.12)}
+body{font-family:'Inter',sans-serif;background:var(--gray);color:#0D1B2A}
+/* LOGIN */
+.login-wrap{min-height:100vh;display:flex;align-items:center;justify-content:center;background:linear-gradient(135deg,var(--blue) 0%,#0D47A1 100%)}
+.login-box{background:var(--white);border-radius:24px;padding:40px 36px;width:min(360px,90vw);text-align:center;box-shadow:0 20px 60px rgba(0,0,0,.2)}
+.login-box .logo{font-size:40px;margin-bottom:12px}
+.login-box h2{font-size:22px;font-weight:800;color:var(--blue);margin-bottom:6px}
+.login-box p{font-size:13px;color:#888;margin-bottom:24px}
+.login-box input{width:100%;padding:13px 16px;border:1.5px solid #e0e8f5;border-radius:12px;font-size:15px;font-family:'Inter',sans-serif;outline:none;margin-bottom:14px;text-align:center;letter-spacing:4px}
+.login-box input:focus{border-color:var(--blue)}
+.btn-login{width:100%;background:linear-gradient(135deg,var(--blue),var(--blue2));color:var(--white);border:none;border-radius:12px;padding:14px;font-size:15px;font-weight:700;cursor:pointer;font-family:'Inter',sans-serif}
+.login-error{color:var(--red);font-size:13px;margin-top:8px;display:none}
+/* ADM LAYOUT */
+.adm-wrap{display:none}
+.adm-header{background:linear-gradient(135deg,var(--blue),var(--blue2));color:var(--white);padding:16px 24px;display:flex;align-items:center;justify-content:space-between}
+.adm-header h1{font-size:20px;font-weight:800;display:flex;align-items:center;gap:10px}
+.btn-logout{background:rgba(255,255,255,.2);color:var(--white);border:none;border-radius:10px;padding:8px 16px;cursor:pointer;font-size:13px;font-family:'Inter',sans-serif;display:flex;align-items:center;gap:6px}
+.adm-body{display:grid;grid-template-columns:1fr 1.5fr;gap:20px;padding:20px;max-width:1400px;margin:0 auto}
+@media(max-width:900px){.adm-body{grid-template-columns:1fr}}
+/* CARDS */
+.adm-card{background:var(--white);border-radius:20px;padding:24px;box-shadow:var(--shadow)}
+.adm-card h2{font-size:17px;font-weight:700;color:var(--blue);margin-bottom:18px;display:flex;align-items:center;gap:8px}
+.form-group{margin-bottom:14px}
+.form-group label{font-size:11px;font-weight:600;color:#888;display:block;margin-bottom:5px;text-transform:uppercase;letter-spacing:.5px}
+.form-group input,.form-group textarea{width:100%;padding:11px 14px;border:1.5px solid #e0e8f5;border-radius:10px;font-size:13px;font-family:'Inter',sans-serif;outline:none;transition:.3s}
+.form-group input:focus,.form-group textarea:focus{border-color:var(--blue)}
+.form-group textarea{min-height:80px;resize:vertical}
+.btn-primary{background:linear-gradient(135deg,var(--blue),var(--blue2));color:var(--white);border:none;border-radius:10px;padding:12px 20px;font-size:14px;font-weight:700;cursor:pointer;font-family:'Inter',sans-serif;display:flex;align-items:center;gap:6px;width:100%;justify-content:center}
+.btn-primary:hover{opacity:.9}
+/* PRODUCT LIST */
+.prod-list{margin-top:8px}
+.prod-item{background:var(--gray);border-radius:14px;padding:12px 14px;margin-bottom:10px;display:flex;gap:12px;align-items:flex-start}
+.prod-item img{width:64px;height:64px;object-fit:cover;border-radius:10px;flex-shrink:0;border:2px solid #e0e8f5}
+.prod-item-info{flex:1;min-width:0}
+.prod-item-name{font-size:14px;font-weight:700;margin-bottom:6px;white-space:nowrap;overflow:hidden;text-overflow:ellipsis}
+.quick-edit-row{display:grid;grid-template-columns:1fr 1fr;gap:6px;margin-bottom:6px}
+.quick-edit-row input{padding:6px 10px;border:1.5px solid #e0e8f5;border-radius:8px;font-size:12px;font-family:'Inter',sans-serif;outline:none;transition:.3s}
+.quick-edit-row input:focus{border-color:var(--blue)}
+.quick-edit-full{width:100%;padding:6px 10px;border:1.5px solid #e0e8f5;border-radius:8px;font-size:12px;font-family:'Inter',sans-serif;outline:none;transition:.3s;margin-bottom:6px}
+.quick-edit-full:focus{border-color:var(--blue)}
+.prod-item-actions{display:flex;gap:6px;flex-wrap:wrap}
+.btn-save-quick{background:var(--green);color:var(--white);border:none;border-radius:8px;padding:6px 14px;font-size:12px;font-weight:600;cursor:pointer;display:flex;align-items:center;gap:4px}
+.btn-delete{background:var(--red);color:var(--white);border:none;border-radius:8px;padding:6px 10px;font-size:12px;cursor:pointer}
+/* ALERTS */
+.adm-alert{background:#fff3e0;border-left:4px solid #FF9800;border-radius:10px;padding:12px 16px;margin-bottom:10px;font-size:13px}
+.adm-alert strong{display:block;font-weight:700;color:#E65100;margin-bottom:2px}
+/* TABS */
+.adm-tabs{display:flex;gap:6px;margin-bottom:18px;flex-wrap:wrap}
+.tab-btn{background:var(--gray);color:#555;border:none;border-radius:10px;padding:9px 16px;font-size:13px;font-weight:600;cursor:pointer;font-family:'Inter',sans-serif;transition:.2s}
+.tab-btn.active{background:var(--blue);color:var(--white)}
+.tab-content{display:none}
+.tab-content.active{display:block}
+/* PAGES SECTION */
+.pages-wrap{padding:20px;max-width:800px;margin:0 auto}
+</style>
+</head>
+<body>
+
+<!-- LOGIN -->
+<div class="login-wrap" id="loginWrap">
+  <div class="login-box">
+    <div class="logo">🛍️</div>
+    <h2>Rio Negrinho Shop</h2>
+    <p>Painel Administrativo</p>
+    <input type="password" id="passInput" placeholder="••••••" onkeydown="if(event.key==='Enter')doLogin()"/>
+    <button class="btn-login" onclick="doLogin()">Entrar no Painel</button>
+    <p class="login-error" id="loginError">Senha incorreta!</p>
+  </div>
+</div>
+
+<!-- ADM PANEL -->
+<div class="adm-wrap" id="admWrap">
+  <div class="adm-header">
+    <h1><i class="fas fa-store"></i> Painel ADM</h1>
+    <button class="btn-logout" onclick="doLogout()"><i class="fas fa-sign-out-alt"></i> Sair</button>
+  </div>
+
+  <div class="adm-body">
+    <!-- LEFT: FORM + PAGES -->
+    <div>
+      <!-- TABS -->
+      <div style="background:var(--white);border-radius:20px;padding:20px;box-shadow:var(--shadow);margin-bottom:20px">
+        <div class="adm-tabs">
+          <button class="tab-btn active" onclick="switchTab('tabProd')">📦 Cadastrar Produto</button>
+          <button class="tab-btn" onclick="switchTab('tabQuem')">🏢 Quem Somos</button>
+          <button class="tab-btn" onclick="switchTab('tabSup')">🛡️ Suporte</button>
+          <button class="tab-btn" onclick="switchTab('tabAlerts')">🔔 Avisos</button>
+        </div>
+
+        <!-- TAB PRODUTO -->
+        <div class="tab-content active" id="tabProd">
+          <div class="form-group"><label>Título do Produto</label><input type="text" id="pTitulo" placeholder="Ex: Tênis Esportivo Nike"/></div>
+          <div class="form-group"><label>Imagem (URL)</label><input type="text" id="pImagem" placeholder="https://..."/></div>
+          <div class="form-group"><label>Descrição</label><textarea id="pDescricao" placeholder="Descreva o produto..."></textarea></div>
+          <div class="form-group"><label>Preço (R$)</label><input type="number" id="pPreco" placeholder="0.00" step="0.01"/></div>
+          <div class="form-group"><label>Estoque</label><input type="number" id="pEstoque" placeholder="Quantidade em estoque"/></div>
+          <button class="btn-primary" onclick="cadastrarProduto()"><i class="fas fa-plus"></i> Cadastrar Produto</button>
+          <p id="prodMsg" style="margin-top:10px;font-size:13px;color:var(--green);display:none">✅ Produto cadastrado!</p>
+        </div>
+
+        <!-- TAB QUEM SOMOS -->
+        <div class="tab-content" id="tabQuem">
+          <div class="form-group">
+            <label>Texto - Quem Somos</label>
+            <textarea id="textQuem" style="min-height:200px" placeholder="Escreva sobre sua loja..."></textarea>
+          </div>
+          <button class="btn-primary" onclick="savePageText('quemSomos','textQuem')"><i class="fas fa-save"></i> Salvar Quem Somos</button>
+          <p id="quemMsg" style="margin-top:10px;font-size:13px;color:var(--green);display:none">✅ Salvo!</p>
+        </div>
+
+        <!-- TAB SUPORTE -->
+        <div class="tab-content" id="tabSup">
+          <div class="form-group">
+            <label>Texto - Suporte e Garantia</label>
+            <textarea id="textSup" style="min-height:200px" placeholder="Descreva seu suporte e garantia..."></textarea>
+          </div>
+          <button class="btn-primary" onclick="savePageText('suporte','textSup')"><i class="fas fa-save"></i> Salvar Suporte</button>
+          <p id="supMsg" style="margin-top:10px;font-size:13px;color:var(--green);display:none">✅ Salvo!</p>
+        </div>
+
+        <!-- TAB AVISOS -->
+        <div class="tab-content" id="tabAlerts">
+          <h3 style="font-size:15px;font-weight:700;color:var(--blue);margin-bottom:12px">📦 Produtos não encontrados pelos clientes</h3>
+          <div id="alertsList"><p style="color:#aaa;font-size:13px">Carregando...</p></div>
+        </div>
+      </div>
+    </div>
+
+    <!-- RIGHT: PRODUCT LIST -->
+    <div class="adm-card">
+      <h2><i class="fas fa-boxes"></i> Produtos Cadastrados</h2>
+      <div class="prod-list" id="prodList">
+        <p style="color:#aaa;text-align:center;padding:20px">Carregando...</p>
+      </div>
+    </div>
+  </div>
+</div>
+
+<script type="module">
+import { initializeApp } from "https://www.gstatic.com/firebasejs/10.12.0/firebase-app.js";
+import { getDatabase, ref, push, set, get, remove, onValue } from "https://www.gstatic.com/firebasejs/10.12.0/firebase-database.js";
+
+const firebaseConfig = {
+  apiKey: "AIzaSyCf6_DCNSh4a3IiOtTv5Uf_N8YaxQtBczw",
+  authDomain: "loja-a33e1.firebaseapp.com",
+  databaseURL: "https://loja-a33e1-default-rtdb.firebaseio.com",
+  projectId: "loja-a33e1",
+  storageBucket: "loja-a33e1.firebasestorage.app",
+  messagingSenderId: "304798626706",
+  appId: "1:304798626706:web:23a0672e6a98ae432c474b"
+};
+
+const app = initializeApp(firebaseConfig);
+const db = getDatabase(app);
+
+// ---- LOGIN ----
+window.doLogin = function() {
+  const pass = document.getElementById('passInput').value;
+  if(pass === '848218') {
+    document.getElementById('loginWrap').style.display = 'none';
+    document.getElementById('admWrap').style.display = 'block';
+    loadAll();
+  } else {
+    document.getElementById('loginError').style.display = 'block';
+  }
+};
+window.doLogout = function() {
+  location.reload();
+};
+
+function loadAll() {
+  loadProducts();
+  loadPageTexts();
+  loadAlerts();
+}
+
+// ---- PRODUCTS ----
+function loadProducts() {
+  const prodRef = ref(db, 'produtos');
+  onValue(prodRef, (snap) => {
+    const data = snap.val();
+    const list = document.getElementById('prodList');
+    if(!data) { list.innerHTML = '<p style="color:#aaa;text-align:center;padding:20px">Nenhum produto cadastrado.</p>'; return; }
+    const items = Object.entries(data);
+    list.innerHTML = items.map(([id, p]) => `
+      <div class="prod-item" id="item_${id}">
+        <img src="${p.img||'https://via.placeholder.com/64'}" alt="${p.title||''}"/>
+        <div class="prod-item-info">
+          <p class="prod-item-name">${p.title||'Sem título'}</p>
+          <div class="quick-edit-row">
+            <input type="text" value="${p.title||''}" placeholder="Título" id="et_${id}"/>
+            <input type="number" value="${p.price||0}" placeholder="Preço" id="ep_${id}" step="0.01"/>
+          </div>
+          <div class="quick-edit-row">
+            <input type="number" value="${p.stock||0}" placeholder="Estoque" id="ee_${id}"/>
+            <input type="text" value="${p.img||''}" placeholder="URL Imagem" id="ei_${id}"/>
+          </div>
+          <input class="quick-edit-full" type="text" value="${(p.desc||'').replace(/'/g,'&#39;')}" placeholder="Descrição" id="ed_${id}"/>
+          <div class="prod-item-actions">
+            <button class="btn-save-quick" onclick="saveQuick('${id}')"><i class="fas fa-save"></i> Salvar</button>
+            <button class="btn-delete" onclick="deleteProd('${id}')"><i class="fas fa-trash"></i></button>
+          </div>
+        </div>
+      </div>
+    `).join('');
+  });
+}
+
+window.saveQuick = function(id) {
+  const title = document.getElementById('et_'+id).value;
+  const price = document.getElementById('ep_'+id).value;
+  const stock = document.getElementById('ee_'+id).value;
+  const img = document.getElementById('ei_'+id).value;
+  const desc = document.getElementById('ed_'+id) ? document.getElementById('ed_'+id).value : '';
+    set(ref(db, 'produtos/'+id), { title, price: parseFloat(price), stock: parseInt(stock), img, desc })
+    .then(() => showToastAdm('✅ Salvo!'))
+    .catch(e => showToastAdm('❌ Erro: '+e.message));
+};
+
+window.deleteProd = function(id) {
+  if(!confirm('Excluir este produto?')) return;
+  remove(ref(db, 'produtos/'+id)).then(() => showToastAdm('🗑️ Produto excluído!'));
+};
+
+window.cadastrarProduto = function() {
+  const title = document.getElementById('pTitulo').value.trim();
+  const img = document.getElementById('pImagem').value.trim();
+  const desc = document.getElementById('pDescricao').value.trim();
+  const price = parseFloat(document.getElementById('pPreco').value) || 0;
+  const stock = parseInt(document.getElementById('pEstoque').value) || 0;
+  if(!title) { showToastAdm('⚠️ Informe o título!'); return; }
+  push(ref(db, 'produtos'), { title, img, desc, price, stock, criadoEm: Date.now() })
+    .then(() => {
+      document.getElementById('pTitulo').value='';
+      document.getElementById('pImagem').value='';
+      document.getElementById('pDescricao').value='';
+      document.getElementById('pPreco').value='';
+      document.getElementById('pEstoque').value='';
+      const msg = document.getElementById('prodMsg');
+      msg.style.display='block';
+      setTimeout(()=>msg.style.display='none',3000);
+    }).catch(e => showToastAdm('❌ '+e.message));
+};
+
+// ---- PAGE TEXTS ----
+function loadPageTexts() {
+  get(ref(db, 'paginas/quemSomos')).then(s => {
+    if(s.val()) document.getElementById('textQuem').value = s.val();
+  });
+  get(ref(db, 'paginas/suporte')).then(s => {
+    if(s.val()) document.getElementById('textSup').value = s.val();
+  });
+}
+
+window.savePageText = function(key, inputId) {
+  const text = document.getElementById(inputId).value;
+  set(ref(db, 'paginas/'+key), text).then(() => {
+    const msgId = key === 'quemSomos' ? 'quemMsg' : 'supMsg';
+    const el = document.getElementById(msgId);
+    el.style.display='block';
+    setTimeout(()=>el.style.display='none',3000);
+  });
+};
+
+// ---- ALERTS (not found products) ----
+function loadAlerts() {
+  onValue(ref(db, 'nao_encontrados'), (snap) => {
+    const data = snap.val();
+    const container = document.getElementById('alertsList');
+    if(!data) { container.innerHTML='<p style="color:#aaa;font-size:13px">Nenhum aviso ainda.</p>'; return; }
+    const items = Object.entries(data).reverse();
+    container.innerHTML = items.map(([id, v]) => `
+      <div class="adm-alert">
+        <strong>🔍 ${v.produto||'Produto não identificado'}</strong>
+        <span style="font-size:11px;color:#999">${v.data ? new Date(v.data).toLocaleString('pt-BR') : ''}</span>
+      </div>
+    `).join('');
+  });
+}
+
+// ---- TABS ----
+window.switchTab = function(tabId) {
+  document.querySelectorAll('.tab-content').forEach(t => t.classList.remove('active'));
+  document.querySelectorAll('.tab-btn').forEach(b => b.classList.remove('active'));
+  document.getElementById(tabId).classList.add('active');
+  event.currentTarget.classList.add('active');
+};
+
+// ---- TOAST ----
+window.showToastAdm = function(msg) {
+  let t = document.getElementById('toastAdm');
+  if(!t){ t=document.createElement('div'); t.id='toastAdm'; t.style.cssText='position:fixed;bottom:30px;left:50%;transform:translateX(-50%);background:#1565C0;color:#fff;padding:12px 24px;border-radius:25px;font-size:14px;font-weight:600;z-index:9999;font-family:Inter,sans-serif'; document.body.appendChild(t); }
+  t.textContent=msg; t.style.display='block';
+  setTimeout(()=>t.style.display='none',2800);
+};
+</script>
+</body>
+</html>
