@@ -4,35 +4,210 @@
 <meta charset="UTF-8"/>
 <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
 <title>Sorteios - Rio Negrinho Shop</title>
-<link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700;800&display=swap" rel="stylesheet"/>
+<link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700;800;900&display=swap" rel="stylesheet"/>
 <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.0/css/all.min.css"/>
 <style>
 *{margin:0;padding:0;box-sizing:border-box}
-body{font-family:'Inter',sans-serif;background:#F4F6FB;color:#0D1B2A;min-height:100vh}
-header{background:linear-gradient(135deg,#1565C0,#1976D2);padding:16px 20px;display:flex;align-items:center;gap:14px;box-shadow:0 2px 20px rgba(0,0,0,.15)}
-.back-btn{background:rgba(255,255,255,.2);border:none;color:#fff;border-radius:50%;width:40px;height:40px;display:flex;align-items:center;justify-content:center;cursor:pointer;font-size:18px;text-decoration:none}
-header h1{color:#fff;font-size:20px;font-weight:800}
-.content{padding:30px 20px;max-width:800px;margin:0 auto;text-align:center}
-.content h2{font-size:26px;font-weight:800;color:#1565C0;margin-bottom:10px}
-.content p{color:#777;font-size:15px;margin-bottom:30px}
-.placeholder{background:#fff;border-radius:20px;padding:60px 30px;box-shadow:0 4px 24px rgba(21,101,192,.1)}
-.placeholder i{font-size:64px;color:#1565C0;margin-bottom:16px;display:block}
-.placeholder p{color:#555;font-size:15px;line-height:1.8}
+:root{--primary:#1a1a2e;--accent:#e94560;--accent2:#f5a623;--blue:#0f3460;--white:#fff;--gray:#f7f8fc;--gray2:#eef0f7;--green:#22c55e;--shadow:0 4px 24px rgba(26,26,46,.10);--radius:16px}
+body{font-family:'Inter',sans-serif;background:var(--gray);color:var(--primary);min-height:100vh}
+
+/* HEADER */
+header{background:linear-gradient(135deg,var(--primary),var(--blue));padding:14px 20px;display:flex;align-items:center;gap:14px;position:sticky;top:0;z-index:100;box-shadow:0 2px 20px rgba(0,0,0,.3)}
+.back-btn{background:rgba(255,255,255,.15);border:none;color:#fff;border-radius:50%;width:40px;height:40px;font-size:18px;cursor:pointer;display:flex;align-items:center;justify-content:center;text-decoration:none}
+.hd-logo{font-size:clamp(16px,4vw,20px);font-weight:900;color:#fff;text-decoration:none;letter-spacing:-.3px}
+.hd-logo span{color:var(--accent)}
+
+/* HERO */
+.sort-hero{background:linear-gradient(135deg,var(--primary),var(--blue));color:#fff;text-align:center;padding:28px 20px 20px;position:relative;overflow:hidden}
+.sort-hero::before{content:'🎁';font-size:80px;position:absolute;opacity:.07;top:-10px;right:-10px}
+.sort-hero h1{font-size:clamp(22px,5vw,36px);font-weight:900;margin-bottom:6px}
+.sort-hero h1 span{color:var(--accent2)}
+.sort-hero p{font-size:14px;opacity:.7}
+
+/* LOADING */
+.loading{text-align:center;padding:60px;color:#aaa}
+.loading i{font-size:40px;animation:spin 1s linear infinite;color:var(--accent)}
+@keyframes spin{to{transform:rotate(360deg)}}
+
+/* SORTEIO CARD */
+.sort-wrap{max-width:700px;margin:0 auto;padding:20px 14px}
+.sort-card{background:var(--white);border-radius:var(--radius);box-shadow:var(--shadow);overflow:hidden;margin-bottom:20px}
+.sort-card-img{width:100%;max-height:300px;object-fit:cover;display:block}
+.sort-card-body{padding:22px}
+.sort-badge{display:inline-flex;align-items:center;gap:6px;background:#e8faf0;color:#15803d;border-radius:50px;padding:5px 14px;font-size:12px;font-weight:700;margin-bottom:12px}
+.sort-badge.enc{background:#fff0f3;color:var(--accent)}
+.sort-title{font-size:22px;font-weight:900;color:var(--primary);margin-bottom:6px}
+.sort-date{font-size:13px;color:#aaa;margin-bottom:12px;display:flex;align-items:center;gap:6px}
+.sort-desc{font-size:14px;line-height:1.85;color:#555;white-space:pre-wrap;margin-bottom:20px}
+
+/* FORM */
+.form-card{background:var(--white);border-radius:var(--radius);box-shadow:var(--shadow);padding:24px;margin-bottom:20px}
+.form-card h2{font-size:18px;font-weight:900;color:var(--primary);margin-bottom:6px;display:flex;align-items:center;gap:8px}
+.form-card p{font-size:13px;color:#aaa;margin-bottom:18px}
+.ff{margin-bottom:12px}
+.ff label{font-size:11px;font-weight:700;color:#aaa;display:block;margin-bottom:4px;text-transform:uppercase;letter-spacing:.5px}
+.ff input{width:100%;padding:12px 14px;border:1.5px solid var(--gray2);border-radius:10px;font-size:14px;font-family:'Inter',sans-serif;outline:none;transition:.3s;background:var(--gray)}
+.ff input:focus{border-color:var(--accent);background:#fff}
+.ff input.err{border-color:var(--accent);background:#fff8f8}
+.ff-row{display:grid;grid-template-columns:1fr 1fr;gap:10px}
+@media(max-width:460px){.ff-row{grid-template-columns:1fr}}
+.btn-part{width:100%;background:linear-gradient(135deg,var(--accent),#c73652);color:#fff;border:none;border-radius:12px;padding:15px;font-size:16px;font-weight:800;cursor:pointer;font-family:'Inter',sans-serif;display:flex;align-items:center;justify-content:center;gap:8px;transition:.2s;margin-top:6px}
+.btn-part:hover{transform:scale(1.02);box-shadow:0 6px 20px rgba(233,69,96,.35)}
+.btn-part:disabled{background:#ccc;cursor:not-allowed;transform:none;box-shadow:none}
+.success-box{background:linear-gradient(135deg,#e8faf0,#dcfce7);border:1.5px solid #86efac;border-radius:var(--radius);padding:28px;text-align:center;display:none}
+.success-box i{font-size:52px;color:var(--green);margin-bottom:12px;display:block}
+.success-box h3{font-size:20px;font-weight:800;color:#15803d;margin-bottom:6px}
+.success-box p{font-size:14px;color:#166534}
+
+/* EMPTY */
+.empty{text-align:center;padding:60px 20px;color:#aaa}
+.empty i{font-size:50px;margin-bottom:14px;display:block;opacity:.3}
+
+/* TOAST */
+.toast{position:fixed;bottom:24px;left:50%;transform:translateX(-50%) translateY(16px);background:var(--primary);color:#fff;padding:12px 26px;border-radius:50px;font-size:13px;font-weight:600;z-index:9000;opacity:0;transition:.3s;pointer-events:none;box-shadow:0 4px 20px rgba(0,0,0,.3)}
+.toast.show{opacity:1;transform:translateX(-50%) translateY(0)}
 </style>
 </head>
 <body>
+
 <header>
-  <a class="back-btn" href="index.html"><i class="fas fa-arrow-left"></i></a>
-  <h1>🎰 Sorteios</h1>
+  <a href="index.html" class="back-btn"><i class="fas fa-arrow-left"></i></a>
+  <a href="index.html" class="hd-logo">RIO NEGRINHO<span>.</span>SHOP</a>
 </header>
-<div class="content">
-  <div class="placeholder">
-    <i class="fas fa-ticket-alt"></i>
-    <h2>Sorteios Rio Negrinho Shop</h2>
-    <p>Esta página está pronta para você inserir o conteúdo do sorteio.<br/>Substitua este conteúdo pelo código HTML do seu sorteio.</p>
-    <br/>
-    <p style="font-size:13px;color:#aaa">Cole o código do sorteio aqui — a página já está vinculada à loja.</p>
+
+<div class="sort-hero">
+  <h1>🎁 <span>Sorteios</span></h1>
+  <p>Participe e concorra a prêmios incríveis!</p>
+</div>
+
+<div class="sort-wrap">
+  <div id="loadingSort" class="loading"><i class="fas fa-circle-notch"></i><br/><br/>Carregando sorteios...</div>
+  <div id="sortContent" style="display:none"></div>
+  <div id="emptySort" class="empty" style="display:none">
+    <i class="fas fa-gift"></i>
+    <p>Nenhum sorteio ativo no momento.<br/>Fique de olho, novidades chegam em breve!</p>
   </div>
 </div>
+
+<div class="toast" id="toast"></div>
+
+<script type="module">
+import { initializeApp } from "https://www.gstatic.com/firebasejs/10.12.0/firebase-app.js";
+import { getDatabase, ref, onValue, push } from "https://www.gstatic.com/firebasejs/10.12.0/firebase-database.js";
+
+const cfg = {
+  apiKey:"AIzaSyCf6_DCNSh4a3IiOtTv5Uf_N8YaxQtBczw",
+  authDomain:"loja-a33e1.firebaseapp.com",
+  databaseURL:"https://loja-a33e1-default-rtdb.firebaseio.com",
+  projectId:"loja-a33e1",
+  storageBucket:"loja-a33e1.firebasestorage.app",
+  messagingSenderId:"304798626706",
+  appId:"1:304798626706:web:23a0672e6a98ae432c474b"
+};
+const app = initializeApp(cfg);
+const db = getDatabase(app);
+
+let sorteiosData = {};
+
+onValue(ref(db,'sorteios'), snap => {
+  document.getElementById('loadingSort').style.display='none';
+  const d = snap.val();
+  sorteiosData = d||{};
+  const ativos = d ? Object.entries(d).filter(([,s])=>s.status==='ativo') : [];
+
+  if(ativos.length===0){
+    document.getElementById('emptySort').style.display='block';
+    return;
+  }
+
+  document.getElementById('sortContent').style.display='block';
+  document.getElementById('sortContent').innerHTML = ativos.map(([id,s])=>`
+    <div class="sort-card">
+      ${s.imagem?`<img src="${esc(s.imagem)}" alt="${esc(s.titulo||'')}" class="sort-card-img"/>`:''}
+      <div class="sort-card-body">
+        <span class="sort-badge"><i class="fas fa-circle"></i> Sorteio Ativo</span>
+        <h2 class="sort-title">${esc(s.titulo||'Sorteio')}</h2>
+        ${s.data?`<p class="sort-date"><i class="fas fa-calendar-alt"></i> Data: ${formatData(s.data)}</p>`:''}
+        ${s.descricao?`<p class="sort-desc">${esc(s.descricao)}</p>`:''}
+      </div>
+    </div>
+
+    <div class="form-card" id="form_${id}">
+      <h2><i class="fas fa-user-plus" style="color:var(--accent)"></i> Participar do Sorteio</h2>
+      <p>Preencha todos os campos para garantir sua participação!</p>
+
+      <div class="ff-row">
+        <div class="ff"><label>Nome *</label><input type="text" id="f_nome_${id}" placeholder="Seu nome"/></div>
+        <div class="ff"><label>Sobrenome *</label><input type="text" id="f_sob_${id}" placeholder="Sobrenome"/></div>
+      </div>
+      <div class="ff-row">
+        <div class="ff"><label>CPF *</label><input type="text" id="f_cpf_${id}" placeholder="000.000.000-00" oninput="maskCpf(this)" maxlength="14"/></div>
+        <div class="ff"><label>WhatsApp *</label><input type="text" id="f_wa_${id}" placeholder="(47) 9xxxx-xxxx" oninput="maskWa(this)" maxlength="15"/></div>
+      </div>
+      <div class="ff"><label>E-mail *</label><input type="email" id="f_email_${id}" placeholder="seu@email.com"/></div>
+      <div class="ff"><label>Bairro *</label><input type="text" id="f_bairro_${id}" placeholder="Seu bairro"/></div>
+      <div class="ff"><label>📱 WhatsApp de um Amigo *</label><input type="text" id="f_amigo_${id}" placeholder="Indique um amigo! (47) 9xxxx-xxxx" oninput="maskWa(this)" maxlength="15"/></div>
+
+      <button class="btn-part" id="btn_${id}" onclick="participar('${id}')">
+        <i class="fas fa-ticket-alt"></i> Quero Participar!
+      </button>
+    </div>
+
+    <div class="success-box" id="ok_${id}">
+      <i class="fas fa-check-circle"></i>
+      <h3>Participação Confirmada! 🎉</h3>
+      <p>Você está concorrendo ao sorteio <strong>${esc(s.titulo||'')}</strong>.<br/>Boa sorte! 🍀</p>
+    </div>
+  `).join('');
+});
+
+window.participar = function(sortId){
+  const get = id => document.getElementById(id+'_'+sortId);
+  const nome = get('f_nome').value.trim();
+  const sob = get('f_sob').value.trim();
+  const cpf = get('f_cpf').value.trim();
+  const wa = get('f_wa').value.trim();
+  const email = get('f_email').value.trim();
+  const bairro = get('f_bairro').value.trim();
+  const amigo = get('f_amigo').value.trim();
+
+  // Validar todos
+  const campos = [{v:nome,id:`f_nome_${sortId}`},{v:sob,id:`f_sob_${sortId}`},{v:cpf,id:`f_cpf_${sortId}`},{v:wa,id:`f_wa_${sortId}`},{v:email,id:`f_email_${sortId}`},{v:bairro,id:`f_bairro_${sortId}`},{v:amigo,id:`f_amigo_${sortId}`}];
+  let ok=true;
+  campos.forEach(c=>{
+    const el=document.getElementById(c.id);
+    if(!c.v){el.classList.add('err');ok=false;}else{el.classList.remove('err');}
+  });
+  if(!ok){toast('⚠️ Preencha todos os campos obrigatórios!');return;}
+  if(!email.includes('@')){document.getElementById(`f_email_${sortId}`).classList.add('err');toast('⚠️ E-mail inválido!');return;}
+
+  const btn = document.getElementById('btn_'+sortId);
+  btn.disabled=true; btn.innerHTML='<i class="fas fa-circle-notch fa-spin"></i> Enviando...';
+
+  push(ref(db,'participantes/'+sortId),{
+    nome,sobrenome:sob,cpf,whatsapp:wa,email,bairro,amigoWa:amigo,
+    data:new Date().toISOString()
+  }).then(()=>{
+    document.getElementById('form_'+sortId).style.display='none';
+    document.getElementById('ok_'+sortId).style.display='block';
+  }).catch(e=>{
+    toast('❌ Erro: '+e.message);
+    btn.disabled=false;btn.innerHTML='<i class="fas fa-ticket-alt"></i> Quero Participar!';
+  });
+};
+
+function formatData(d){
+  if(!d)return'';
+  const [y,m,dia]=d.split('-');
+  return `${dia}/${m}/${y}`;
+}
+
+function esc(s){return String(s||'').replace(/&/g,'&amp;').replace(/</g,'&lt;').replace(/>/g,'&gt;').replace(/"/g,'&quot;').replace(/'/g,'&#39;');}
+
+window.maskCpf=function(el){let v=el.value.replace(/\D/g,'');v=v.replace(/(\d{3})(\d)/,'$1.$2');v=v.replace(/(\d{3})(\d)/,'$1.$2');v=v.replace(/(\d{3})(\d{1,2})$/,'$1-$2');el.value=v;};
+window.maskWa=function(el){let v=el.value.replace(/\D/g,'');if(v.length>10)v=v.replace(/^(\d{2})(\d{5})(\d{4}).*/,'($1) $2-$3');else v=v.replace(/^(\d{2})(\d{4})(\d{0,4}).*/,'($1) $2-$3');el.value=v;};
+
+function toast(msg){const t=document.getElementById('toast');t.textContent=msg;t.classList.add('show');setTimeout(()=>t.classList.remove('show'),3000);}
+</script>
 </body>
 </html>
