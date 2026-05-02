@@ -200,7 +200,7 @@ footer{background:var(--primary);color:#fff;padding:36px 20px 20px;margin-top:40
 <!-- HEADER -->
 <header>
   <div class="header-inner">
-    <a href="#" class="logo"><div class="logo-name">LEVABRASIL<span style="color:var(--accent2)">.</span>SHOP</div></a>
+    <a href="#" class="logo"><div class="logo-name">CATÁLAGO DO BRITO<span style="color:var(--accent2)">.</span>SHOP</div></a>
     <div class="search-wrap"><input type="text" id="searchH" placeholder="🔍 Buscar produtos..." oninput="buscar(this.value)"/></div>
     <button class="cart-icon-btn" id="cartBtn" onclick="openCart()">
       <i class="fas fa-shopping-cart"></i>
@@ -210,7 +210,7 @@ footer{background:var(--primary);color:#fff;padding:36px 20px 20px;margin-top:40
 </header>
 
 <!-- FRETE BANNER -->
-<div class="frete-banner">🚚 FRETE GRÁTIS COMPRA HOJE CHEGA AMANHÃ</div>
+<div class="frete-banner"> COMPRA HOJE CHEGA AMANHÃ SEM TAXA DE ENTREGA</div>
 
 <!-- HERO -->
 <div class="hero">
@@ -242,7 +242,7 @@ footer{background:var(--primary);color:#fff;padding:36px 20px 20px;margin-top:40
 <!-- NOT FOUND -->
 <div class="not-found-box">
   <h3>🔍 Não achou o que procurava?</h3>
-  <p>Nos diga o produto</p>
+  <p> Qual produto você busca ?</p>
   <div class="not-found-row">
     <input type="text" id="nfInput" placeholder="Nome do produto..."/>
     <button onclick="enviarNF()">Enviar</button>
@@ -259,8 +259,8 @@ footer{background:var(--primary);color:#fff;padding:36px 20px 20px;margin-top:40
     </div>
     <div class="fg-col">
       <h4></h4>
-      <a href="#" onclick="abrirPagina('pgQuem');return false">Quem Somos</a>
-      <a href="#" onclick="abrirPagina('pgSup');return false">Suporte e Garantia</a>
+      <a href="#" onclick="abrirPagina('pgQuem');return false"></a>
+      <a href="#" onclick="abrirPagina('pgSup');return false"></a>
       <a href="sorteio.html"></a>
     </div>
     <div class="fg-col">
@@ -323,7 +323,7 @@ footer{background:var(--primary);color:#fff;padding:36px 20px 20px;margin-top:40
     </div>
     <div class="ff" id="trocoBox" style="display:none"><label>Troco para</label><input type="text" id="cTroco" placeholder="Ex: R$ 50,00"/></div>
     <div class="cart-total-row"><span>Total</span><strong id="cartTotal">R$ 0,00</strong></div>
-    <button class="btn-finalizar" onclick="finalizar()"><i class="fab fa-whatsapp"></i> Finalizar pelo WhatsApp</button>
+    <button class="btn-finalizar" onclick="finalizar()"><i class="fab fa-whatsapp"></i> Finalizar Pedido </button>
     <button class="btn-voltar" onclick="closeCart()">← Continuar Comprando</button>
   </div>
 </div>
