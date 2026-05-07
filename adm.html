@@ -1,480 +1,367 @@
 <!DOCTYPE html>
-<html lang="pt-BR">
+<html lang="pt-br">
 <head>
-<meta charset="UTF-8"/>
-<meta name="viewport" content="width=device-width, initial-scale=1.0"/>
-<title>Painel VIP - Rio Negrinho Shop</title>
-<link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700;800;900&display=swap" rel="stylesheet"/>
-<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.0/css/all.min.css"/>
-<style>
-*{margin:0;padding:0;box-sizing:border-box}
-:root{--primary:#1a1a2e;--accent:#e94560;--blue:#0f3460;--white:#fff;--gray:#f7f8fc;--gray2:#eef0f7;--green:#22c55e;--shadow:0 4px 24px rgba(26,26,46,.10)}
-body{font-family:'Inter',sans-serif;background:var(--gray);color:var(--primary)}
-/* LOGIN */
-.login-wrap{min-height:100vh;display:flex;align-items:center;justify-content:center;background:linear-gradient(135deg,var(--primary),var(--blue))}
-.login-box{background:var(--white);border-radius:24px;padding:40px 32px;width:min(360px,92vw);text-align:center;box-shadow:0 20px 60px rgba(0,0,0,.25)}
-.login-logo{font-size:38px;margin-bottom:10px}
-.login-box h2{font-size:21px;font-weight:900;color:var(--primary);margin-bottom:4px}
-.login-box p{font-size:13px;color:#aaa;margin-bottom:22px}
-.login-box input{width:100%;padding:13px 16px;border:1.5px solid var(--gray2);border-radius:12px;font-size:15px;font-family:'Inter',sans-serif;outline:none;margin-bottom:12px;text-align:center;letter-spacing:4px;transition:.3s}
-.login-box input:focus{border-color:var(--accent)}
-.btn-login{width:100%;background:linear-gradient(135deg,var(--accent),#c73652);color:#fff;border:none;border-radius:12px;padding:14px;font-size:15px;font-weight:800;cursor:pointer;font-family:'Inter',sans-serif}
-.login-err{color:var(--accent);font-size:13px;margin-top:8px;display:none}
-/* LAYOUT */
-.adm-wrap{display:none}
-.adm-header{background:linear-gradient(135deg,var(--primary),var(--blue));color:#fff;padding:15px 20px;display:flex;align-items:center;justify-content:space-between;position:sticky;top:0;z-index:100}
-.adm-header h1{font-size:18px;font-weight:900;display:flex;align-items:center;gap:8px}
-.btn-logout{background:rgba(255,255,255,.15);color:#fff;border:none;border-radius:10px;padding:7px 14px;cursor:pointer;font-size:12px;font-family:'Inter',sans-serif;display:flex;align-items:center;gap:5px}
-.adm-content{padding:16px;max-width:1400px;margin:0 auto}
-/* TABS NAV */
-.tabs-nav{display:flex;gap:6px;margin-bottom:18px;overflow-x:auto;scrollbar-width:none;padding-bottom:2px}
-.tabs-nav::-webkit-scrollbar{display:none}
-.tab-btn{background:var(--white);color:#666;border:none;border-radius:10px;padding:10px 16px;font-size:13px;font-weight:600;cursor:pointer;font-family:'Inter',sans-serif;transition:.2s;white-space:nowrap;box-shadow:var(--shadow)}
-.tab-btn.active{background:var(--accent);color:#fff}
-.tab{display:none}
-.tab.active{display:block}
-/* CARD */
-.card{background:var(--white);border-radius:18px;padding:22px;box-shadow:var(--shadow);margin-bottom:18px}
-.card h2{font-size:16px;font-weight:800;color:var(--primary);margin-bottom:16px;display:flex;align-items:center;gap:8px}
-/* FORM */
-.fg{margin-bottom:12px}
-.fg label{font-size:11px;font-weight:700;color:#aaa;display:block;margin-bottom:4px;text-transform:uppercase;letter-spacing:.5px}
-.fg input,.fg textarea,.fg select{width:100%;padding:10px 14px;border:1.5px solid var(--gray2);border-radius:10px;font-size:13px;font-family:'Inter',sans-serif;outline:none;transition:.3s;background:var(--gray)}
-.fg input:focus,.fg textarea:focus{border-color:var(--accent);background:#fff}
-.fg textarea{min-height:80px;resize:vertical}
-.fg-row{display:grid;grid-template-columns:1fr 1fr;gap:10px}
-@media(max-width:500px){.fg-row{grid-template-columns:1fr}}
-.btn-primary{background:linear-gradient(135deg,var(--accent),#c73652);color:#fff;border:none;border-radius:10px;padding:11px 20px;font-size:14px;font-weight:700;cursor:pointer;font-family:'Inter',sans-serif;display:flex;align-items:center;gap:6px;justify-content:center;width:100%;transition:.2s}
-.btn-primary:hover{opacity:.9}
-.btn-green{background:linear-gradient(135deg,var(--green),#16a34a);color:#fff;border:none;border-radius:10px;padding:10px 18px;font-size:13px;font-weight:700;cursor:pointer;font-family:'Inter',sans-serif;display:flex;align-items:center;gap:5px;transition:.2s}
-.btn-red{background:#ef4444;color:#fff;border:none;border-radius:8px;padding:7px 12px;font-size:12px;cursor:pointer;font-family:'Inter',sans-serif}
-.msg-ok{color:var(--green);font-size:13px;font-weight:600;margin-top:8px;display:none}
-/* PRODUCT LIST */
-.prod-grid{display:grid;gap:10px}
-.prod-item{background:var(--gray);border-radius:14px;padding:12px;display:flex;gap:10px;align-items:flex-start}
-.prod-item img{width:60px;height:60px;object-fit:cover;border-radius:10px;flex-shrink:0;border:2px solid var(--gray2)}
-.pi-info{flex:1;min-width:0}
-.pi-name{font-size:13px;font-weight:700;margin-bottom:7px;white-space:nowrap;overflow:hidden;text-overflow:ellipsis}
-.pi-row{display:grid;grid-template-columns:1fr 1fr;gap:6px;margin-bottom:6px}
-.pi-row input,.pi-full{padding:7px 10px;border:1.5px solid var(--gray2);border-radius:8px;font-size:12px;font-family:'Inter',sans-serif;outline:none;transition:.3s;background:#fff;width:100%;margin-bottom:5px}
-.pi-row input:focus,.pi-full:focus{border-color:var(--accent)}
-.pi-actions{display:flex;gap:6px;flex-wrap:wrap}
-/* FILIADOS */
-.fil-item{background:var(--gray);border-radius:12px;padding:12px 14px;margin-bottom:8px;display:flex;align-items:center;justify-content:space-between;gap:10px;flex-wrap:wrap}
-.fil-info{flex:1}
-.fil-info strong{font-size:14px;font-weight:700}
-.fil-info span{display:block;font-size:12px;color:#aaa;margin-top:2px}
-.fil-code{background:var(--accent);color:#fff;border-radius:8px;padding:4px 10px;font-size:13px;font-weight:800;letter-spacing:1px}
-.fil-link{font-size:11px;color:var(--blue);word-break:break-all;margin-top:4px}
-/* SORTEIOS */
-.sort-item{background:var(--gray);border-radius:14px;padding:14px;margin-bottom:10px;display:flex;gap:12px;align-items:flex-start;flex-wrap:wrap}
-.sort-item img{width:70px;height:70px;object-fit:cover;border-radius:10px;flex-shrink:0}
-.sort-info{flex:1;min-width:0}
-.sort-info strong{font-size:14px;font-weight:700;display:block;margin-bottom:3px}
-.sort-info span{font-size:12px;color:#aaa}
-/* VENDAS */
-.venda-item{background:var(--gray);border-radius:12px;padding:12px 14px;margin-bottom:8px}
-.venda-header{display:flex;justify-content:space-between;align-items:center;flex-wrap:wrap;gap:8px;margin-bottom:6px}
-.venda-nome{font-size:14px;font-weight:700}
-.venda-total{font-size:16px;font-weight:900;color:var(--accent)}
-.venda-info{font-size:12px;color:#aaa;margin-bottom:4px}
-.venda-fil{background:#fff3cd;border-radius:6px;padding:3px 8px;font-size:11px;font-weight:600;color:#8a6d00;display:inline-block;margin-top:4px}
-/* ALERTS */
-.alert-item{background:#fff8f0;border-left:3px solid #f5a623;border-radius:8px;padding:10px 14px;margin-bottom:8px}
-.alert-item strong{display:block;font-size:13px;font-weight:700;color:#8a4e00}
-.alert-item span{font-size:11px;color:#aaa}
-/* TOAST */
-.t-toast{position:fixed;bottom:24px;left:50%;transform:translateX(-50%);background:var(--primary);color:#fff;padding:12px 24px;border-radius:50px;font-size:13px;font-weight:600;z-index:9999;display:none;box-shadow:0 4px 20px rgba(0,0,0,.3)}
-</style>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title id="site-title-tag">BRITOTEM.COM</title>
+    
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+    <script src="https://cdn.jsdelivr.net/npm/sweetalert2@11"></script>
+
+    <style>
+        :root { --blue: #0056b3; --dark: #001a35; --white: #ffffff; --gray: #f4f7f6; --led: #ff004c; --green: #2ecc71; }
+        * { margin: 0; padding: 0; box-sizing: border-box; font-family: 'Segoe UI', Tahoma, sans-serif; }
+        body { background: var(--gray); color: #333; overflow-x: hidden; -webkit-user-select: none; user-select: none; }
+
+        /* HEADER */
+        header { background: var(--blue); padding: 15px 5%; display: flex; justify-content: space-between; align-items: center; position: sticky; top: 0; z-index: 1000; box-shadow: 0 4px 10px rgba(0,0,0,0.1); }
+        .logo-box img { max-height: 45px; border-radius: 5px; }
+        .site-name-display { color: white; font-weight: bold; font-size: 1.3rem; letter-spacing: 1px; }
+
+        /* GRADE DE PRODUTOS */
+        .container { padding: 30px 5%; min-height: 80vh; }
+        .grid { display: grid; grid-template-columns: repeat(auto-fill, minmax(180px, 1fr)); gap: 15px; }
+        .card { background: var(--white); border-radius: 12px; overflow: hidden; border: 1px solid #ddd; transition: 0.3s; display: flex; flex-direction: column; position: relative; }
+        .card:hover { transform: translateY(-5px); box-shadow: 0 10px 20px rgba(0,0,0,0.1); }
+        .card img { width: 100%; height: 180px; object-fit: cover; cursor: zoom-in; }
+        
+        .p-body { padding: 12px; flex-grow: 1; }
+        .p-title { font-size: 0.9rem; font-weight: 600; height: 38px; overflow: hidden; }
+        .p-price { color: var(--blue); font-size: 1.3rem; font-weight: 800; margin-top: 5px; }
+        
+        /* LED PISCANTE */
+        .led-shipping { font-size: 0.7rem; font-weight: bold; color: var(--green); margin: 6px 0; animation: blink 1.2s infinite; }
+        @keyframes blink { 0%, 100% { opacity: 1; } 50% { opacity: 0.3; } }
+
+        .btn-detalhe { background: #f0f2f5; border: none; padding: 7px; font-size: 0.75rem; cursor: pointer; border-radius: 5px; width: 100%; margin-top: 5px; font-weight: 600; color: var(--blue); }
+        .btn-add { background: var(--blue); color: white; border: none; padding: 12px; cursor: pointer; font-weight: bold; width: 100%; margin-top: 8px; border-radius: 6px; }
+
+        /* ZOOM OVERLAY */
+        #zoom-overlay { position: fixed; top:0; left:0; width:100%; height:100%; background: rgba(0,0,0,0.9); z-index: 9999; display: none; justify-content: center; align-items: center; cursor: zoom-out; }
+        #zoom-overlay img { max-width: 90%; max-height: 90%; border-radius: 10px; box-shadow: 0 0 30px rgba(255,255,255,0.2); }
+
+        /* ELEMENTOS ARRASTÁVEIS */
+        .draggable { position: fixed; z-index: 5000; cursor: move; display: flex; justify-content: center; align-items: center; box-shadow: 0 5px 15px rgba(0,0,0,0.2); border-radius: 50%; }
+        .wp-float { bottom: 25px; left: 25px; width: 60px; height: 60px; background: #25d366; font-size: 32px; color: white; text-decoration: none; }
+        .cart-float { bottom: 25px; right: 25px; width: 60px; height: 60px; background: var(--blue); font-size: 24px; color: white; }
+        .led-badge { position: absolute; top: -5px; right: -5px; background: var(--led); color: white; padding: 3px 8px; border-radius: 12px; font-size: 0.75rem; font-weight: bold; box-shadow: 0 0 10px var(--led); }
+
+        /* MODAIS */
+        .modal-side { position: fixed; top: 0; right: -100%; width: 100%; max-width: 420px; height: 100%; background: white; z-index: 6000; transition: 0.5s; padding: 25px; overflow-y: auto; box-shadow: -10px 0 30px rgba(0,0,0,0.1); }
+        .modal-side.active { right: 0; }
+        .cart-row { display: flex; gap: 12px; margin-bottom: 15px; border-bottom: 1px solid #eee; padding-bottom: 10px; align-items: center; }
+        .cart-row img { width: 55px; height: 55px; border-radius: 6px; }
+        .p-desc-modern p { margin-bottom: 15px; line-height: 1.6; color: #555; }
+
+        /* PRODUTO NÃO ENCONTRADO */
+        .missing-product-box { background: white; padding: 25px; border-radius: 12px; margin-top: 30px; border: 2px dashed var(--blue); text-align: center; }
+
+        /* PAINEL ADM */
+        #admin-panel { display: none; position: fixed; top: 0; left: 0; width: 100%; height: 100%; background: #f8f9fa; z-index: 8000; padding: 25px; overflow-y: auto; }
+        .adm-card { background: white; padding: 25px; border-radius: 12px; margin-bottom: 20px; box-shadow: 0 2px 8px rgba(0,0,0,0.05); }
+        .quick-edit-grid { display: grid; grid-template-columns: 1fr 0.8fr 0.5fr 1fr 1.5fr auto; gap: 10px; padding: 15px 0; border-bottom: 1px solid #eee; align-items: center; }
+        .label-adm { font-size: 0.7rem; color: var(--blue); font-weight: bold; text-transform: uppercase; margin-bottom: 3px; display: block; }
+        input, textarea { width: 100%; padding: 12px; margin: 5px 0; border: 1px solid #ccc; border-radius: 8px; outline: none; }
+
+        footer { background: var(--dark); color: white; padding: 40px 5%; text-align: center; }
+        .btn-a-adm { float: left; color: rgba(255,255,255,0.05); text-decoration: none; font-size: 11px; font-weight: bold; }
+    </style>
 </head>
-<body>
+<body oncontextmenu="return false;">
 
-<!-- LOGIN -->
-<div class="login-wrap" id="loginWrap">
-  <div class="login-box">
-    <div class="login-logo">⭐</div>
-    <h2>Rio Negrinho Shop</h2>
-    <p>Painel VIP</p>
-    <input type="password" id="passInput" placeholder="••••••" onkeydown="if(event.key==='Enter')doLogin()"/>
-    <button class="btn-login" onclick="doLogin()">Entrar</button>
-    <p class="login-err" id="loginErr">Senha incorreta!</p>
-  </div>
-</div>
+    <header>
+        <div class="logo-box"><img id="v-logo" src="" alt=""></div>
+        <div class="site-name-display" id="v-site-name">BRITOTEM.COM</div>
+    </header>
 
-<!-- PAINEL -->
-<div class="adm-wrap" id="admWrap">
-  <div class="adm-header">
-    <h1>⭐ Painel VIP</h1>
-    <button class="btn-logout" onclick="location.reload()"><i class="fas fa-sign-out-alt"></i> Sair</button>
-  </div>
-  <div class="adm-content">
-    <!-- TABS -->
-    <div class="tabs-nav">
-      <button class="tab-btn active" onclick="switchTab('tProd',this)">📦 Produtos</button>
-      <button class="tab-btn" onclick="switchTab('tFil',this)">🤝 Filiados</button>
-      <button class="tab-btn" onclick="switchTab('tSort',this)">🎁 Sorteios</button>
-      <button class="tab-btn" onclick="switchTab('tVendas',this)">💰 Vendas</button>
-      <button class="tab-btn" onclick="switchTab('tTextos',this)">📝 Textos</button>
-      <button class="tab-btn" onclick="switchTab('tAvisos',this)">🔔 Avisos</button>
+    <div class="container">
+        <div class="grid" id="product-grid"></div>
+
+        <div class="missing-product-box">
+            <h4>Não encontrou o que procurava?</h4>
+            <p style="font-size: 0.9rem; color: #666; margin-bottom: 15px;">Qual produto você gostaria de ver aqui?</p>
+            <input type="text" id="missing-p-name" placeholder="Escreva o nome do produto...">
+            <button class="btn-add" style="max-width: 300px; margin: 10px auto;" onclick="sendMissingProduct()">ENVIAR PEDIDO</button>
+        </div>
     </div>
 
-    <!-- TAB: PRODUTOS -->
-    <div class="tab active" id="tProd">
-      <div style="display:grid;grid-template-columns:1fr 1.6fr;gap:16px" class="prod-layout">
-        <div class="card">
-          <h2><i class="fas fa-plus-circle"></i> Novo Produto</h2>
-          <div class="fg"><label>Título</label><input type="text" id="pTit" placeholder="Nome do produto"/></div>
-          <div class="fg"><label>Imagem (URL)</label><input type="text" id="pImg" placeholder="https://..."/></div>
-          <div class="fg"><label>Descrição</label><textarea id="pDesc" placeholder="Descreva o produto..."></textarea></div>
-          <div class="fg-row">
-            <div class="fg"><label>Preço R$</label><input type="number" id="pPreco" step="0.01" placeholder="0,00"/></div>
-            <div class="fg"><label>Estoque</label><input type="number" id="pEst" placeholder="Qtd"/></div>
-          </div>
-          <button class="btn-primary" onclick="cadProd()"><i class="fas fa-plus"></i> Cadastrar</button>
-          <p class="msg-ok" id="mProd">✅ Produto cadastrado!</p>
-        </div>
-        <div class="card">
-          <h2><i class="fas fa-boxes"></i> Produtos Cadastrados</h2>
-          <div id="prodList"><p style="color:#aaa;text-align:center;padding:20px">Carregando...</p></div>
-        </div>
-      </div>
+    <!-- Zoom Overlay -->
+    <div id="zoom-overlay" onclick="this.style.display='none'"><img id="zoom-img" src=""></div>
+
+    <!-- Draggables -->
+    <div id="wp-drag" class="draggable wp-float" onmousedown="dragStart(event, this)" ontouchstart="dragStart(event, this)">
+        <a href="" id="v-wp-link" target="_blank" style="color:white;"><i class="fab fa-whatsapp"></i></a>
     </div>
 
-    <!-- TAB: FILIADOS -->
-    <div class="tab" id="tFil">
-      <div class="card">
-        <h2><i class="fas fa-user-plus"></i> Cadastrar Filiado</h2>
-        <div class="fg-row">
-          <div class="fg"><label>Nome do Filiado</label><input type="text" id="fNome" placeholder="Nome completo"/></div>
-          <div class="fg"><label>Código (4 dígitos)</label><input type="text" id="fCod" placeholder="Ex: 1234" maxlength="4" oninput="this.value=this.value.replace(/\D/g,'')"/></div>
-        </div>
-        <div class="fg-row">
-          <div class="fg"><label>WhatsApp</label><input type="text" id="fWa" placeholder="(47) 9xxxx-xxxx"/></div>
-          <div class="fg"><label>Comissão %</label><input type="number" id="fCom" placeholder="Ex: 10" min="0" max="100"/></div>
-        </div>
-        <button class="btn-primary" onclick="cadFil()"><i class="fas fa-user-check"></i> Cadastrar Filiado</button>
-        <p class="msg-ok" id="mFil">✅ Filiado cadastrado!</p>
-      </div>
-      <div class="card">
-        <h2><i class="fas fa-users"></i> Filiados Cadastrados</h2>
-        <div id="filList"><p style="color:#aaa;text-align:center;padding:20px">Carregando...</p></div>
-      </div>
+    <div id="cart-drag" class="draggable cart-float" onmousedown="dragStart(event, this)" ontouchstart="dragStart(event, this)" onclick="toggleCart()">
+        <i class="fas fa-shopping-cart"></i>
+        <div class="led-badge" id="cart-count">0</div>
     </div>
 
-    <!-- TAB: SORTEIOS -->
-    <div class="tab" id="tSort">
-      <div class="card">
-        <h2><i class="fas fa-gift"></i> Novo Sorteio</h2>
-        <div class="fg"><label>Título do Sorteio</label><input type="text" id="sTit" placeholder="Ex: Sorteio de Natal"/></div>
-        <div class="fg"><label>Imagem (URL)</label><input type="text" id="sImg" placeholder="https://..."/></div>
-        <div class="fg"><label>Descrição</label><textarea id="sDesc" placeholder="Descrição do sorteio, regras, data..."></textarea></div>
-        <div class="fg"><label>Data do Sorteio</label><input type="date" id="sData"/></div>
-        <div class="fg"><label>Status</label>
-          <select id="sStatus" style="width:100%;padding:10px 14px;border:1.5px solid var(--gray2);border-radius:10px;font-size:13px;font-family:'Inter',sans-serif;outline:none;background:var(--gray)">
-            <option value="ativo">🟢 Ativo</option>
-            <option value="encerrado">🔴 Encerrado</option>
-          </select>
+    <!-- Carrinho Side -->
+    <div id="modal-cart" class="modal-side">
+        <div style="display:flex; justify-content: space-between; align-items:center; margin-bottom:20px;">
+            <h3>🛒 Finalizar Pedido</h3>
+            <span onclick="toggleCart()" style="cursor:pointer; font-size: 28px;">&times;</span>
         </div>
-        <button class="btn-primary" onclick="cadSort()"><i class="fas fa-plus"></i> Publicar Sorteio</button>
-        <p class="msg-ok" id="mSort">✅ Sorteio publicado!</p>
-      </div>
-      <div class="card">
-        <h2><i class="fas fa-list"></i> Sorteios Publicados</h2>
-        <div id="sortList"><p style="color:#aaa;text-align:center;padding:20px">Carregando...</p></div>
-      </div>
-      <div class="card">
-        <h2><i class="fas fa-clipboard-list"></i> Participantes</h2>
-        <select id="sortFiltro" onchange="loadParticipantes(this.value)" style="width:100%;padding:10px 14px;border:1.5px solid var(--gray2);border-radius:10px;font-size:13px;font-family:'Inter',sans-serif;outline:none;background:var(--gray);margin-bottom:12px">
-          <option value="">Selecione um sorteio...</option>
-        </select>
-        <div id="partList"></div>
-      </div>
+        <div id="cart-list"></div>
+        <div id="checkout-form" style="display:none; margin-top:25px;">
+            <input type="text" id="f-nome" placeholder="Nome">
+            <input type="text" id="f-sobrenome" placeholder="Sobrenome">
+            <input type="text" id="f-cpf" placeholder="CPF">
+            <input type="text" id="f-whats" placeholder="WhatsApp">
+            <input type="text" id="f-rua" placeholder="Rua / Avenida">
+            <input type="text" id="f-bairro" placeholder="Bairro">
+            <input type="text" id="f-casa" placeholder="Nº Casa">
+            <textarea id="f-obs" placeholder="Observações"></textarea>
+            <button class="btn-add" style="background:#28a745;" onclick="finalizarPedido()">FINALIZAR</button>
+            <button class="btn-add" style="background:#6c757d; margin-top:5px;" onclick="toggleCart()">CONTINUAR COMPRANDO</button>
+        </div>
     </div>
 
-    <!-- TAB: VENDAS -->
-    <div class="tab" id="tVendas">
-      <div class="card">
-        <h2><i class="fas fa-chart-line"></i> Últimas Vendas</h2>
-        <div id="vendasList"><p style="color:#aaa;text-align:center;padding:20px">Carregando...</p></div>
-      </div>
+    <!-- PAINEL ADM -->
+    <div id="admin-panel">
+        <div style="display:flex; justify-content:space-between; align-items:center; margin-bottom:30px;">
+            <h2>Painel Adm BRITOTEM</h2>
+            <button onclick="location.reload()" style="padding:10px 20px; border-radius:8px; cursor:pointer;">SAIR</button>
+        </div>
+
+        <div class="adm-card">
+            <h4>Configurações Gerais & Rodapé</h4>
+            <div style="display:grid; grid-template-columns: 1fr 1fr; gap:15px;">
+                <div><span class="label-adm">Nome do Site</span><input type="text" id="adm-nome"></div>
+                <div><span class="label-adm">WhatsApp Central</span><input type="text" id="adm-whats"></div>
+            </div>
+            <span class="label-adm">Link da Logo</span><input type="text" id="adm-logo">
+            <span class="label-adm">Texto Rodapé</span><textarea id="adm-footer"></textarea>
+            <button class="btn-add" onclick="saveConfig()">ATUALIZAR SITE</button>
+        </div>
+
+        <div class="adm-card">
+            <h4>Adicionar Produto</h4>
+            <div style="display:grid; grid-template-columns: 1fr 1fr; gap:10px;">
+                <input type="text" id="p-new-nome" placeholder="Título">
+                <input type="text" id="p-new-img" placeholder="Link Imagem">
+                <input type="number" id="p-new-preco" placeholder="Preço">
+                <input type="number" id="p-new-estoque" placeholder="Estoque">
+            </div>
+            <textarea id="p-new-det" placeholder="Descrição (Use ENTER para novos parágrafos)"></textarea>
+            <button class="btn-add" style="background: var(--green);" onclick="addProduct()">CADASTRAR</button>
+        </div>
+
+        <div class="adm-card">
+            <h4>Edição Rápida & Estoque</h4>
+            <div id="adm-product-list"></div>
+        </div>
+
+        <div class="adm-card">
+            <h4>Pedidos de Clientes (Faltantes)</h4>
+            <div id="missing-requests-log"></div>
+        </div>
+
+        <div class="adm-card">
+            <h4>Registro de Vendas</h4>
+            <div id="vendas-log"></div>
+        </div>
     </div>
 
-    <!-- TAB: TEXTOS -->
-    <div class="tab" id="tTextos">
-      <div class="card">
-        <h2><i class="fas fa-building"></i> Quem Somos</h2>
-        <div class="fg"><textarea id="tQuem" style="min-height:180px" placeholder="Escreva sobre sua loja..."></textarea></div>
-        <button class="btn-primary" onclick="saveText('quemSomos','tQuem','mQuem')"><i class="fas fa-save"></i> Salvar</button>
-        <p class="msg-ok" id="mQuem">✅ Salvo!</p>
-      </div>
-      <div class="card">
-        <h2><i class="fas fa-shield-alt"></i> Suporte e Garantia</h2>
-        <div class="fg"><textarea id="tSup" style="min-height:180px" placeholder="Suporte e políticas de garantia..."></textarea></div>
-        <button class="btn-primary" onclick="saveText('suporte','tSup','mSup')"><i class="fas fa-save"></i> Salvar</button>
-        <p class="msg-ok" id="mSup">✅ Salvo!</p>
-      </div>
-    </div>
+    <footer>
+        <a href="#" class="btn-a-adm" onclick="openAdmin()">A</a>
+        <div id="v-footer-text"></div>
+    </footer>
 
-    <!-- TAB: AVISOS -->
-    <div class="tab" id="tAvisos">
-      <div class="card">
-        <h2><i class="fas fa-search"></i> Produtos Não Encontrados</h2>
-        <div id="avisosList"><p style="color:#aaa;text-align:center;padding:20px">Carregando...</p></div>
-      </div>
-    </div>
+    <!-- Firebase -->
+    <script type="module">
+        import { initializeApp } from "https://www.gstatic.com/firebasejs/9.17.1/firebase-app.js";
+        import { getDatabase, ref, set, push, onValue, update, remove } from "https://www.gstatic.com/firebasejs/9.17.1/firebase-database.js";
 
-  </div><!-- /adm-content -->
-</div><!-- /adm-wrap -->
+        const firebaseConfig = {
+            apiKey: "AIzaSyCf6_DCNSh4a3IiOtTv5Uf_N8YaxQtBczw",
+            authDomain: "loja-a33e1.firebaseapp.com",
+            databaseURL: "https://loja-a33e1-default-rtdb.firebaseio.com",
+            projectId: "loja-a33e1",
+            storageBucket: "loja-a33e1.firebasestorage.app",
+            messagingSenderId: "304798626706",
+            appId: "1:304798626706:web:23a0672e6a98ae432c474b"
+        };
 
-<div class="t-toast" id="tToast"></div>
+        const app = initializeApp(firebaseConfig);
+        const db = getDatabase(app);
+        let cart = [];
+        let siteConfig = {};
 
-<style>
-@media(max-width:800px){.prod-layout{grid-template-columns:1fr!important}}
-</style>
+        // CONFIGS
+        onValue(ref(db, 'config'), (snap) => {
+            siteConfig = snap.val() || { nome: 'BRITOTEM.COM', whats: '47988771313', footer: '© 2026 BRITOTEM' };
+            document.getElementById('v-site-name').innerText = siteConfig.nome;
+            document.getElementById('site-title-tag').innerText = siteConfig.nome;
+            document.getElementById('v-logo').src = siteConfig.logo;
+            document.getElementById('v-wp-link').href = `https://wa.me/55${siteConfig.whats}`;
+            document.getElementById('v-footer-text').innerText = siteConfig.footer;
+            
+            document.getElementById('adm-nome').value = siteConfig.nome;
+            document.getElementById('adm-logo').value = siteConfig.logo;
+            document.getElementById('adm-whats').value = siteConfig.whats;
+            document.getElementById('adm-footer').value = siteConfig.footer;
+        });
 
-<script type="module">
-import { initializeApp } from "https://www.gstatic.com/firebasejs/10.12.0/firebase-app.js";
-import { getDatabase, ref, push, set, get, remove, onValue } from "https://www.gstatic.com/firebasejs/10.12.0/firebase-database.js";
+        // PRODUTOS
+        onValue(ref(db, 'produtos'), (snap) => {
+            const grid = document.getElementById('product-grid');
+            const admList = document.getElementById('adm-product-list');
+            grid.innerHTML = ""; admList.innerHTML = "";
+            const data = snap.val();
 
-const cfg = {
-  apiKey:"AIzaSyCf6_DCNSh4a3IiOtTv5Uf_N8YaxQtBczw",
-  authDomain:"loja-a33e1.firebaseapp.com",
-  databaseURL:"https://loja-a33e1-default-rtdb.firebaseio.com",
-  projectId:"loja-a33e1",
-  storageBucket:"loja-a33e1.firebasestorage.app",
-  messagingSenderId:"304798626706",
-  appId:"1:304798626706:web:23a0672e6a98ae432c474b"
-};
-const app = initializeApp(cfg);
-const db = getDatabase(app);
+            for(let id in data) {
+                let p = data[id];
+                grid.innerHTML += `
+                    <div class="card">
+                        <img src="${p.img}" onclick="zoom('${p.img}')">
+                        <div class="p-body">
+                            <div class="p-title">${p.nome}</div>
+                            <div class="led-shipping">🟢 Frete Grátis - Chega amanhã</div>
+                            <div class="p-price">R$ ${parseFloat(p.preco).toFixed(2)}</div>
+                            <button class="btn-detalhe" onclick="abrirDetalhe('${p.nome}', \`${p.det}\`)">Detalhes</button>
+                            <button class="btn-add" onclick="addToCart('${id}', '${p.nome}', ${p.preco}, '${p.img}')">🛒 ADICIONAR</button>
+                        </div>
+                    </div>
+                `;
+                admList.innerHTML += `
+                    <div class="quick-edit-grid">
+                        <div><span class="label-adm">Título</span><input type="text" value="${p.nome}" onchange="quickUpdate('${id}', 'nome', this.value)"></div>
+                        <div><span class="label-adm">Preço</span><input type="number" value="${p.preco}" onchange="quickUpdate('${id}', 'preco', this.value)"></div>
+                        <div><span class="label-adm">Estoque</span><input type="number" value="${p.estoque}" onchange="quickUpdate('${id}', 'estoque', this.value)"></div>
+                        <div><span class="label-adm">Link Imagem</span><input type="text" value="${p.img}" onchange="quickUpdate('${id}', 'img', this.value)"></div>
+                        <div><span class="label-adm">Detalhes</span><input type="text" value="${p.det}" onchange="quickUpdate('${id}', 'det', this.value)"></div>
+                        <button onclick="removeProd('${id}')" style="color:red; border:none; background:none; cursor:pointer; font-size:20px;">&times;</button>
+                    </div>
+                `;
+            }
+        });
 
-// ---- LOGIN ----
-window.doLogin = function(){
-  if(document.getElementById('passInput').value === '848218'){
-    document.getElementById('loginWrap').style.display='none';
-    document.getElementById('admWrap').style.display='block';
-    initAll();
-  } else {
-    document.getElementById('loginErr').style.display='block';
-  }
-};
+        // VENDAS E FALTANTES NO ADM
+        onValue(ref(db, 'pedidos_faltantes'), (snap) => {
+            const log = document.getElementById('missing-requests-log');
+            log.innerHTML = "";
+            const data = snap.val();
+            if(data) Object.keys(data).forEach(id => {
+                log.innerHTML += `<div style="padding:8px; border-bottom:1px solid #eee;">- ${data[id].nome} (${data[id].data}) <button onclick="removeMissing('${id}')" style="color:red; border:none; background:none; cursor:pointer;">[X]</button></div>`;
+            });
+        });
 
-function initAll(){
-  loadProds(); loadFiliados(); loadSorteios(); loadVendas(); loadTextos(); loadAvisos();
-}
+        onValue(ref(db, 'vendas'), (snap) => {
+            const log = document.getElementById('vendas-log');
+            log.innerHTML = "";
+            const data = snap.val();
+            if(data) Object.values(data).reverse().forEach(v => {
+                log.innerHTML += `<div style="padding:10px; border-bottom:1px solid #eee; font-size:12px;"><b>${v.data}</b> - ${v.cliente.nome} | Itens: ${v.itens} | Total: R$ ${v.total}</div>`;
+            });
+        });
 
-// ---- PRODUTOS ----
-function loadProds(){
-  onValue(ref(db,'produtos'), snap => {
-    const d=snap.val();
-    const el=document.getElementById('prodList');
-    if(!d){el.innerHTML='<p style="color:#aaa;text-align:center;padding:20px">Nenhum produto.</p>';return;}
-    el.innerHTML=Object.entries(d).map(([id,p])=>`
-      <div class="prod-item" id="pi_${id}">
-        <img src="${p.img||'https://placehold.co/60'}" alt=""/>
-        <div class="pi-info">
-          <p class="pi-name">${p.title||'Sem título'}</p>
-          <div class="pi-row">
-            <input type="text" value="${esc(p.title||'')}" id="et_${id}" placeholder="Título"/>
-            <input type="number" value="${p.price||0}" id="ep_${id}" step="0.01" placeholder="Preço"/>
-          </div>
-          <div class="pi-row">
-            <input type="number" value="${p.stock||0}" id="ee_${id}" placeholder="Estoque"/>
-            <input type="text" value="${esc(p.img||'')}" id="ei_${id}" placeholder="URL Imagem"/>
-          </div>
-          <input class="pi-full" type="text" value="${esc(p.desc||'')}" id="ed_${id}" placeholder="Descrição"/>
-          <div class="pi-actions">
-            <button class="btn-green" onclick="saveQuick('${id}')"><i class="fas fa-save"></i> Salvar</button>
-            <button class="btn-red" onclick="delProd('${id}')"><i class="fas fa-trash"></i></button>
-          </div>
-        </div>
-      </div>`).join('');
-  });
-}
+        // LOJA FUNCS
+        window.zoom = (src) => { document.getElementById('zoom-img').src = src; document.getElementById('zoom-overlay').style.display = 'flex'; };
+        
+        window.abrirDetalhe = (title, text) => {
+            let formatted = text.split('\n').map(p => `<p>${p}</p>`).join('');
+            Swal.fire({ title: title, html: `<div class="p-desc-modern">${formatted}</div>`, confirmButtonColor: '#0056b3' });
+        };
 
-window.saveQuick = function(id){
-  const title=document.getElementById('et_'+id).value;
-  const price=parseFloat(document.getElementById('ep_'+id).value)||0;
-  const stock=parseInt(document.getElementById('ee_'+id).value)||0;
-  const img=document.getElementById('ei_'+id).value;
-  const desc=document.getElementById('ed_'+id).value;
-  set(ref(db,'produtos/'+id),{title,price,stock,img,desc})
-    .then(()=>showT('✅ Salvo!')).catch(e=>showT('❌ '+e.message));
-};
-window.delProd = function(id){
-  if(!confirm('Excluir?'))return;
-  remove(ref(db,'produtos/'+id)).then(()=>showT('🗑️ Excluído!'));
-};
-window.cadProd = function(){
-  const title=document.getElementById('pTit').value.trim();
-  if(!title){showT('⚠️ Informe o título!');return;}
-  push(ref(db,'produtos'),{
-    title,img:document.getElementById('pImg').value.trim(),
-    desc:document.getElementById('pDesc').value.trim(),
-    price:parseFloat(document.getElementById('pPreco').value)||0,
-    stock:parseInt(document.getElementById('pEst').value)||0,
-    criadoEm:Date.now()
-  }).then(()=>{
-    ['pTit','pImg','pDesc','pPreco','pEst'].forEach(k=>document.getElementById(k).value='');
-    const m=document.getElementById('mProd');m.style.display='block';setTimeout(()=>m.style.display='none',3000);
-  });
-};
+        window.addToCart = (id, nome, preco, img) => {
+            cart.push({id, nome, preco, img});
+            document.getElementById('cart-count').innerText = cart.length;
+            Swal.fire({icon:'success', title:'No Carrinho!', timer:700, showConfirmButton:false});
+        };
 
-// ---- FILIADOS ----
-function loadFiliados(){
-  onValue(ref(db,'filiados'), snap => {
-    const d=snap.val();
-    const el=document.getElementById('filList');
-    if(!d){el.innerHTML='<p style="color:#aaa;text-align:center;padding:20px">Nenhum filiado.</p>';return;}
-    el.innerHTML=Object.entries(d).map(([id,f])=>`
-      <div class="fil-item">
-        <div class="fil-info">
-          <strong>${f.nome||'Sem nome'}</strong>
-          <span>WhatsApp: ${f.whatsapp||'-'} · Comissão: ${f.comissao||0}%</span>
-          <div class="fil-link">🔗 www.rionegrinho.shop?ref=${f.codigo}</div>
-        </div>
-        <div style="display:flex;align-items:center;gap:8px;flex-wrap:wrap">
-          <span class="fil-code">${f.codigo}</span>
-          <button class="btn-red" onclick="delFil('${id}')"><i class="fas fa-trash"></i></button>
-        </div>
-      </div>`).join('');
-  });
-}
+        window.toggleCart = () => {
+            document.getElementById('modal-cart').classList.toggle('active');
+            const list = document.getElementById('cart-list');
+            const area = document.getElementById('checkout-form');
+            if(cart.length > 0) {
+                area.style.display = 'block';
+                list.innerHTML = cart.map((i, idx) => `
+                    <div class="cart-row">
+                        <img src="${i.img}">
+                        <div style="flex-grow:1"><b>${i.nome}</b><br>R$ ${i.preco.toFixed(2)}</div>
+                        <i class="fas fa-trash" style="color:red; cursor:pointer" onclick="removeFromCart(${idx})"></i>
+                    </div>
+                `).join('');
+            } else { list.innerHTML = "Carrinho vazio..."; area.style.display = 'none'; }
+        };
 
-window.cadFil = function(){
-  const nome=document.getElementById('fNome').value.trim();
-  const codigo=document.getElementById('fCod').value.trim();
-  const whatsapp=document.getElementById('fWa').value.trim();
-  const comissao=parseFloat(document.getElementById('fCom').value)||0;
-  if(!nome||!codigo){showT('⚠️ Nome e código obrigatórios!');return;}
-  if(!/^\d{4}$/.test(codigo)){showT('⚠️ Código deve ter exatamente 4 dígitos!');return;}
-  push(ref(db,'filiados'),{nome,codigo,whatsapp,comissao,criadoEm:Date.now()})
-    .then(()=>{
-      ['fNome','fCod','fWa','fCom'].forEach(k=>document.getElementById(k).value='');
-      const m=document.getElementById('mFil');m.style.display='block';setTimeout(()=>m.style.display='none',3000);
-    });
-};
-window.delFil = function(id){
-  if(!confirm('Excluir filiado?'))return;
-  remove(ref(db,'filiados/'+id)).then(()=>showT('🗑️ Filiado removido!'));
-};
+        window.removeFromCart = (idx) => { cart.splice(idx,1); toggleCart(); toggleCart(); document.getElementById('cart-count').innerText = cart.length; };
 
-// ---- SORTEIOS ----
-function loadSorteios(){
-  onValue(ref(db,'sorteios'), snap => {
-    const d=snap.val();
-    const el=document.getElementById('sortList');
-    const sel=document.getElementById('sortFiltro');
-    sel.innerHTML='<option value="">Selecione um sorteio...</option>';
-    if(!d){el.innerHTML='<p style="color:#aaa;text-align:center;padding:20px">Nenhum sorteio.</p>';return;}
-    el.innerHTML=Object.entries(d).map(([id,s])=>`
-      <div class="sort-item">
-        ${s.imagem?`<img src="${esc(s.imagem)}" alt=""/>`:''}
-        <div class="sort-info">
-          <strong>${s.titulo||'Sorteio'}</strong>
-          <span>${s.data||''} · ${s.status==='ativo'?'🟢 Ativo':'🔴 Encerrado'}</span>
-          <p style="font-size:12px;color:#666;margin-top:4px;line-height:1.5">${(s.descricao||'').substring(0,120)}${(s.descricao||'').length>120?'...':''}</p>
-        </div>
-        <button class="btn-red" onclick="delSort('${id}')"><i class="fas fa-trash"></i></button>
-      </div>`).join('');
-    Object.entries(d).forEach(([id,s])=>{
-      const o=document.createElement('option');o.value=id;o.textContent=s.titulo||id;
-      sel.appendChild(o);
-    });
-  });
-}
+        window.finalizarPedido = () => {
+            const total = cart.reduce((a, b) => a + b.preco, 0).toFixed(2);
+            const itens = cart.map(i => i.nome).join(", ");
+            const c = { 
+                nome: document.getElementById('f-nome').value, 
+                sobrenome: document.getElementById('f-sobrenome').value,
+                whats: document.getElementById('f-whats').value 
+            };
+            if(!c.nome || !c.whats) return Swal.fire('Erro','Nome e Whats obrigatórios','error');
 
-window.cadSort = function(){
-  const titulo=document.getElementById('sTit').value.trim();
-  if(!titulo){showT('⚠️ Informe o título!');return;}
-  push(ref(db,'sorteios'),{
-    titulo,imagem:document.getElementById('sImg').value.trim(),
-    descricao:document.getElementById('sDesc').value.trim(),
-    data:document.getElementById('sData').value,
-    status:document.getElementById('sStatus').value,
-    criadoEm:Date.now()
-  }).then(()=>{
-    ['sTit','sImg','sDesc','sData'].forEach(k=>document.getElementById(k).value='');
-    const m=document.getElementById('mSort');m.style.display='block';setTimeout(()=>m.style.display='none',3000);
-  });
-};
-window.delSort = function(id){
-  if(!confirm('Excluir sorteio?'))return;
-  remove(ref(db,'sorteios/'+id)).then(()=>showT('🗑️ Removido!'));
-};
+            push(ref(db, 'vendas'), { cliente: c, itens, total, data: new Date().toLocaleString() });
+            
+            let msg = `*PEDIDO - ${siteConfig.nome}*%0A%0ACliente: ${c.nome} ${c.sobrenome}%0AEndereço: ${document.getElementById('f-rua').value}%0AItens: ${itens}%0ATotal: R$ ${total}`;
+            window.open(`https://wa.me/55${siteConfig.whats}?text=${msg}`);
+            cart = []; toggleCart();
+        };
 
-window.loadParticipantes = function(sortId){
-  const el=document.getElementById('partList');
-  if(!sortId){el.innerHTML='';return;}
-  el.innerHTML='<p style="color:#aaa;font-size:13px">Carregando...</p>';
-  get(ref(db,'participantes/'+sortId)).then(snap=>{
-    const d=snap.val();
-    if(!d){el.innerHTML='<p style="color:#aaa;font-size:13px">Nenhum participante ainda.</p>';return;}
-    const lista=Object.values(d);
-    el.innerHTML=`<p style="font-size:13px;font-weight:700;margin-bottom:10px;color:var(--primary)">${lista.length} participante(s)</p>`+
-    lista.map((p,i)=>`<div style="background:var(--gray);border-radius:10px;padding:10px 14px;margin-bottom:7px;font-size:13px">
-      <strong>${i+1}. ${p.nome||''} ${p.sobrenome||''}</strong><br/>
-      📱 ${p.whatsapp||''} · 📧 ${p.email||''}<br/>
-      📄 CPF: ${p.cpf||''} · 🏘️ ${p.bairro||''}<br/>
-      ${p.amigoWa?`👥 Amigo: ${p.amigoWa}`:''}
-    </div>`).join('');
-  });
-};
+        window.sendMissingProduct = () => {
+            const nome = document.getElementById('missing-p-name').value;
+            if(!nome) return;
+            push(ref(db, 'pedidos_faltantes'), { nome, data: new Date().toLocaleString() });
+            Swal.fire('Obrigado!', 'Registramos seu pedido!', 'success');
+            document.getElementById('missing-p-name').value = "";
+        };
 
-// ---- VENDAS ----
-function loadVendas(){
-  onValue(ref(db,'vendas'), snap => {
-    const d=snap.val();
-    const el=document.getElementById('vendasList');
-    if(!d){el.innerHTML='<p style="color:#aaa;text-align:center;padding:20px">Nenhuma venda.</p>';return;}
-    const items=Object.entries(d).reverse().slice(0,50);
-    el.innerHTML=items.map(([id,v])=>`
-      <div class="venda-item">
-        <div class="venda-header">
-          <span class="venda-nome">👤 ${v.nome||'-'}</span>
-          <span class="venda-total">R$ ${parseFloat(v.total||0).toFixed(2).replace('.',',')}</span>
-        </div>
-        <p class="venda-info">💳 ${v.pagamento||'-'} · ${v.data?new Date(v.data).toLocaleString('pt-BR'):'-'}</p>
-        ${v.filiado?`<span class="venda-fil">🤝 Filiado: ${v.filiado.nome} (${v.filiado.codigo})</span>`:''}
-      </div>`).join('');
-  });
-}
+        // ADM FUNCS
+        window.openAdmin = () => { Swal.fire({title:'Acesso Adm', input:'password'}).then(r => { if(r.value === "848218") document.getElementById('admin-panel').style.display='block'; }); };
+        
+        window.saveConfig = () => {
+            set(ref(db, 'config'), { nome: document.getElementById('adm-nome').value, logo: document.getElementById('adm-logo').value, whats: document.getElementById('adm-whats').value, footer: document.getElementById('adm-footer').value });
+            Swal.fire('OK','Site Atualizado','success');
+        };
 
-// ---- TEXTOS ----
-function loadTextos(){
-  get(ref(db,'paginas/quemSomos')).then(s=>{if(s.val())document.getElementById('tQuem').value=s.val();});
-  get(ref(db,'paginas/suporte')).then(s=>{if(s.val())document.getElementById('tSup').value=s.val();});
-}
-window.saveText = function(key,inputId,msgId){
-  set(ref(db,'paginas/'+key),document.getElementById(inputId).value)
-    .then(()=>{const m=document.getElementById(msgId);m.style.display='block';setTimeout(()=>m.style.display='none',3000);});
-};
+        window.addProduct = () => {
+            const p = { nome: document.getElementById('p-new-nome').value, img: document.getElementById('p-new-img').value, preco: parseFloat(document.getElementById('p-new-preco').value), estoque: document.getElementById('p-new-estoque').value, det: document.getElementById('p-new-det').value };
+            push(ref(db, 'produtos'), p);
+            Swal.fire('OK','Produto Cadastrado','success');
+        };
 
-// ---- AVISOS ----
-function loadAvisos(){
-  onValue(ref(db,'nao_encontrados'), snap => {
-    const d=snap.val();
-    const el=document.getElementById('avisosList');
-    if(!d){el.innerHTML='<p style="color:#aaa;text-align:center;padding:20px">Nenhum aviso.</p>';return;}
-    el.innerHTML=Object.entries(d).reverse().map(([id,v])=>`
-      <div class="alert-item">
-        <strong>🔍 ${v.produto||'Produto não identificado'}</strong>
-        <span>${v.data?new Date(v.data).toLocaleString('pt-BR'):''}</span>
-      </div>`).join('');
-  });
-}
+        window.quickUpdate = (id, field, value) => {
+            const up = {}; up[`/produtos/${id}/${field}`] = field === 'preco' || field === 'estoque' ? parseFloat(value) : value;
+            update(ref(db), up);
+        };
 
-// ---- UTILS ----
-function esc(s){return String(s||'').replace(/&/g,'&amp;').replace(/</g,'&lt;').replace(/>/g,'&gt;').replace(/"/g,'&quot;').replace(/'/g,'&#39;');}
-function showT(msg){const t=document.getElementById('tToast');t.textContent=msg;t.style.display='block';setTimeout(()=>t.style.display='none',2800);}
+        window.removeProd = (id) => { remove(ref(db, `produtos/${id}`)); };
+        window.removeMissing = (id) => { remove(ref(db, `pedidos_faltantes/${id}`)); };
 
-// TABS
-window.switchTab = function(id,btn){
-  document.querySelectorAll('.tab').forEach(t=>t.classList.remove('active'));
-  document.querySelectorAll('.tab-btn').forEach(b=>b.classList.remove('active'));
-  document.getElementById(id).classList.add('active');
-  btn.classList.add('active');
-};
-</script>
+    </script>
+
+    <script>
+        // DRAG SYSTEM
+        let actEl, isDown = false, off = [0,0];
+        function dragStart(e, el) { 
+            isDown = true; actEl = el; 
+            const ev = e.type.includes('touch') ? e.touches[0] : e;
+            off = [el.offsetLeft - ev.clientX, el.offsetTop - ev.clientY]; 
+        }
+        document.addEventListener('mousemove', (e) => {
+            if(!isDown) return;
+            actEl.style.left = (e.clientX + off[0]) + 'px'; actEl.style.top = (e.clientY + off[1]) + 'px';
+            actEl.style.bottom = 'auto'; actEl.style.right = 'auto';
+        });
+        document.addEventListener('mouseup', () => isDown = false);
+        document.addEventListener('touchmove', (e) => {
+            if(!isDown) return;
+            actEl.style.left = (e.touches[0].clientX + off[0]) + 'px'; actEl.style.top = (e.touches[0].clientY + off[1]) + 'px';
+            actEl.style.bottom = 'auto'; actEl.style.right = 'auto';
+        });
+        document.addEventListener('touchend', () => isDown = false);
+
+        // PROTECTION
+        document.onkeydown = function(e) { if(e.keyCode == 123 || (e.ctrlKey && e.shiftKey && e.keyCode == 73)) return false; };
+    </script>
 </body>
 </html>
