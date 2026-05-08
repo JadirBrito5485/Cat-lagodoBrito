@@ -14,130 +14,134 @@
         /* HEADER & SEARCH */
         header { background: var(--blue); padding: 12px 5%; position: sticky; top: 0; z-index: 1000; box-shadow: 0 4px 10px rgba(0,0,0,0.1); }
         .header-top { display: flex; justify-content: space-between; align-items: center; margin-bottom: 10px; }
-        .logo-box img { max-height: 40px; border-radius: 4px; }
-        .site-name-top { color: white; font-weight: bold; font-size: 1.2rem; }
+        
+        /* Logo fixa em 400x400px escala no container */
+        .logo-box img { width: 80px; height: 80px; object-fit: contain; border-radius: 8px; background: white; }
+        @media (min-width: 768px) { .logo-box img { width: 120px; height: 120px; } }
+
+        .site-name-top { color: white; font-weight: bold; font-size: 1.4rem; letter-spacing: 1px; }
         
         .search-container { position: relative; width: 100%; }
-        .search-container input { width: 100%; padding: 10px 40px 10px 15px; border-radius: 6px; border: none; outline: none; font-size: 0.9rem; }
-        .search-container i { position: absolute; right: 12px; top: 50%; transform: translateY(-50%); color: #888; }
+        .search-container input { width: 100%; padding: 12px 45px 12px 20px; border-radius: 8px; border: none; outline: none; font-size: 1rem; box-shadow: inset 0 2px 4px rgba(0,0,0,0.1); }
+        .search-container i { position: absolute; right: 15px; top: 50%; transform: translateY(-50%); color: #888; font-size: 1.2rem; }
 
-        /* SHOPEE STYLE GRID */
+        /* SHOPEE STYLE GRID (MOBILE 2 COLUMNS) */
         .container { padding: 10px; max-width: 1200px; margin: 0 auto; }
-        .grid { display: grid; grid-template-columns: repeat(2, 1fr); gap: 8px; }
-        @media (min-width: 768px) { .grid { grid-template-columns: repeat(auto-fill, minmax(220px, 1fr)); gap: 15px; } }
+        .grid { display: grid; grid-template-columns: repeat(2, 1fr); gap: 10px; }
+        @media (min-width: 768px) { .grid { grid-template-columns: repeat(auto-fill, minmax(220px, 1fr)); gap: 20px; } }
 
-        .card { background: var(--white); border-radius: 4px; overflow: hidden; display: flex; flex-direction: column; position: relative; box-shadow: 0 2px 5px rgba(0,0,0,0.05); }
+        .card { background: var(--white); border-radius: 8px; overflow: hidden; display: flex; flex-direction: column; position: relative; box-shadow: 0 4px 12px rgba(0,0,0,0.08); transition: 0.3s; }
         .card img { width: 100%; aspect-ratio: 1/1; object-fit: cover; cursor: zoom-in; }
-        .p-body { padding: 8px; flex-grow: 1; display: flex; flex-direction: column; }
-        .p-title { font-size: 0.85rem; color: #222; height: 34px; overflow: hidden; display: -webkit-box; -webkit-line-clamp: 2; -webkit-box-orient: vertical; line-height: 1.2; margin-bottom: 4px; }
-        .p-price { color: var(--orange); font-size: 1.1rem; font-weight: bold; margin-top: auto; }
         
-        .p-badge { background: var(--blue); color: white; font-size: 0.65rem; padding: 3px 6px; border-radius: 2px; margin-bottom: 5px; width: fit-content; font-weight: bold; }
+        .p-body { padding: 10px; flex-grow: 1; display: flex; flex-direction: column; }
+        .p-badge { background: var(--blue); color: white; font-size: 0.7rem; padding: 4px 8px; border-radius: 4px; margin-bottom: 8px; width: fit-content; font-weight: bold; text-transform: uppercase; }
+        .p-title { font-size: 0.9rem; color: #333; height: 40px; overflow: hidden; display: -webkit-box; -webkit-line-clamp: 2; -webkit-box-orient: vertical; line-height: 1.2; margin-bottom: 8px; font-weight: 500; }
+        .p-price { color: var(--orange); font-size: 1.2rem; font-weight: 800; margin-top: auto; }
 
-        .btn-detalhe { background: #f0f2f5; border: 1px solid #ddd; padding: 6px; font-size: 0.75rem; cursor: pointer; border-radius: 4px; width: 100%; margin-top: 5px; color: var(--blue); font-weight: bold; }
-        .btn-add { background: var(--blue); color: white; border: none; padding: 10px; cursor: pointer; font-weight: bold; width: 100%; margin-top: 8px; border-radius: 4px; font-size: 0.85rem; }
+        .btn-detalhe { background: #f0f2f5; border: 1px solid #ddd; padding: 8px; font-size: 0.8rem; cursor: pointer; border-radius: 6px; width: 100%; margin-top: 8px; color: var(--blue); font-weight: bold; }
+        .btn-add { background: var(--blue); color: white; border: none; padding: 12px; cursor: pointer; font-weight: bold; width: 100%; margin-top: 8px; border-radius: 6px; font-size: 0.9rem; }
 
-        /* FLOATING DRAGGABLES */
-        .draggable { position: fixed; z-index: 5000; cursor: move; display: flex; justify-content: center; align-items: center; box-shadow: 0 5px 15px rgba(0,0,0,0.3); border-radius: 50%; width: 60px; height: 60px; touch-action: none; }
-        .wp-float { bottom: 20px; left: 20px; background: #25d366; font-size: 32px; color: white; text-decoration: none; }
-        .cart-float { bottom: 20px; right: 20px; background: var(--blue); font-size: 24px; color: white; }
-        .cart-badge { position: absolute; top: -5px; right: -5px; background: var(--led); color: white; padding: 3px 8px; border-radius: 12px; font-size: 0.75rem; font-weight: bold; box-shadow: 0 0 10px var(--led); }
+        /* DRAGGABLES */
+        .draggable { position: fixed; z-index: 5000; cursor: move; display: flex; justify-content: center; align-items: center; box-shadow: 0 8px 20px rgba(0,0,0,0.3); border-radius: 50%; width: 65px; height: 65px; touch-action: none; }
+        .wp-float { bottom: 30px; left: 20px; background: #25d366; font-size: 35px; color: white; text-decoration: none; }
+        .cart-float { bottom: 30px; right: 20px; background: var(--blue); font-size: 28px; color: white; }
+        .cart-badge { position: absolute; top: -2px; right: -2px; background: var(--led); color: white; padding: 4px 10px; border-radius: 15px; font-size: 0.8rem; font-weight: bold; animation: pulse 1.5s infinite; }
+        @keyframes pulse { 0% { transform: scale(1); } 50% { transform: scale(1.1); } 100% { transform: scale(1); } }
 
-        /* MODALS */
-        .modal-side { position: fixed; top: 0; right: -100%; width: 100%; max-width: 450px; height: 100%; background: white; z-index: 6000; transition: 0.4s; padding: 20px; overflow-y: auto; box-shadow: -5px 0 20px rgba(0,0,0,0.2); }
+        /* MODAL CARRINHO */
+        .modal-side { position: fixed; top: 0; right: -100%; width: 100%; max-width: 480px; height: 100%; background: white; z-index: 6000; transition: 0.5s cubic-bezier(0.4, 0, 0.2, 1); padding: 25px; overflow-y: auto; box-shadow: -10px 0 30px rgba(0,0,0,0.15); }
         .modal-side.active { right: 0; }
-        .cart-row { display: flex; gap: 10px; margin-bottom: 15px; border-bottom: 1px solid #eee; padding-bottom: 10px; align-items: center; }
-        .cart-row img { width: 50px; height: 50px; border-radius: 4px; object-fit: cover; }
+        .cart-row { display: flex; gap: 15px; margin-bottom: 20px; border-bottom: 1px solid #eee; padding-bottom: 15px; align-items: center; }
+        .cart-row img { width: 60px; height: 60px; border-radius: 8px; object-fit: cover; }
         
-        .zoom-overlay { position: fixed; top: 0; left: 0; width: 100%; height: 100%; background: rgba(0,0,0,0.9); z-index: 9999; display: none; justify-content: center; align-items: center; cursor: zoom-out; }
-        .zoom-overlay img { max-width: 95%; max-height: 85%; border-radius: 8px; }
+        .zoom-overlay { position: fixed; top: 0; left: 0; width: 100%; height: 100%; background: rgba(0,0,0,0.95); z-index: 9999; display: none; justify-content: center; align-items: center; cursor: zoom-out; }
+        .zoom-overlay img { max-width: 90%; max-height: 80%; border-radius: 12px; box-shadow: 0 0 30px rgba(255,255,255,0.1); }
 
-        /* ADM PANEL */
-        #admin-panel { display: none; position: fixed; top: 0; left: 0; width: 100%; height: 100%; background: #f8f9fa; z-index: 8000; padding: 20px; overflow-y: auto; color: #333; }
-        .adm-card { background: white; padding: 20px; border-radius: 8px; margin-bottom: 20px; box-shadow: 0 2px 5px rgba(0,0,0,0.1); }
-        .quick-edit-grid { display: grid; grid-template-columns: 2fr 1fr 1fr 1fr auto; gap: 10px; align-items: center; min-width: 700px; padding: 10px 0; border-bottom: 1px solid #eee; }
+        /* ADM */
+        #admin-panel { display: none; position: fixed; top: 0; left: 0; width: 100%; height: 100%; background: #f4f7f6; z-index: 8000; padding: 30px; overflow-y: auto; }
+        .adm-card { background: white; padding: 25px; border-radius: 12px; margin-bottom: 25px; box-shadow: 0 4px 15px rgba(0,0,0,0.05); border: 1px solid #e1e8ed; }
         
-        input, textarea { width: 100%; padding: 12px; margin: 5px 0; border: 1px solid #ccc; border-radius: 6px; outline: none; }
-        label { font-size: 0.7rem; font-weight: bold; color: var(--blue); text-transform: uppercase; }
+        input, textarea, select { width: 100%; padding: 14px; margin: 8px 0; border: 1px solid #d1d9e0; border-radius: 8px; outline: none; font-size: 1rem; transition: 0.2s; }
+        input:focus { border-color: var(--blue); box-shadow: 0 0 0 3px rgba(0,86,179,0.1); }
+        label { font-size: 0.75rem; font-weight: bold; color: var(--blue); text-transform: uppercase; margin-top: 10px; display: block; }
 
-        footer { background: var(--dark); color: white; padding: 40px 5%; text-align: center; margin-top: 30px; }
-        .btn-a-trigger { float: left; opacity: 0.05; color: white; text-decoration: none; font-size: 10px; }
+        footer { background: var(--dark); color: white; padding: 50px 5%; text-align: center; margin-top: 50px; }
+        .btn-a-trigger { float: left; opacity: 0.1; color: white; text-decoration: none; font-size: 12px; font-weight: bold; }
         
-        .p-desc-modern p { margin-bottom: 15px; line-height: 1.6; color: #444; }
+        .p-desc-modern p { margin-bottom: 15px; line-height: 1.7; color: #444; font-size: 1.05rem; }
     </style>
 </head>
 <body oncontextmenu="return false;">
 
     <header>
         <div class="header-top">
-            <div class="logo-box"><img id="v-logo" src="" alt="Logo"></div>
+            <div class="logo-box"><img id="v-logo" src="" alt="BRITOTEM Logo"></div>
             <div class="site-name-top" id="v-site-name">BRITOTEM.COM</div>
         </div>
         <div class="search-container">
-            <input type="text" id="search-input" placeholder="O que você deseja hoje?" onkeyup="filtrarProdutos()">
+            <input type="text" id="search-input" placeholder="O que você está procurando?" onkeyup="filtrarProdutos()">
             <i class="fas fa-search"></i>
         </div>
     </header>
 
     <div class="container">
-        <!-- Grade Shopee -->
+        <!-- Grade de Produtos -->
         <div class="grid" id="product-grid"></div>
 
-        <hr style="margin: 40px 0; border: 0; border-top: 1px solid #ddd;">
+        <hr style="margin: 50px 0; border: 0; border-top: 2px solid #eee;">
 
-        <!-- Parte 2: Sorteio -->
+        <!-- Seção Sorteio -->
         <div class="adm-card" id="sorteio-section">
-            <img id="v-s-banner" src="" style="width:100%; border-radius:8px; margin-bottom:15px;">
-            <h2 id="v-s-titulo" style="color: var(--blue);"></h2>
+            <img id="v-s-banner" src="" style="width:100%; border-radius:12px; margin-bottom:20px; box-shadow: 0 5px 15px rgba(0,0,0,0.1);">
+            <h2 id="v-s-titulo" style="color: var(--blue); font-size: 1.8rem; margin-bottom: 10px;"></h2>
             <div id="v-s-desc" class="p-desc-modern"></div>
-            <div style="margin-top:20px;">
-                <input type="text" id="s-nome" placeholder="Seu Nome Completo">
-                <input type="text" id="s-cpf" placeholder="Seu CPF">
+            <div style="margin-top:25px; background: #f9f9f9; padding: 20px; border-radius: 12px;">
+                <input type="text" id="s-nome" placeholder="Nome Completo">
+                <input type="text" id="s-cpf" placeholder="CPF">
                 <input type="text" id="s-whats" placeholder="Seu WhatsApp">
-                <input type="text" id="s-indica" placeholder="WhatsApp de quem te indicou (Obrigatório)">
-                <button class="btn-add" style="background:var(--green);" onclick="cadastrarSorteio()">CADASTRAR NO SORTEIO</button>
+                <input type="text" id="s-indica" placeholder="WhatsApp de quem indicou (Diferente do seu)">
+                <button class="btn-add" style="background:var(--green); font-size: 1.1rem; padding: 15px;" onclick="cadastrarSorteio()">PARTICIPAR DO SORTEIO</button>
             </div>
         </div>
 
-        <!-- Sugestão de Produto -->
-        <div class="adm-card" style="border-left: 5px solid var(--blue);">
-            <h4 style="color: var(--blue);">Não encontrou o que buscava?</h4>
-            <p style="font-size: 0.8rem; margin-bottom: 10px;">Sugira um produto e avisaremos quando chegar!</p>
-            <input type="text" id="missing-p" placeholder="Qual produto você quer ver aqui?">
-            <button class="btn-add" onclick="pedirProduto()">ENVIAR SUGESTÃO</button>
+        <!-- Pedido de Produto -->
+        <div class="adm-card" style="border-left: 6px solid var(--blue);">
+            <h4 style="color: var(--blue); font-size: 1.3rem;">Deseja algo que não temos?</h4>
+            <p style="font-size: 0.9rem; color: #666; margin-bottom: 15px;">Diga-nos qual produto você quer ver aqui na loja.</p>
+            <input type="text" id="missing-p" placeholder="Ex: Fone de ouvido Bluetooth XYZ">
+            <button class="btn-add" style="width: auto; padding: 12px 30px;" onclick="pedirProduto()">ENVIAR SOLICITAÇÃO</button>
         </div>
     </div>
 
-    <!-- WhatsApp Arrastável -->
+    <!-- Flutuantes Arrastáveis -->
     <div id="wp-drag" class="draggable wp-float" onmousedown="dragStart(event, this)" ontouchstart="dragStart(event, this)">
         <a href="" id="v-wp-link" target="_blank" style="color:white;"><i class="fab fa-whatsapp"></i></a>
     </div>
 
-    <!-- Carrinho Arrastável -->
     <div id="cart-drag" class="draggable cart-float" onmousedown="dragStart(event, this)" ontouchstart="dragStart(event, this)" onclick="toggleCart()">
         <i class="fas fa-shopping-cart"></i>
         <div class="cart-badge" id="cart-count">0</div>
     </div>
 
-    <!-- Carrinho Lateral -->
+    <!-- Modal Carrinho Lateral -->
     <div id="modal-cart" class="modal-side">
-        <div style="display:flex; justify-content: space-between; align-items:center; margin-bottom:20px;">
-            <h3>🛒 Checkout</h3>
-            <span onclick="toggleCart()" style="cursor:pointer; font-size: 30px;">&times;</span>
+        <div style="display:flex; justify-content: space-between; align-items:center; margin-bottom:25px;">
+            <h3 style="font-size: 1.5rem;">🛒 Finalizar Compra</h3>
+            <span onclick="toggleCart()" style="cursor:pointer; font-size: 35px; color: #888;">&times;</span>
         </div>
         <div id="cart-list"></div>
         
-        <div id="coupon-area" style="background:#f0f5ff; padding:15px; border-radius:8px; margin-top:15px;">
+        <div id="coupon-area" style="background:#f0f5ff; padding:20px; border-radius:12px; margin-top:20px;">
             <label>Cupom de Desconto</label>
-            <div style="display:flex; gap:5px;">
-                <input type="text" id="f-cupom" placeholder="Código">
-                <button onclick="validarCupom()" style="padding:10px; background:var(--blue); color:white; border:none; border-radius:6px;">OK</button>
+            <div style="display:flex; gap:10px;">
+                <input type="text" id="f-cupom" placeholder="Insira o código">
+                <button onclick="validarCupom()" style="padding:0 20px; background:var(--blue); color:white; border:none; border-radius:8px; font-weight: bold;">APLICAR</button>
             </div>
-            <div id="cupom-msg" style="font-size:0.75rem; margin-top:5px;"></div>
+            <div id="cupom-msg" style="font-size:0.85rem; margin-top:8px;"></div>
         </div>
 
-        <div id="checkout-form" style="display:none; margin-top:20px;">
-            <div style="display:grid; grid-template-columns: 1fr 1fr; gap:5px;">
+        <div id="checkout-form" style="display:none; margin-top:25px;">
+            <div style="display:grid; grid-template-columns: 1fr 1fr; gap:10px;">
                 <input type="text" id="f-nome" placeholder="Nome">
                 <input type="text" id="f-sobrenome" placeholder="Sobrenome">
             </div>
@@ -145,80 +149,80 @@
             <input type="text" id="f-whats" placeholder="WhatsApp">
             <input type="text" id="f-rua" placeholder="Rua / Avenida">
             <input type="text" id="f-bairro" placeholder="Bairro">
-            <input type="text" id="f-casa" placeholder="Nº da Casa">
-            <input type="text" id="v-cidade-atend" disabled style="background:#eee; font-weight:bold;">
-            <textarea id="f-obs" placeholder="Alguma observação?"></textarea>
+            <input type="text" id="f-casa" placeholder="Nº da Residência">
+            <input type="text" id="v-cidade-atend" disabled style="background:#f0f0f0; font-weight:bold; color:#555;">
+            <textarea id="f-obs" placeholder="Observações (Ex: Referência do endereço)"></textarea>
             
-            <h2 id="v-total" style="color: var(--orange); margin: 15px 0; text-align: right;">Total: R$ 0,00</h2>
-            <button class="btn-add" style="background:var(--green); font-size: 1.1rem;" onclick="finalizarPedido()">FINALIZAR</button>
-            <button class="btn-add" style="background:#888;" onclick="toggleCart()">CONTINUAR COMPRANDO</button>
+            <h2 id="v-total" style="color: var(--orange); margin: 20px 0; text-align: right; font-size: 2rem;">Total: R$ 0,00</h2>
+            <button class="btn-add" style="background:var(--green); font-size: 1.3rem; padding: 18px;" onclick="finalizarPedido()">CONCLUIR PEDIDO</button>
+            <button class="btn-add" style="background:#888; margin-top: 10px;" onclick="toggleCart()">VOLTAR PARA A LOJA</button>
         </div>
     </div>
 
-    <!-- Zoom Viewer -->
+    <!-- Zoom Overlay -->
     <div class="zoom-overlay" id="zoom-overlay" onclick="this.style.display='none'"><img id="zoom-img"></div>
 
     <!-- PAINEL ADM -->
     <div id="admin-panel">
-        <div style="display:flex; justify-content:space-between; align-items:center; margin-bottom:30px;">
-            <h2>⚙️ Master Admin BRITOTEM</h2>
-            <button onclick="location.reload()" style="padding:10px 20px; border-radius:6px;">SAIR</button>
+        <div style="display:flex; justify-content:space-between; align-items:center; margin-bottom:40px;">
+            <h2 style="color: var(--dark);">⚙️ Master Admin BRITOTEM</h2>
+            <button onclick="location.reload()" style="padding:12px 25px; border-radius:8px; background: white; border: 1px solid #ddd; cursor: pointer; font-weight: bold;">FECHAR ADM</button>
         </div>
 
         <div class="adm-card">
-            <h4>1. Configurações Gerais</h4>
-            <div style="display:grid; grid-template-columns: 1fr 1fr; gap:10px;">
-                <div><label>Nome do Site</label><input type="text" id="adm-nome"></div>
-                <div><label>WhatsApp Central</label><input type="text" id="adm-whats"></div>
+            <h4>1. Personalização do Site</h4>
+            <div style="display:grid; grid-template-columns: 1fr 1fr; gap:15px;">
+                <div><label>Nome da Loja</label><input type="text" id="adm-nome"></div>
+                <div><label>WhatsApp de Vendas</label><input type="text" id="adm-whats"></div>
             </div>
-            <label>Link da Logo</label><input type="text" id="adm-logo">
-            <label>Texto Faixa Azul (Produtos)</label><input type="text" id="adm-led-txt">
-            <label>Aviso de Atendimento</label><input type="text" id="adm-cidade-txt">
-            <label>Texto do Rodapé</label><textarea id="adm-footer"></textarea>
-            <button class="btn-add" onclick="saveConfig()">ATUALIZAR SITE</button>
+            <label>URL da Logo (Recomendado 400x400)</label><input type="text" id="adm-logo">
+            <label>Texto da Faixa Azul (Produtos)</label><input type="text" id="adm-led-txt">
+            <label>Mensagem Atendimento Local</label><input type="text" id="adm-cidade-txt">
+            <label>Texto de Rodapé</label><textarea id="adm-footer" rows="3"></textarea>
+            <button class="btn-add" style="background: var(--dark);" onclick="saveConfig()">SALVAR CONFIGURAÇÕES</button>
         </div>
 
         <div class="adm-card">
-            <h4>2. Cupom & Sorteio</h4>
-            <div style="display:grid; grid-template-columns: 1fr 1fr 1fr; gap:10px;">
-                <div><label>Código</label><input type="text" id="adm-c-code"></div>
-                <div><label>% Desc.</label><input type="number" id="adm-c-pct"></div>
-                <div><label>Validade</label><input type="date" id="adm-c-val"></div>
+            <h4>2. Promoções & Sorteios</h4>
+            <div style="display:grid; grid-template-columns: 1fr 1fr 1fr; gap:15px;">
+                <div><label>Código Cupom</label><input type="text" id="adm-c-code"></div>
+                <div><label>% de Desconto</label><input type="number" id="adm-c-pct"></div>
+                <div><label>Data Expiração</label><input type="date" id="adm-c-val"></div>
             </div>
-            <hr style="margin:20px 0;">
-            <label>Link Banner Sorteio</label><input type="text" id="adm-s-banner">
-            <label>Título Sorteio</label><input type="text" id="adm-s-tit">
-            <label>Descrição Sorteio</label><textarea id="adm-s-desc" rows="4"></textarea>
-            <button class="btn-add" style="background:#6f42c1" onclick="saveExtras()">SALVAR EXTRAS</button>
+            <hr style="margin:25px 0; border-color: #eee;">
+            <label>Banner do Sorteio (Link)</label><input type="text" id="adm-s-banner">
+            <label>Título da Campanha</label><input type="text" id="adm-s-tit">
+            <label>Descrição e Regras</label><textarea id="adm-s-desc" rows="4"></textarea>
+            <button class="btn-add" style="background:#6f42c1" onclick="saveExtras()">ATUALIZAR CAMPANHA</button>
         </div>
 
         <div class="adm-card" style="overflow-x: auto;">
-            <h4>3. Gestão de Produtos</h4>
+            <h4>3. Catálogo de Produtos</h4>
             <div id="adm-product-list"></div>
             <br>
-            <h5>Adicionar Novo</h5>
-            <div style="display:grid; grid-template-columns: 2fr 1fr 1fr; gap:10px;">
-                <input type="text" id="p-new-nome" placeholder="Título">
-                <input type="number" id="p-new-preco" placeholder="Preço">
-                <input type="number" id="p-new-estoque" placeholder="Estoque">
+            <h5 style="background: #f8f9fa; padding: 15px; border-radius: 8px;">➕ Adicionar Novo Produto</h5>
+            <div style="display:grid; grid-template-columns: 2fr 1fr 1fr; gap:15px;">
+                <input type="text" id="p-new-nome" placeholder="Nome do Produto">
+                <input type="number" id="p-new-preco" placeholder="Preço (R$)">
+                <input type="number" id="p-new-estoque" placeholder="Qtd Estoque">
             </div>
-            <input type="text" id="p-new-img" placeholder="Link da Imagem">
-            <textarea id="p-new-det" placeholder="Detalhes (Use Enter para parágrafos)"></textarea>
-            <button class="btn-add" onclick="addProduct()">CADASTRAR PRODUTO</button>
+            <input type="text" id="p-new-img" placeholder="URL da Imagem">
+            <textarea id="p-new-det" placeholder="Descrição Detalhada (Use Enter para parágrafos)"></textarea>
+            <button class="btn-add" onclick="addProduct()">PUBLICAR PRODUTO</button>
         </div>
 
         <div class="adm-card">
-            <h4>4. Logs de Registros</h4>
-            <div id="adm-logs" style="font-size: 0.8rem; line-height: 1.5;"></div>
+            <h4>4. Relatórios e Logs</h4>
+            <div id="adm-logs" style="font-size: 0.9rem; background: #fdfdfd; padding: 15px; border-radius: 8px; border: 1px dashed #ccc;"></div>
         </div>
     </div>
 
     <footer>
         <a href="#" class="btn-a-trigger" onclick="openAdmin()">A</a>
         <div id="v-footer-text"></div>
+        <p style="margin-top: 15px; font-size: 0.8rem; opacity: 0.6;">Rio Negrinho - SC | Desenvolvido por Brito</p>
     </footer>
 
-    <!-- Firebase Integration -->
     <script type="module">
         import { initializeApp } from "https://www.gstatic.com/firebasejs/9.17.1/firebase-app.js";
         import { getDatabase, ref, set, push, onValue, update, remove } from "https://www.gstatic.com/firebasejs/9.17.1/firebase-database.js";
@@ -240,13 +244,12 @@
         let cupomAtivo = null;
         let descFinal = 0;
 
-        // LOAD DATA
+        // INICIALIZAÇÃO DE DADOS
         onValue(ref(db), (snap) => {
             const data = snap.val() || {};
             siteData = data.config || { nome: 'BRITOTEM.COM', whats: '47988771313', led: 'Frete Grátis - Chega Amanhã', atend: 'Atendemos Somente Rio Negrinho SC' };
             cupomAtivo = data.cupom || null;
             
-            // Site UI Update
             document.getElementById('v-site-name').innerText = siteData.nome;
             document.getElementById('site-title-tag').innerText = siteData.nome;
             document.getElementById('v-logo').src = siteData.logo || '';
@@ -254,30 +257,21 @@
             document.getElementById('v-footer-text').innerText = siteData.footer || '© 2026 BRITOTEM';
             document.getElementById('v-cidade-atend').value = siteData.atend;
 
-            // Sorteio UI
             const s = data.sorteio_config || {};
             document.getElementById('v-s-banner').src = s.banner || '';
-            document.getElementById('v-s-titulo').innerText = s.titulo || 'Sorteio do Mês';
+            document.getElementById('v-s-titulo').innerText = s.titulo || 'Sorteio Especial';
             document.getElementById('v-s-desc').innerHTML = s.desc ? s.desc.split('\n').map(p => `<p>${p}</p>`).join('') : '';
 
-            // ADM Fill
+            renderProducts(data.produtos);
+            renderLogs(data);
+            
+            // Auto-fill ADM
             document.getElementById('adm-nome').value = siteData.nome;
             document.getElementById('adm-whats').value = siteData.whats;
             document.getElementById('adm-logo').value = siteData.logo || '';
             document.getElementById('adm-led-txt').value = siteData.led;
             document.getElementById('adm-cidade-txt').value = siteData.atend;
             document.getElementById('adm-footer').value = siteData.footer || '';
-            if(cupomAtivo) {
-                document.getElementById('adm-c-code').value = cupomAtivo.code;
-                document.getElementById('adm-c-pct').value = cupomAtivo.pct;
-                document.getElementById('adm-c-val').value = cupomAtivo.val;
-            }
-            document.getElementById('adm-s-banner').value = s.banner || '';
-            document.getElementById('adm-s-tit').value = s.titulo || '';
-            document.getElementById('adm-s-desc').value = s.desc || '';
-
-            renderProducts(data.produtos);
-            renderLogs(data);
         });
 
         function renderProducts(prods) {
@@ -287,7 +281,6 @@
             
             for(let id in prods) {
                 let p = prods[id];
-                // Storefront
                 grid.innerHTML += `
                     <div class="card" data-title="${p.nome.toLowerCase()}">
                         <img src="${p.img}" onclick="zoom('${p.img}')">
@@ -295,36 +288,35 @@
                             <div class="p-badge">${siteData.led}</div>
                             <div class="p-title">${p.nome}</div>
                             <div class="p-price">R$ ${parseFloat(p.preco).toFixed(2)}</div>
-                            <button class="btn-detalhe" onclick="abrirDetalhe('${p.nome}', \`${p.det}\`)">Detalhes</button>
-                            <button class="btn-add" onclick="addToCart('${id}', '${p.nome}', ${p.preco}, '${p.img}')">ADICIONAR</button>
+                            <button class="btn-detalhe" onclick="abrirDetalhe('${p.nome}', \`${p.det}\`)">DETALHES</button>
+                            <button class="btn-add" onclick="addToCart('${id}', '${p.nome}', ${p.preco}, '${p.img}')">🛒 ADICIONAR</button>
                         </div>
                     </div>
                 `;
-                // ADM Quick Edit
                 admList.innerHTML += `
-                    <div class="quick-edit-grid">
-                        <input type="text" value="${p.nome}" onchange="quickUpdate('${id}', 'nome', this.value)">
-                        <input type="number" value="${p.preco}" onchange="quickUpdate('${id}', 'preco', this.value)">
-                        <input type="number" value="${p.estoque}" onchange="quickUpdate('${id}', 'estoque', this.value)">
-                        <input type="text" value="${p.img}" onchange="quickUpdate('${id}', 'img', this.value)">
-                        <button onclick="removeProd('${id}')" style="color:red; border:none; background:none; cursor:pointer;"><i class="fas fa-trash"></i></button>
+                    <div class="quick-edit-grid" style="display: grid; grid-template-columns: 2fr 1fr 1fr 1fr auto; gap: 10px; border-bottom: 1px solid #eee; padding: 10px 0;">
+                        <div><label>Título</label><input type="text" value="${p.nome}" onchange="quickUpdate('${id}', 'nome', this.value)"></div>
+                        <div><label>Preço</label><input type="number" value="${p.preco}" onchange="quickUpdate('${id}', 'preco', this.value)"></div>
+                        <div><label>Estoque</label><input type="number" value="${p.estoque}" onchange="quickUpdate('${id}', 'estoque', this.value)"></div>
+                        <div><label>URL Imagem</label><input type="text" value="${p.img}" onchange="quickUpdate('${id}', 'img', this.value)"></div>
+                        <button onclick="removeProd('${id}')" style="background:none; border:none; color:red; cursor:pointer; font-size: 1.5rem; margin-top: 25px;">&times;</button>
                     </div>
                 `;
             }
         }
 
-        // LOJA LOGIC
+        // FUNÇÕES LOJA
         window.zoom = (src) => { document.getElementById('zoom-img').src = src; document.getElementById('zoom-overlay').style.display = 'flex'; };
         
         window.abrirDetalhe = (title, text) => {
-            let html = text.split('\n').map(p => `<p style="margin-bottom:10px">${p}</p>`).join('');
-            Swal.fire({ title: title, html: `<div style="text-align:left; font-size:0.9rem;">${html}</div>`, confirmButtonColor: '#0056b3' });
+            let html = text.split('\n').map(p => `<p style="margin-bottom:12px">${p}</p>`).join('');
+            Swal.fire({ title: title, html: `<div class="p-desc-modern" style="text-align:left;">${html}</div>`, confirmButtonColor: '#0056b3', width: '90%' });
         };
 
         window.addToCart = (id, nome, preco, img) => {
             cart.push({id, nome, preco, img});
             document.getElementById('cart-count').innerText = cart.length;
-            Swal.fire({ icon: 'success', title: 'Adicionado!', timer: 800, showConfirmButton: false });
+            Swal.fire({ icon: 'success', title: 'Adicionado ao carrinho!', timer: 800, showConfirmButton: false, toast: true, position: 'top-end' });
         };
 
         window.toggleCart = () => {
@@ -341,13 +333,13 @@
                 list.innerHTML = cart.map((item, index) => `
                     <div class="cart-row">
                         <img src="${item.img}">
-                        <div style="flex-grow:1"><b>${item.nome}</b><br>R$ ${item.preco.toFixed(2)}</div>
-                        <i class="fas fa-times-circle" style="color:red; cursor:pointer" onclick="removeFromCart(${index})"></i>
+                        <div style="flex-grow:1"><b style="font-size:0.9rem">${item.nome}</b><br><span style="color:var(--orange); font-weight:bold">R$ ${item.preco.toFixed(2)}</span></div>
+                        <i class="fas fa-trash-alt" style="color:#ff5e5e; cursor:pointer" onclick="removeFromCart(${index})"></i>
                     </div>
                 `).join('');
                 updateTotal();
             } else {
-                list.innerHTML = "Seu carrinho está vazio.";
+                list.innerHTML = "<p style='text-align:center; padding: 20px; color: #999;'>Seu carrinho está vazio.</p>";
                 form.style.display = 'none';
             }
         }
@@ -360,10 +352,10 @@
             const hoje = new Date().toISOString().split('T')[0];
             if(cupomAtivo && cod === cupomAtivo.code && hoje <= cupomAtivo.val) {
                 descFinal = cupomAtivo.pct;
-                msg.innerHTML = `<span style="color:green">Cupom aplicado! ${descFinal}% OFF</span>`;
+                msg.innerHTML = `<b style="color:green">Cupom ativo: ${descFinal}% de desconto!</b>`;
             } else {
                 descFinal = 0;
-                msg.innerHTML = `<span style="color:red">Cupom inválido ou expirado.</span>`;
+                msg.innerHTML = `<b style="color:red">Cupom inválido ou vencido.</b>`;
             }
             updateTotal();
         };
@@ -383,21 +375,25 @@
                 bairro: document.getElementById('f-bairro').value,
                 casa: document.getElementById('f-casa').value
             };
-            if(!client.nome || !client.whats) return Swal.fire('Erro','Nome e Whats obrigatórios!','error');
+            if(!client.nome || !client.whats) return Swal.fire('Atenção','Preencha ao menos seu Nome e WhatsApp!','warning');
             
             localStorage.setItem('brito_client', JSON.stringify(client));
             let sub = cart.reduce((a,b) => a + b.preco, 0);
             let total = (sub - (sub * (descFinal / 100))).toFixed(2);
-            let pNames = cart.map(i => i.nome).join(', ');
+            let itensStr = cart.map(i => i.nome).join(', ');
 
-            push(ref(db, 'vendas'), { client, total, pNames, data: new Date().toLocaleString() });
+            push(ref(db, 'vendas'), { client, total, itensStr, data: new Date().toLocaleString() });
 
-            let msg = `*PEDIDO - ${siteData.nome}*%0A%0A*Cliente:* ${client.nome}%0A*Whats:* ${client.whats}%0A*Endereço:* ${client.rua}, ${client.casa} - ${client.bairro}%0A%0A*Itens:* ${pNames}%0A%0A*TOTAL: R$ ${total}*`;
-            window.open(`https://wa.me/55${siteData.whats}?text=${msg}`);
-            cart = []; toggleCart(); document.getElementById('cart-count').innerText = "0";
+            let whatsMsg = `*NOVO PEDIDO - ${siteData.nome}*%0A%0A*Cliente:* ${client.nome} ${client.sobrenome}%0A*WhatsApp:* ${client.whats}%0A*Endereço:* ${client.rua}, ${client.casa} - ${client.bairro}%0A%0A*Itens:* ${itensStr}%0A%0A*TOTAL:* R$ ${total}`;
+            window.open(`https://wa.me/55${siteData.whats}?text=${whatsMsg}`);
+            
+            cart = []; 
+            toggleCart(); 
+            document.getElementById('cart-count').innerText = "0";
+            Swal.fire('Pedido Enviado!', 'Você será redirecionado para o WhatsApp para combinar a entrega.', 'success');
         };
 
-        // EXTRAS
+        // EXTRAS E ADM
         window.cadastrarSorteio = () => {
             const s = { 
                 nome: document.getElementById('s-nome').value, 
@@ -405,23 +401,22 @@
                 whats: document.getElementById('s-whats').value, 
                 indica: document.getElementById('s-indica').value 
             };
-            if(!s.nome || !s.whats || !s.indica) return Swal.fire('Erro','Preencha todos os campos!','error');
-            if(s.whats === s.indica) return Swal.fire('Erro','WhatsApp da indicação deve ser diferente do seu!','error');
+            if(!s.nome || !s.whats || !s.indica) return Swal.fire('Erro','Campos Nome, Whats e Indicação são obrigatórios!','error');
+            if(s.whats === s.indica) return Swal.fire('Erro','O WhatsApp de quem indicou deve ser diferente do seu!','error');
             push(ref(db, 'sorteio_vips'), s);
-            Swal.fire('Boa Sorte!','Cadastro realizado com sucesso!','success');
+            Swal.fire('Cadastrado!', 'Boa sorte! Seus dados foram salvos para o sorteio.', 'success');
         };
 
         window.pedirProduto = () => {
             const p = document.getElementById('missing-p').value;
             if(!p) return;
             push(ref(db, 'pedidos_faltantes'), { nome: p, data: new Date().toLocaleString() });
-            Swal.fire('Recebido!','Anotamos sua sugestão.','success');
+            Swal.fire('Anotado!', 'Agradecemos sua sugestão. Verificaremos a disponibilidade em breve.', 'info');
             document.getElementById('missing-p').value = "";
         };
 
-        // ADM LOGIC
         window.openAdmin = () => {
-            Swal.fire({ title: 'Acesso Restrito', input: 'password', showCancelButton: true }).then(r => {
+            Swal.fire({ title: 'Acesso Administrativo', input: 'password', showCancelButton: true, confirmButtonText: 'Entrar' }).then(r => {
                 if(r.value === "848218") document.getElementById('admin-panel').style.display = 'block';
                 else if(r.value) Swal.fire('Negado','Senha incorreta','error');
             });
@@ -436,7 +431,7 @@
                 atend: document.getElementById('adm-cidade-txt').value,
                 footer: document.getElementById('adm-footer').value
             });
-            Swal.fire('OK','Configurações Salvas','success');
+            Swal.fire('Sucesso','Configurações aplicadas!','success');
         };
 
         window.saveExtras = () => {
@@ -450,7 +445,7 @@
                 titulo: document.getElementById('adm-s-tit').value,
                 desc: document.getElementById('adm-s-desc').value
             });
-            Swal.fire('OK','Sorteio e Cupom atualizados','success');
+            Swal.fire('Atualizado','Cupom e Sorteio foram salvos!','success');
         };
 
         window.addProduct = () => {
@@ -461,44 +456,46 @@
                 img: document.getElementById('p-new-img').value,
                 det: document.getElementById('p-new-det').value
             };
+            if(!p.nome || !p.preco) return Swal.fire('Erro', 'Nome e Preço são obrigatórios', 'error');
             push(ref(db, 'produtos'), p);
-            Swal.fire('Sucesso','Produto adicionado','success');
+            Swal.fire('Produto Criado', '', 'success');
+            // Limpar campos
+            ['p-new-nome','p-new-preco','p-new-estoque','p-new-img','p-new-det'].forEach(id => document.getElementById(id).value = "");
         };
 
         window.quickUpdate = (id, field, value) => {
-            const up = {}; up[`/produtos/${id}/${field}`] = (field === 'preco' || field === 'estoque') ? parseFloat(value) : value;
-            update(ref(db), up);
+            const updateRef = {};
+            updateRef[`/produtos/${id}/${field}`] = (field === 'preco' || field === 'estoque') ? parseFloat(value) : value;
+            update(ref(db), updateRef);
         };
 
-        window.removeProd = (id) => { if(confirm('Excluir este produto?')) remove(ref(db, `produtos/${id}`)); };
+        window.removeProd = (id) => { if(confirm('Excluir permanentemente este produto?')) remove(ref(db, `produtos/${id}`)); };
 
         function renderLogs(data) {
             const div = document.getElementById('adm-logs');
-            let html = "<strong>Vendas:</strong><br>";
-            if(data.vendas) Object.values(data.vendas).reverse().forEach(v => html += `${v.data} - ${v.client.nome}: R$ ${v.total}<br>`);
-            html += "<br><strong>Sorteios:</strong><br>";
-            if(data.sorteio_vips) Object.values(data.sorteio_vips).reverse().forEach(s => html += `${s.nome} (${s.whats}) - Indicou: ${s.indica}<br>`);
-            html += "<br><strong>Pedidos Faltantes:</strong><br>";
-            if(data.pedidos_faltantes) Object.values(data.pedidos_faltantes).reverse().forEach(f => html += `${f.data}: ${f.nome}<br>`);
-            div.innerHTML = html;
+            let h = "<strong>📦 Histórico de Vendas:</strong><br>";
+            if(data.vendas) Object.values(data.vendas).reverse().forEach(v => h += `• ${v.data} - ${v.client.nome}: R$ ${v.total}<br>`);
+            h += "<br><strong>🍀 Inscritos Sorteio:</strong><br>";
+            if(data.sorteio_vips) Object.values(data.sorteio_vips).reverse().forEach(s => h += `• ${s.nome} (${s.whats}) - Indicado por: ${s.indica}<br>`);
+            h += "<br><strong>🔍 Sugestões de Clientes:</strong><br>";
+            if(data.pedidos_faltantes) Object.values(data.pedidos_faltantes).reverse().forEach(f => h += `• ${f.data}: ${f.nome}<br>`);
+            div.innerHTML = h;
         }
 
         function loadClientData() {
             const saved = localStorage.getItem('brito_client');
             if(saved) {
                 const c = JSON.parse(saved);
-                document.getElementById('f-nome').value = c.nome || '';
-                document.getElementById('f-sobrenome').value = c.sobrenome || '';
-                document.getElementById('f-whats').value = c.whats || '';
-                document.getElementById('f-rua').value = c.rua || '';
-                document.getElementById('f-bairro').value = c.bairro || '';
-                document.getElementById('f-casa').value = c.casa || '';
+                ['f-nome', 'f-sobrenome', 'f-whats', 'f-rua', 'f-bairro', 'f-casa'].forEach(id => {
+                    let field = id.split('-')[1];
+                    document.getElementById(id).value = c[field] || '';
+                });
             }
         }
     </script>
 
     <script>
-        // DRAG & SEARCH & SECURITY
+        // DRAG, SEARCH E SEGURANÇA
         let activeEl, isDragging = false, offset = [0,0];
 
         function dragStart(e, el) {
@@ -519,14 +516,16 @@
         document.addEventListener('touchend', () => isDragging = false);
 
         window.filtrarProdutos = () => {
-            const t = document.getElementById('search-input').value.toLowerCase();
-            document.querySelectorAll('#product-grid .card').forEach(c => {
-                c.style.display = c.getAttribute('data-title').includes(t) ? 'flex' : 'none';
+            const term = document.getElementById('search-input').value.toLowerCase();
+            document.querySelectorAll('#product-grid .card').forEach(card => {
+                card.style.display = card.getAttribute('data-title').includes(term) ? 'flex' : 'none';
             });
         };
 
-        // Bloqueio F12 e Inspeção básica
-        document.onkeydown = (e) => { if(e.keyCode == 123 || (e.ctrlKey && e.shiftKey && (e.keyCode == 73 || e.keyCode == 74))) return false; };
+        // Bloqueio de Teclas de Inspeção
+        document.onkeydown = (e) => {
+            if(e.keyCode == 123 || (e.ctrlKey && e.shiftKey && (e.keyCode == 73 || e.keyCode == 74))) return false;
+        };
     </script>
 </body>
 </html>
