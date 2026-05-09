@@ -456,7 +456,7 @@ gap:10px;
 <button class="btn btn-primary" onclick="sendProductRequest()">ENVIAR PEDIDO</button>
 </section>
 
-<section class="raffle-box">
+<section class="raffle-box" id="raffleSection">
 <div class="raffle-layout">
 <div>
 <img id="raffleImage" class="raffle-img" src="" onclick="openZoom(encodeURIComponent(this.src))">
@@ -543,8 +543,10 @@ gap:10px;
 <input id="cBairro" required>
 </div>
 <div>
-<label>Cidade</label>
-<input id="cCidade" required>
+<label>Cidade atendida</label>
+<select id="cCidade" required>
+<option value="">Selecione sua cidade</option>
+</select>
 </div>
 <div>
 <label>Número da Casa</label>
@@ -610,8 +612,26 @@ gap:10px;
 </div>
 
 <div class="admin-section">
+<h3>Cidades atendidas</h3>
+<p class="help">Cadastre aqui as cidades que você atende. No carrinho, o cliente só poderá escolher uma dessas cidades.</p>
+
+<label>Nome da cidade atendida</label>
+<input id="newCity" placeholder="Exemplo: Rio Negrinho SC">
+
+<button class="btn btn-green" onclick="addCity()">CADASTRAR CIDADE</button>
+
+<div id="adminCities"></div>
+</div>
+
+<div class="admin-section">
 <h3>Editar sessão de sorteio</h3>
-<p class="help">Edite o título, imagem e descrição da sessão de sorteio exibida na sequência do site.</p>
+<p class="help">Edite o título, imagem, descrição e escolha se a sessão de sorteio aparece ou não na loja.</p>
+
+<label>Exibir sessão de sorteio na loja?</label>
+<select id="admRaffleEnabled">
+<option value="true">SIM, EXIBIR SORTEIO</option>
+<option value="false">NÃO, OCULTAR SORTEIO</option>
+</select>
 
 <label>Título do sorteio</label>
 <input id="admRaffleTitle">
@@ -716,6 +736,7 @@ let config={};
 let coupons={};
 let raffle={};
 let raffleParticipants={};
+let cities={};
 let cart=[];
 let appliedCoupon=null;
 
@@ -767,18 +788,37 @@ renderProducts();
 renderCart();
 });
 
+onValue(ref(db,"cities"),snap=>{
+cities=snap.val()||{};
+if(Object.keys(cities).length===0){
+push(ref(db,"cities"),{name:"Rio Negrinho SC"});
+return;
+}
+renderCitiesSelect();
+renderAdminCities();
+});
+
 onValue(ref(db,"raffle"),snap=>{
 raffle=snap.val()||{
+enabled:true,
 title:"Sorteio Especial BRITOTEM.COM",
 image:"https://via.placeholder.com/900x600/075ee8/ffffff?text=Sorteio+BRITOTEM.COM",
 description:"Cadastre-se para participar do nosso sorteio especial.\\n\\nPreencha seus dados e indique o WhatsApp de um amigo."
 };
+
 raffleTitle.innerText=raffle.title||"Sorteio Especial BRITOTEM.COM";
 raffleImage.src=raffle.image||"https://via.placeholder.com/900x600/075ee8/ffffff?text=Sorteio+BRITOTEM.COM";
 raffleDesc.innerText=raffle.description||"Cadastre-se para participar do nosso sorteio especial.";
 admRaffleTitle.value=raffle.title||"";
 admRaffleImage.value=raffle.image||"";
 admRaffleDesc.value=raffle.description||"";
+admRaffleEnabled.value=String(raffle.enabled!==false);
+
+if(raffle.enabled===false){
+raffleSection.style.display="none";
+}else{
+raffleSection.style.display="block";
+}
 });
 
 onValue(ref(db,"raffleParticipants"),snap=>{
@@ -1147,12 +1187,62 @@ adminPanel.style.display="none";
 
 window.saveRaffleConfig=()=>{
 set(ref(db,"raffle"),{
+enabled:admRaffleEnabled.value==="true",
 title:admRaffleTitle.value.trim()||"Sorteio Especial BRITOTEM.COM",
 image:admRaffleImage.value.trim()||"https://via.placeholder.com/900x600/075ee8/ffffff?text=Sorteio+BRITOTEM.COM",
 description:admRaffleDesc.value.trim()||"Cadastre-se para participar do nosso sorteio especial."
 });
 alert("Sorteio salvo.");
 adminPanel.style.display="none";
+};
+
+window.addCity=()=>{
+const name=newCity.value.trim();
+if(!name){
+alert("Digite o nome da cidade.");
+return;
+}
+push(ref(db,"cities"),{name});
+newCity.value="";
+alert("Cidade cadastrada.");
+};
+
+function renderCitiesSelect(){
+cCidade.innerHTML='<option value="">Selecione sua cidade</option>';
+Object.entries(cities).forEach(([id,c])=>{
+cCidade.innerHTML+=`<option value="${c.name||""}">${c.name||""}</option>`;
+});
+}
+
+function renderAdminCities(){
+adminCities.innerHTML="";
+Object.entries(cities).forEach(([id,c])=>{
+adminCities.innerHTML+=`
+<div class="admin-item">
+<label>Nome da cidade atendida</label>
+<input id="city_${id}" value="${c.name||""}">
+<div class="admin-actions">
+<button class="btn btn-primary" onclick="saveCity('${id}')">SALVAR CIDADE</button>
+<button class="btn btn-red" onclick="deleteCity('${id}')">APAGAR CIDADE</button>
+</div>
+</div>`;
+});
+}
+
+window.saveCity=id=>{
+const name=document.getElementById("city_"+id).value.trim();
+if(!name){
+alert("Digite o nome da cidade.");
+return;
+}
+update(ref(db,"cities/"+id),{name});
+alert("Cidade salva.");
+};
+
+window.deleteCity=id=>{
+if(confirm("Apagar esta cidade atendida?")){
+remove(ref(db,"cities/"+id));
+}
 };
 
 window.saveCoupon=()=>{
