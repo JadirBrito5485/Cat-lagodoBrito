@@ -3,7 +3,7 @@
 <head>
 
 <meta charset="UTF-8">
-<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<meta name="viewport" content="width=device-width,initial-scale=1.0">
 
 <title>BRITOTEM.COM</title>
 
@@ -21,14 +21,27 @@ font-family:'Poppins',sans-serif;
 body{
 background:#f4f7ff;
 overflow-x:hidden;
+-webkit-tap-highlight-color:transparent;
+}
+
+img{
+user-select:none;
+pointer-events:auto;
+}
+
+:root{
+--azul:#0d6efd;
+--verde:#25d366;
+--escuro:#111827;
+--cinza:#6b7280;
 }
 
 ::-webkit-scrollbar{
-width:6px;
+width:5px;
 }
 
 ::-webkit-scrollbar-thumb{
-background:#0d6efd;
+background:var(--azul);
 border-radius:20px;
 }
 
@@ -38,25 +51,25 @@ header{
 position:sticky;
 top:0;
 z-index:999;
-background:#0d6efd;
-padding:15px;
+background:var(--azul);
+padding:14px;
 box-shadow:0 5px 20px rgba(0,0,0,0.15);
 }
 
 .topo{
-max-width:1600px;
+max-width:1700px;
 margin:auto;
 display:flex;
 align-items:center;
+justify-content:space-between;
 gap:20px;
-flex-wrap:wrap;
 }
 
 .logo{
-font-size:32px;
-font-weight:700;
 color:#fff;
-min-width:250px;
+font-size:28px;
+font-weight:700;
+min-width:max-content;
 }
 
 .busca{
@@ -65,55 +78,61 @@ flex:1;
 
 .busca input{
 width:100%;
-padding:16px;
+padding:15px;
 border:none;
-border-radius:15px;
-font-size:16px;
 outline:none;
+border-radius:14px;
+font-size:15px;
 }
 
-/* CONTAINER */
+/* PRODUTOS */
 
 .container{
-max-width:1600px;
-margin:30px auto;
-padding:0 15px;
+max-width:1700px;
+margin:auto;
+padding:20px;
 }
-
-/* GRADE */
 
 .grade{
 display:grid;
-grid-template-columns:repeat(auto-fit,minmax(260px,1fr));
-gap:20px;
+grid-template-columns:repeat(auto-fit,minmax(250px,1fr));
+gap:18px;
 }
-
-/* PRODUTO */
 
 .produto{
 background:#fff;
-border-radius:20px;
+border-radius:22px;
 overflow:hidden;
 position:relative;
 box-shadow:0 5px 20px rgba(0,0,0,0.08);
 transition:0.3s;
+display:flex;
+flex-direction:column;
 }
 
 .produto:hover{
 transform:translateY(-5px);
 }
 
+.produto img{
+width:100%;
+height:260px;
+object-fit:cover;
+cursor:pointer;
+background:#eee;
+}
+
 .faixa{
 position:absolute;
 top:10px;
 left:10px;
-background:#25d366;
+background:var(--verde);
+color:#fff;
 padding:8px 12px;
 border-radius:12px;
-color:#fff;
-font-size:12px;
+font-size:11px;
 font-weight:700;
-z-index:5;
+z-index:10;
 }
 
 .esgotado{
@@ -122,150 +141,72 @@ top:50%;
 left:50%;
 transform:translate(-50%,-50%);
 background:red;
-padding:14px 20px;
-border-radius:15px;
 color:#fff;
-font-weight:700;
+padding:12px 20px;
 font-size:18px;
+font-weight:700;
+border-radius:14px;
 z-index:20;
-}
-
-.produto img{
-width:100%;
-height:260px;
-object-fit:cover;
-cursor:pointer;
 }
 
 .info{
 padding:15px;
+display:flex;
+flex-direction:column;
+flex:1;
 }
 
 .info h3{
-font-size:20px;
+font-size:17px;
 margin-bottom:10px;
+color:var(--escuro);
 }
 
 .desc{
 font-size:14px;
-color:#666;
-height:45px;
-overflow:hidden;
+color:var(--cinza);
+min-height:42px;
 }
 
 .preco{
 font-size:28px;
 font-weight:700;
-color:#0d6efd;
-margin-top:15px;
+color:var(--azul);
+margin-top:10px;
 }
 
-.btn,
-.btn2{
-width:100%;
-padding:15px;
-border:none;
-border-radius:12px;
-margin-top:10px;
-cursor:pointer;
-font-weight:700;
-font-size:15px;
+.botoes{
+margin-top:auto;
 }
 
 .btn{
-background:#0d6efd;
+width:100%;
+padding:14px;
+border:none;
+border-radius:14px;
+font-weight:700;
+cursor:pointer;
+margin-top:10px;
+transition:0.2s;
+}
+
+.btn:hover{
+transform:scale(0.98);
+}
+
+.btn-add{
+background:var(--azul);
 color:#fff;
 }
 
-.btn2{
+.btn-det{
 background:#111;
 color:#fff;
 }
 
-/* FLUTUANTES */
-
-.cart-float,
-.whats-float{
-position:fixed;
-width:85px;
-height:85px;
-border-radius:50%;
-display:flex;
-justify-content:center;
-align-items:center;
-z-index:9999;
-cursor:move;
-box-shadow:0 5px 20px rgba(0,0,0,0.3);
-user-select:none;
-}
-
-.cart-float{
-right:20px;
-bottom:20px;
-background:#0d6efd;
-font-size:34px;
-color:#fff;
-}
-
-.whats-float{
-left:20px;
-bottom:20px;
-background:#25d366;
-flex-direction:column;
-text-decoration:none;
-color:#fff;
-padding:8px;
-font-size:12px;
-font-weight:700;
-text-align:center;
-}
-
-.badge{
-position:absolute;
-top:-5px;
-right:-5px;
-width:30px;
-height:30px;
-background:red;
-border-radius:50%;
-display:flex;
-justify-content:center;
-align-items:center;
-font-size:13px;
-font-weight:700;
-}
-
-.led{
-animation:pisca 1s infinite;
-}
-
-@keyframes pisca{
-0%{opacity:1;}
-50%{opacity:0.3;}
-100%{opacity:1;}
-}
-
-/* MODAIS */
-
-.modal{
-position:fixed;
-inset:0;
-background:rgba(0,0,0,0.8);
-display:none;
-justify-content:center;
-align-items:center;
-padding:20px;
-z-index:99999;
-}
-
-.modal-content{
-background:#fff;
-width:100%;
-max-width:1100px;
-max-height:95vh;
-overflow:auto;
-border-radius:20px;
-padding:25px;
+.btn:disabled{
+background:#999;
+cursor:not-allowed;
 }
 
 /* ZOOM */
@@ -278,22 +219,53 @@ display:none;
 justify-content:center;
 align-items:center;
 z-index:999999;
+padding:20px;
 }
 
 .zoom img{
-max-width:90%;
-max-height:90%;
+max-width:95%;
+max-height:95%;
 border-radius:20px;
+}
+
+/* MODAIS */
+
+.modal{
+position:fixed;
+inset:0;
+background:rgba(0,0,0,0.7);
+display:none;
+justify-content:center;
+align-items:center;
+padding:20px;
+z-index:999999;
+}
+
+.modal-content{
+background:#fff;
+width:100%;
+max-width:1100px;
+max-height:95vh;
+overflow:auto;
+border-radius:24px;
+padding:25px;
 }
 
 /* DETALHES */
 
-.detalhes{
-white-space:pre-line;
-line-height:1.9;
+#imgDetalhe{
+width:100%;
+max-height:450px;
+object-fit:cover;
+border-radius:20px;
+margin-top:15px;
+}
+
+#textoDetalhes{
 margin-top:20px;
+line-height:1.8;
+white-space:pre-line;
 color:#444;
-font-size:16px;
 }
 
 /* CARRINHO */
@@ -302,21 +274,21 @@ font-size:16px;
 display:flex;
 gap:15px;
 align-items:center;
+padding:12px;
 border:1px solid #ddd;
-padding:10px;
-border-radius:15px;
-margin-bottom:15px;
+border-radius:16px;
+margin-top:12px;
 }
 
 .item-cart img{
 width:80px;
 height:80px;
 object-fit:cover;
-border-radius:10px;
+border-radius:12px;
 }
 
 .item-cart input{
-width:80px;
+width:70px;
 padding:10px;
 border-radius:10px;
 border:1px solid #ddd;
@@ -326,21 +298,21 @@ border:1px solid #ddd;
 font-size:28px;
 font-weight:700;
 margin-top:20px;
-color:#0d6efd;
+color:var(--azul);
 }
 
 .form-grid{
 display:grid;
 grid-template-columns:repeat(auto-fit,minmax(220px,1fr));
 gap:15px;
-margin-top:20px;
+margin-top:25px;
 }
 
 .form-grid input,
 .form-grid textarea{
 width:100%;
-padding:14px;
-border-radius:12px;
+padding:15px;
+border-radius:14px;
 border:1px solid #ddd;
 outline:none;
 }
@@ -354,52 +326,171 @@ resize:none;
 .btn-finalizar,
 .btn-continuar{
 width:100%;
-padding:18px;
+padding:17px;
 border:none;
 border-radius:15px;
-margin-top:15px;
-font-size:18px;
+font-size:17px;
 font-weight:700;
+margin-top:15px;
 cursor:pointer;
 color:#fff;
 }
 
 .btn-finalizar{
-background:#25d366;
+background:var(--verde);
 }
 
 .btn-continuar{
-background:#0d6efd;
+background:var(--azul);
 }
 
-/* PEDIDO */
+/* FLUTUANTES */
+
+.cart-float,
+.whats-float{
+position:fixed;
+width:82px;
+height:82px;
+border-radius:50%;
+display:flex;
+align-items:center;
+justify-content:center;
+z-index:99999;
+cursor:move;
+box-shadow:0 5px 20px rgba(0,0,0,0.25);
+color:#fff;
+user-select:none;
+}
+
+.cart-float{
+right:20px;
+bottom:20px;
+background:var(--azul);
+font-size:32px;
+}
+
+.whats-float{
+left:20px;
+bottom:20px;
+background:var(--verde);
+flex-direction:column;
+font-size:11px;
+font-weight:700;
+text-align:center;
+padding:5px;
+text-decoration:none;
+}
+
+.badge{
+position:absolute;
+top:-5px;
+right:-5px;
+width:30px;
+height:30px;
+border-radius:50%;
+background:red;
+display:flex;
+align-items:center;
+justify-content:center;
+font-weight:700;
+font-size:13px;
+}
+
+.led{
+animation:pisca 1s infinite;
+}
+
+@keyframes pisca{
+0%{opacity:1;}
+50%{opacity:0.4;}
+100%{opacity:1;}
+}
+
+/* PEDIDO PRODUTO */
 
 .pedido-box{
-margin-top:50px;
 background:#fff;
 padding:25px;
-border-radius:20px;
+border-radius:24px;
+margin-top:40px;
 box-shadow:0 5px 20px rgba(0,0,0,0.08);
 }
 
 .pedido-box textarea{
 width:100%;
 height:120px;
-border-radius:15px;
+border-radius:16px;
 border:1px solid #ddd;
 padding:15px;
-resize:none;
 margin-top:15px;
+resize:none;
 }
 
 .pedido-box button{
 padding:15px 25px;
 border:none;
-border-radius:12px;
-background:#0d6efd;
+border-radius:14px;
+background:var(--azul);
 color:#fff;
+font-weight:700;
 cursor:pointer;
 margin-top:15px;
+}
+
+/* ADM */
+
+#adm{
+position:fixed;
+inset:0;
+background:#f4f7ff;
+z-index:9999999;
+overflow:auto;
+display:none;
+padding:20px;
+}
+
+.adm-box{
+background:#fff;
+padding:25px;
+border-radius:24px;
+margin-bottom:20px;
+box-shadow:0 5px 20px rgba(0,0,0,0.08);
+}
+
+.adm-box h2{
+margin-bottom:20px;
+}
+
+.adm-box p{
+font-size:14px;
+margin-bottom:8px;
+color:#666;
+}
+
+.adm-box input,
+.adm-box textarea{
+width:100%;
+padding:14px;
+border-radius:14px;
+border:1px solid #ddd;
+margin-bottom:15px;
+outline:none;
+}
+
+.adm-box textarea{
+height:140px;
+resize:none;
+}
+
+.salvar{
+padding:14px 20px;
+border:none;
+border-radius:14px;
+background:var(--azul);
+color:#fff;
+font-weight:700;
+cursor:pointer;
+margin-right:10px;
 }
 
 /* FOOTER */
@@ -412,65 +503,62 @@ text-align:center;
 }
 
 .admin-link{
-opacity:0.1;
+opacity:0.12;
 color:#fff;
-font-size:14px;
+font-size:15px;
 cursor:pointer;
 margin-bottom:10px;
 }
 
 .copy{
-color:#777;
+color:#888;
 font-size:14px;
 }
 
-/* ADM */
+/* MOBILE SHOPEE */
 
-#admPanel{
-position:fixed;
-inset:0;
-background:#f4f7ff;
-z-index:999999;
-overflow:auto;
-padding:20px;
-display:none;
+@media(max-width:700px){
+
+.logo{
+font-size:21px;
 }
 
-.adm-box{
-background:#fff;
-padding:20px;
-border-radius:20px;
-margin-bottom:20px;
-box-shadow:0 5px 20px rgba(0,0,0,0.08);
+.grade{
+grid-template-columns:repeat(2,1fr);
+gap:12px;
 }
 
-.adm-box h2{
-margin-bottom:20px;
+.produto img{
+height:170px;
 }
 
-.adm-box input,
-.adm-box textarea{
-width:100%;
-padding:14px;
-border-radius:12px;
-border:1px solid #ddd;
-margin-top:10px;
-margin-bottom:15px;
+.preco{
+font-size:21px;
 }
 
-.adm-box button{
-padding:14px 25px;
-border:none;
-border-radius:12px;
-background:#0d6efd;
-color:#fff;
-cursor:pointer;
-font-weight:700;
-margin-right:10px;
+.info h3{
+font-size:14px;
+}
+
+.desc{
+font-size:12px;
+min-height:35px;
+}
+
+.btn{
+padding:11px;
+font-size:12px;
+}
+
+.cart-float,
+.whats-float{
+width:70px;
+height:70px;
+}
+
 }
 
 </style>
-
 </head>
 
 <body>
@@ -499,7 +587,7 @@ BRITOTEM.COM
 
 <h2>Não encontrou o produto?</h2>
 
-<p>Digite abaixo o produto que deseja.</p>
+<p>Digite abaixo qual produto você gostaria de encontrar na loja.</p>
 
 <textarea id="produtoDesejado"></textarea>
 
@@ -514,9 +602,7 @@ ENVIAR PEDIDO
 <!-- ZOOM -->
 
 <div class="zoom" id="zoom">
-
 <img id="zoomImg">
-
 </div>
 
 <!-- DETALHES -->
@@ -527,9 +613,9 @@ ENVIAR PEDIDO
 
 <h2 id="tituloDetalhe"></h2>
 
-<img id="imgDetalhe" style="width:100%;max-height:400px;object-fit:cover;border-radius:20px;margin-top:20px;">
+<img id="imgDetalhe">
 
-<div class="detalhes" id="textoDetalhes"></div>
+<div id="textoDetalhes"></div>
 
 <button class="btn-continuar" onclick="fecharDetalhes()">
 FECHAR
@@ -545,15 +631,16 @@ FECHAR
 
 🛒
 
-<div class="badge" id="badge">
-0
-</div>
+<div class="badge" id="badge">0</div>
 
 </div>
 
 <!-- WHATS -->
 
-<a href="https://wa.me/5547988771313" target="_blank" class="whats-float" id="whatsFloat">
+<a href="https://wa.me/5547988771313"
+target="_blank"
+class="whats-float"
+id="whatsFloat">
 
 💬
 
@@ -574,7 +661,7 @@ FALE COM O VENDEDOR
 <div id="listaCarrinho"></div>
 
 <div class="total" id="total">
-Total: R$ 0
+Total: R$ 0,00
 </div>
 
 <div class="form-grid">
@@ -607,25 +694,25 @@ CONTINUAR COMPRANDO
 
 <!-- ADM -->
 
-<div id="admPanel">
+<div id="adm">
 
 <div class="adm-box">
 
-<h2>PAINEL ADMINISTRATIVO</h2>
+<h2>Painel Administrativo</h2>
 
-<p>Edite abaixo o nome do site.</p>
+<p>Nome da loja exibido no topo do site.</p>
 
-<input type="text" id="admLogo">
+<input type="text" id="admNomeLoja">
 
-<p>Texto da faixa de frete.</p>
+<p>Texto da faixa verde exibida nos produtos.</p>
 
 <input type="text" id="admFaixa">
 
-<button onclick="salvarConfig()">
+<button class="salvar" onclick="salvarConfig()">
 SALVAR
 </button>
 
-<button onclick="fecharADM()">
+<button class="salvar" onclick="fecharADM()">
 SAIR
 </button>
 
@@ -633,25 +720,25 @@ SAIR
 
 <div class="adm-box">
 
-<h2>Produtos</h2>
-
-<div id="admProdutos"></div>
-
-</div>
-
-<div class="adm-box">
-
 <h2>Pedidos Recebidos</h2>
 
-<div id="admPedidos"></div>
+<div id="listaPedidos"></div>
 
 </div>
 
 <div class="adm-box">
 
-<h2>Produtos Solicitados</h2>
+<h2>Pedidos de Produtos Não Encontrados</h2>
 
-<div id="admPedidosProdutos"></div>
+<div id="listaPedidosProdutos"></div>
+
+</div>
+
+<div class="adm-box">
+
+<h2>Produtos</h2>
+
+<div id="listaADMProdutos"></div>
 
 </div>
 
@@ -684,40 +771,33 @@ from "https://www.gstatic.com/firebasejs/10.12.2/firebase-database.js";
 
 const firebaseConfig = {
 
-apiKey: "AIzaSyCf6_DCNSh4a3IiOtTv5Uf_N8YaxQtBczw",
-authDomain: "loja-a33e1.firebaseapp.com",
-databaseURL: "https://loja-a33e1-default-rtdb.firebaseio.com",
-projectId: "loja-a33e1",
-storageBucket: "loja-a33e1.firebasestorage.app",
-messagingSenderId: "304798626706",
-appId: "1:304798626706:web:23a0672e6a98ae432c474b"
+apiKey:"AIzaSyCf6_DCNSh4a3IiOtTv5Uf_N8YaxQtBczw",
+authDomain:"loja-a33e1.firebaseapp.com",
+databaseURL:"https://loja-a33e1-default-rtdb.firebaseio.com",
+projectId:"loja-a33e1",
+storageBucket:"loja-a33e1.firebasestorage.app",
+messagingSenderId:"304798626706",
+appId:"1:304798626706:web:23a0672e6a98ae432c474b"
 
 };
 
-const app = initializeApp(firebaseConfig);
-const db = getDatabase(app);
+const app=initializeApp(firebaseConfig);
+const db=getDatabase(app);
 
-let produtos = [];
-let carrinho = [];
-let faixaFrete = "FRETE GRÁTIS - CHEGA AMANHÃ";
+let produtos=[];
+let carrinho=[];
 
 /* CONFIG */
 
-onValue(ref(db,"config"),(snapshot)=>{
+onValue(ref(db,"config"),snap=>{
 
-const cfg = snapshot.val();
+const cfg=snap.val() || {};
 
-if(cfg){
+document.getElementById("logoSite").innerText=cfg.nome || "BRITOTEM.COM";
 
-document.getElementById("logoSite").innerText = cfg.logo || "BRITOTEM.COM";
+document.getElementById("admNomeLoja").value=cfg.nome || "BRITOTEM.COM";
 
-document.getElementById("admLogo").value = cfg.logo || "";
-
-document.getElementById("admFaixa").value = cfg.faixa || "";
-
-faixaFrete = cfg.faixa || faixaFrete;
-
-}
+document.getElementById("admFaixa").value=cfg.faixa || "FRETE GRÁTIS - CHEGA AMANHÃ";
 
 });
 
@@ -725,99 +805,80 @@ faixaFrete = cfg.faixa || faixaFrete;
 
 function carregarProdutos(){
 
-onValue(ref(db,"produtos"),(snapshot)=>{
+onValue(ref(db,"produtos"),snapshot=>{
 
-const dados = snapshot.val();
+const dados=snapshot.val();
 
-document.getElementById("grade").innerHTML = "";
+const grade=document.getElementById("grade");
 
-document.getElementById("admProdutos").innerHTML = "";
+grade.innerHTML="";
 
-produtos = [];
+produtos=[];
 
-if(!dados) return;
+if(!dados)return;
 
-Object.keys(dados).forEach((id)=>{
+Object.keys(dados).forEach(id=>{
 
-const p = dados[id];
+const p=dados[id];
 
-p.id = id;
+p.id=id;
 
 produtos.push(p);
 
-const semEstoque = Number(p.estoque || 0) <= 0;
+const estoque=Number(p.estoque || 0);
 
-document.getElementById("grade").innerHTML += `
+grade.innerHTML += `
 
 <div class="produto">
 
 <div class="faixa">
-${faixaFrete}
+${document.getElementById("admFaixa").value || "FRETE GRÁTIS - CHEGA AMANHÃ"}
 </div>
 
-${semEstoque ? '<div class="esgotado">ESGOTADO</div>' : ''}
+${estoque <= 0 ? '<div class="esgotado">ESGOTADO</div>' : ''}
 
 <img src="${p.imagem}" onclick="zoomImagem('${p.imagem}')">
 
 <div class="info">
 
-<h3>${p.titulo}</h3>
+<h3>${p.titulo || ''}</h3>
 
 <div class="desc">
-${p.descricao}
+${p.descricao || ''}
 </div>
 
 <div class="preco">
-R$ ${Number(p.preco).toFixed(2)}
+R$ ${Number(p.preco || 0).toFixed(2)}
 </div>
 
-${!semEstoque ? `
-<button class="btn" onclick="addCarrinho('${id}')">
-ADICIONAR
-</button>
-` : ''}
+<div class="botoes">
 
-<button class="btn2" onclick="abrirDetalhes('${id}')">
+<button class="btn btn-add"
+${estoque <= 0 ? 'disabled' : ''}
+onclick="addCarrinho('${id}')">
+
+${estoque <= 0 ? 'ESGOTADO' : 'ADICIONAR'}
+
+</button>
+
+<button class="btn btn-det"
+onclick="abrirDetalhes('${id}')">
+
 DETALHES
+
 </button>
 
 </div>
 
 </div>
-
-`;
-
-document.getElementById("admProdutos").innerHTML += `
-
-<div style="border:1px solid #ddd;padding:15px;border-radius:15px;margin-bottom:15px;">
-
-<p>Título do Produto</p>
-<input type="text" id="titulo_${id}" value="${p.titulo || ''}">
-
-<p>Imagem do Produto</p>
-<input type="text" id="imagem_${id}" value="${p.imagem || ''}">
-
-<p>Preço do Produto</p>
-<input type="number" id="preco_${id}" value="${p.preco || 0}">
-
-<p>Descrição Curta</p>
-<textarea id="descricao_${id}">${p.descricao || ''}</textarea>
-
-<p>Descrição Completa</p>
-<textarea id="detalhes_${id}">${p.detalhes || ''}</textarea>
-
-<p>Quantidade em Estoque</p>
-<input type="number" id="estoque_${id}" value="${p.estoque || 0}">
-
-<button onclick="salvarProduto('${id}')">
-SALVAR
-</button>
 
 </div>
 
 `;
 
 });
+
+renderADMProdutos();
 
 });
 
@@ -827,16 +888,16 @@ carregarProdutos();
 
 /* BUSCA */
 
-document.getElementById("busca").addEventListener("keyup",(e)=>{
+document.getElementById("busca").addEventListener("keyup",e=>{
 
-const valor = e.target.value.toLowerCase();
+const valor=e.target.value.toLowerCase();
 
-document.querySelectorAll(".produto").forEach((card)=>{
+document.querySelectorAll(".produto").forEach(card=>{
 
-const titulo = card.querySelector("h3").innerText.toLowerCase();
+const titulo=card.querySelector("h3").innerText.toLowerCase();
 
-card.style.display = titulo.includes(valor)
-? "block"
+card.style.display=titulo.includes(valor)
+? "flex"
 : "none";
 
 });
@@ -845,61 +906,57 @@ card.style.display = titulo.includes(valor)
 
 /* ZOOM */
 
-window.zoomImagem = function(img){
+window.zoomImagem=(img)=>{
 
-document.getElementById("zoom").style.display = "flex";
+document.getElementById("zoom").style.display="flex";
 
-document.getElementById("zoomImg").src = img;
+document.getElementById("zoomImg").src=img;
 
-}
+};
 
-document.getElementById("zoom").onclick = function(){
+document.getElementById("zoom").onclick=()=>{
 
-this.style.display = "none";
+document.getElementById("zoom").style.display="none";
 
-}
+};
 
 /* DETALHES */
 
-window.abrirDetalhes = function(id){
+window.abrirDetalhes=(id)=>{
 
-const p = produtos.find(x=>x.id===id);
+const p=produtos.find(x=>x.id===id);
 
-document.getElementById("tituloDetalhe").innerText = p.titulo;
+document.getElementById("tituloDetalhe").innerText=p.titulo;
 
-document.getElementById("imgDetalhe").src = p.imagem;
+document.getElementById("imgDetalhe").src=p.imagem;
 
-document.getElementById("textoDetalhes").innerText = p.detalhes || "Sem detalhes";
+document.getElementById("textoDetalhes").innerText=p.detalhes || "Sem detalhes cadastrados.";
 
-document.getElementById("modalDetalhes").style.display = "flex";
+document.getElementById("modalDetalhes").style.display="flex";
 
-}
+};
 
-window.fecharDetalhes = function(){
+window.fecharDetalhes=()=>{
 
-document.getElementById("modalDetalhes").style.display = "none";
+document.getElementById("modalDetalhes").style.display="none";
 
-}
+};
 
 /* CARRINHO */
 
-window.addCarrinho = function(id){
+window.addCarrinho=(id)=>{
 
-const p = produtos.find(x=>x.id===id);
+const p=produtos.find(x=>x.id===id);
 
-if(Number(p.estoque || 0) <= 0){
+if(Number(p.estoque)<=0)return;
 
-alert("Produto esgotado");
-
-return;
-
-}
-
-const existe = carrinho.find(x=>x.id===id);
+const existe=carrinho.find(x=>x.id===id);
 
 if(existe){
 
+if(existe.qtd < Number(p.estoque)){
 existe.qtd++;
+}
 
 }else{
 
@@ -912,39 +969,41 @@ qtd:1
 
 atualizarBadge();
 
-}
+};
 
 function atualizarBadge(){
 
-let total = 0;
+let total=0;
 
-carrinho.forEach(i=> total += i.qtd);
+carrinho.forEach(i=>{
+total += i.qtd;
+});
 
-document.getElementById("badge").innerText = total;
+document.getElementById("badge").innerText=total;
 
 }
 
-window.abrirCarrinho = function(){
+window.abrirCarrinho=()=>{
 
-document.getElementById("modalCarrinho").style.display = "flex";
+document.getElementById("modalCarrinho").style.display="flex";
 
 renderCarrinho();
 
-}
+};
 
-window.fecharCarrinho = function(){
+window.fecharCarrinho=()=>{
 
-document.getElementById("modalCarrinho").style.display = "none";
+document.getElementById("modalCarrinho").style.display="none";
 
-}
+};
 
 function renderCarrinho(){
 
-const lista = document.getElementById("listaCarrinho");
+const lista=document.getElementById("listaCarrinho");
 
-lista.innerHTML = "";
+lista.innerHTML="";
 
-let total = 0;
+let total=0;
 
 carrinho.forEach((p,index)=>{
 
@@ -956,7 +1015,7 @@ lista.innerHTML += `
 
 <img src="${p.imagem}">
 
-<div style="flex:1;">
+<div style="flex:1">
 
 <h3>${p.titulo}</h3>
 
@@ -966,7 +1025,11 @@ R$ ${Number(p.preco).toFixed(2)}
 
 </div>
 
-<input type="number" min="1" value="${p.qtd}" onchange="alterarQtd(${index},this.value)">
+<input type="number"
+min="1"
+max="${p.estoque}"
+value="${p.qtd}"
+onchange="alterarQtd(${index},this.value)">
 
 </div>
 
@@ -974,25 +1037,30 @@ R$ ${Number(p.preco).toFixed(2)}
 
 });
 
-document.getElementById("total").innerText = "Total: R$ " + total.toFixed(2);
+document.getElementById("total").innerText=
+"Total: R$ "+total.toFixed(2);
 
 }
 
-window.alterarQtd = function(index,qtd){
+window.alterarQtd=(index,qtd)=>{
 
-carrinho[index].qtd = parseInt(qtd);
+qtd=parseInt(qtd);
+
+if(qtd<1)qtd=1;
+
+carrinho[index].qtd=qtd;
 
 renderCarrinho();
 
 atualizarBadge();
 
-}
+};
 
 /* FINALIZAR */
 
-window.finalizarCompra = function(){
+window.finalizarCompra=()=>{
 
-if(carrinho.length <= 0){
+if(carrinho.length<=0){
 
 alert("Carrinho vazio");
 
@@ -1000,11 +1068,11 @@ return;
 
 }
 
-let texto = "🛒 *NOVO PEDIDO* %0A%0A";
+let texto="🛒 *NOVO PEDIDO* %0A%0A";
 
-let total = 0;
+let total=0;
 
-carrinho.forEach((p)=>{
+carrinho.forEach(p=>{
 
 texto += `📦 ${p.titulo} x${p.qtd} - R$ ${p.preco}%0A`;
 
@@ -1014,14 +1082,21 @@ total += Number(p.preco) * p.qtd;
 
 texto += `%0A💰 TOTAL: R$ ${total.toFixed(2)}%0A%0A`;
 
-texto += `👤 Nome: ${nome.value} ${sobrenome.value}%0A`;
-texto += `📱 Whatsapp: ${whatsapp.value}%0A`;
-texto += `📧 Email: ${email.value}%0A`;
-texto += `🏠 Rua: ${rua.value}%0A`;
-texto += `🏘 Bairro: ${bairro.value}%0A`;
-texto += `🌆 Cidade: ${cidade.value}%0A`;
-texto += `🔢 Número: ${numero.value}%0A`;
-texto += `📝 Obs: ${obs.value}%0A`;
+texto += `👤 ${nome.value} ${sobrenome.value}%0A`;
+
+texto += `📱 ${whatsapp.value}%0A`;
+
+texto += `📧 ${email.value}%0A`;
+
+texto += `🏠 ${rua.value}%0A`;
+
+texto += `🏘 ${bairro.value}%0A`;
+
+texto += `🌆 ${cidade.value}%0A`;
+
+texto += `🔢 ${numero.value}%0A`;
+
+texto += `📝 ${obs.value}%0A`;
 
 push(ref(db,"pedidos"),{
 
@@ -1041,18 +1116,38 @@ data:new Date().toLocaleString()
 
 });
 
+carrinho.forEach(item=>{
+
+const estoqueAtual=Number(item.estoque || 0);
+
+update(ref(db,"produtos/"+item.id),{
+estoque:estoqueAtual-item.qtd
+});
+
+});
+
 window.open(
 "https://wa.me/5547988771313?text="+texto,
 "_blank"
 );
 
-}
+alert("Pedido enviado!");
+
+carrinho=[];
+
+renderCarrinho();
+
+atualizarBadge();
+
+fecharCarrinho();
+
+};
 
 /* PEDIDO PRODUTO */
 
-window.enviarPedidoProduto = function(){
+window.enviarPedidoProduto=()=>{
 
-const texto = document.getElementById("produtoDesejado").value;
+const texto=document.getElementById("produtoDesejado").value;
 
 if(!texto){
 
@@ -1064,26 +1159,26 @@ return;
 
 push(ref(db,"pedidosProdutos"),{
 
-texto:texto,
+texto,
 data:new Date().toLocaleString()
 
 });
 
 alert("Pedido enviado!");
 
-document.getElementById("produtoDesejado").value = "";
+document.getElementById("produtoDesejado").value="";
 
-}
+};
 
-/* LOGIN ADM */
+/* ADM */
 
-window.loginADM = function(){
+window.loginADM=()=>{
 
-const senha = prompt("Digite a senha");
+const senha=prompt("Digite a senha ADM");
 
-if(senha === "848218"){
+if(senha==="848218"){
 
-document.getElementById("admPanel").style.display = "block";
+document.getElementById("adm").style.display="block";
 
 carregarPedidos();
 
@@ -1095,75 +1190,119 @@ alert("Senha incorreta");
 
 }
 
-}
+};
 
-window.fecharADM = function(){
+window.fecharADM=()=>{
 
-document.getElementById("admPanel").style.display = "none";
+document.getElementById("adm").style.display="none";
 
-}
+};
 
-/* SALVAR CONFIG */
-
-window.salvarConfig = function(){
+window.salvarConfig=()=>{
 
 update(ref(db,"config"),{
 
-logo:document.getElementById("admLogo").value,
+nome:document.getElementById("admNomeLoja").value,
 faixa:document.getElementById("admFaixa").value
 
 });
 
-alert("Configuração salva");
+alert("Configurações salvas!");
+
+};
+
+/* ADM PRODUTOS */
+
+function renderADMProdutos(){
+
+const box=document.getElementById("listaADMProdutos");
+
+box.innerHTML="";
+
+produtos.forEach(p=>{
+
+box.innerHTML += `
+
+<div style="border:1px solid #ddd;padding:15px;border-radius:16px;margin-top:15px;">
+
+<p>Título do produto.</p>
+<input id="t_${p.id}" value="${p.titulo || ''}">
+
+<p>Descrição resumida do produto.</p>
+<input id="d_${p.id}" value="${p.descricao || ''}">
+
+<p>Descrição completa em parágrafos.</p>
+<textarea id="det_${p.id}">${p.detalhes || ''}</textarea>
+
+<p>Preço do produto.</p>
+<input id="p_${p.id}" value="${p.preco || ''}">
+
+<p>Imagem do produto.</p>
+<input id="i_${p.id}" value="${p.imagem || ''}">
+
+<p>Quantidade em estoque.</p>
+<input id="e_${p.id}" value="${p.estoque || 0}">
+
+<button class="salvar"
+onclick="salvarProduto('${p.id}')">
+
+SALVAR
+
+</button>
+
+</div>
+
+`;
+
+});
 
 }
 
-/* SALVAR PRODUTO */
-
-window.salvarProduto = function(id){
+window.salvarProduto=(id)=>{
 
 update(ref(db,"produtos/"+id),{
 
-titulo:document.getElementById("titulo_"+id).value,
-imagem:document.getElementById("imagem_"+id).value,
-preco:document.getElementById("preco_"+id).value,
-descricao:document.getElementById("descricao_"+id).value,
-detalhes:document.getElementById("detalhes_"+id).value,
-estoque:document.getElementById("estoque_"+id).value
+titulo:document.getElementById("t_"+id).value,
+descricao:document.getElementById("d_"+id).value,
+detalhes:document.getElementById("det_"+id).value,
+preco:document.getElementById("p_"+id).value,
+imagem:document.getElementById("i_"+id).value,
+estoque:document.getElementById("e_"+id).value
 
 });
 
-alert("Produto salvo");
+alert("Produto salvo!");
 
-}
+};
 
-/* PEDIDOS ADM */
+/* PEDIDOS */
 
 function carregarPedidos(){
 
-onValue(ref(db,"pedidos"),(snapshot)=>{
+onValue(ref(db,"pedidos"),snap=>{
 
-const dados = snapshot.val();
+const dados=snap.val();
 
-let html = "";
+const box=document.getElementById("listaPedidos");
 
-if(dados){
+box.innerHTML="";
 
-Object.keys(dados).reverse().forEach((id)=>{
+if(!dados)return;
 
-const p = dados[id];
+Object.keys(dados).reverse().forEach(id=>{
 
-html += `
+const p=dados[id];
 
-<div style="border:1px solid #ddd;padding:15px;border-radius:15px;margin-bottom:15px;">
+box.innerHTML += `
 
-<h3>${p.nome} ${p.sobrenome}</h3>
+<div style="border:1px solid #ddd;padding:15px;border-radius:16px;margin-top:15px;">
 
-<p><b>Whatsapp:</b> ${p.whatsapp}</p>
+<b>${p.nome} ${p.sobrenome}</b><br><br>
 
-<p><b>Total:</b> R$ ${Number(p.total).toFixed(2)}</p>
-
-<p><b>Data:</b> ${p.data}</p>
+Whatsapp: ${p.whatsapp}<br>
+Cidade: ${p.cidade}<br>
+Total: R$ ${Number(p.total).toFixed(2)}<br>
+Data: ${p.data}<br><br>
 
 </div>
 
@@ -1171,37 +1310,33 @@ html += `
 
 });
 
-}
-
-document.getElementById("admPedidos").innerHTML = html;
-
 });
 
 }
-
-/* PRODUTOS PEDIDOS */
 
 function carregarPedidosProdutos(){
 
-onValue(ref(db,"pedidosProdutos"),(snapshot)=>{
+onValue(ref(db,"pedidosProdutos"),snap=>{
 
-const dados = snapshot.val();
+const dados=snap.val();
 
-let html = "";
+const box=document.getElementById("listaPedidosProdutos");
 
-if(dados){
+box.innerHTML="";
 
-Object.keys(dados).reverse().forEach((id)=>{
+if(!dados)return;
 
-const p = dados[id];
+Object.keys(dados).reverse().forEach(id=>{
 
-html += `
+const p=dados[id];
 
-<div style="border:1px solid #ddd;padding:15px;border-radius:15px;margin-bottom:15px;">
+box.innerHTML += `
 
-<p>${p.texto}</p>
+<div style="border:1px solid #ddd;padding:15px;border-radius:16px;margin-top:15px;">
 
-<p>${p.data}</p>
+${p.texto}<br><br>
+
+${p.data}
 
 </div>
 
@@ -1209,21 +1344,18 @@ html += `
 
 });
 
-}
-
-document.getElementById("admPedidosProdutos").innerHTML = html;
-
 });
 
 }
 
-/* ARRASTAR */
+/* DRAG */
 
 function dragElement(el){
 
 let pos1=0,pos2=0,pos3=0,pos4=0;
 
 el.onmousedown=dragMouseDown;
+el.ontouchstart=dragTouchStart;
 
 function dragMouseDown(e){
 
@@ -1235,8 +1367,19 @@ pos3=e.clientX;
 pos4=e.clientY;
 
 document.onmouseup=closeDragElement;
-
 document.onmousemove=elementDrag;
+
+}
+
+function dragTouchStart(e){
+
+const touch=e.touches[0];
+
+pos3=touch.clientX;
+pos4=touch.clientY;
+
+document.ontouchend=closeDragElement;
+document.ontouchmove=elementTouchDrag;
 
 }
 
@@ -1257,10 +1400,27 @@ el.style.left=(el.offsetLeft-pos1)+"px";
 
 }
 
+function elementTouchDrag(e){
+
+const touch=e.touches[0];
+
+pos1=pos3-touch.clientX;
+pos2=pos4-touch.clientY;
+
+pos3=touch.clientX;
+pos4=touch.clientY;
+
+el.style.top=(el.offsetTop-pos2)+"px";
+el.style.left=(el.offsetLeft-pos1)+"px";
+
+}
+
 function closeDragElement(){
 
 document.onmouseup=null;
 document.onmousemove=null;
+document.ontouchend=null;
+document.ontouchmove=null;
 
 }
 
