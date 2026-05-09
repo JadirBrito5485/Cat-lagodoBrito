@@ -10,13 +10,15 @@
 :root{--azul:#075ee8;--azul2:#003b99;--verde:#00a650;--vermelho:#e00000;--fundo:#f4f6fb;--texto:#111827;--card:#fff}
 body{background:var(--fundo);color:var(--texto);user-select:none}
 header{position:sticky;top:0;z-index:50;background:linear-gradient(135deg,var(--azul),var(--azul2));color:#fff;box-shadow:0 5px 20px #0003}
-.header-main{padding:14px 18px;display:flex;align-items:center;gap:18px}
+.header-main{padding:14px 18px;display:grid;grid-template-columns:260px 1fr 360px;align-items:center;gap:18px}
+.logo-box{line-height:1.15}
 .logo{font-size:23px;font-weight:900;letter-spacing:.5px;white-space:nowrap}
-.search-area{flex:1;display:flex;justify-content:center}
+.subtitle{font-size:12px;font-weight:700;opacity:.9;margin-top:3px}
+.search-area{display:flex;justify-content:center}
 .search-area input{width:100%;max-width:600px;padding:14px 20px;border-radius:40px;border:0;outline:0;font-size:16px}
+.top-info{display:flex;align-items:center;justify-content:flex-end;gap:10px;font-size:12px;font-weight:400;white-space:nowrap;opacity:.95}
+.top-info span{display:inline-flex;align-items:center;gap:4px}
 .top-banner{background:#00a650;color:#fff;text-align:center;font-weight:900;font-size:14px;padding:9px 10px}
-.login-area{display:flex;align-items:center;gap:8px;font-size:12px;font-weight:900}
-.login-photo{width:32px;height:32px;border-radius:50%;object-fit:cover;background:#fff}
 .container{max-width:1350px;margin:auto;padding:18px}
 .banner-carousel{width:100%;height:400px;border-radius:22px;overflow:hidden;margin:25px 0;background:#e5e7eb;box-shadow:0 8px 22px #00000014}
 .banner-carousel img{width:100%;height:100%;object-fit:cover;display:block}
@@ -47,6 +49,7 @@ header{position:sticky;top:0;z-index:50;background:linear-gradient(135deg,var(--
 .modal-box h2{margin-bottom:14px;color:var(--azul)}
 .form-grid{display:grid;grid-template-columns:repeat(2,1fr);gap:11px}
 label{display:block;font-size:12px;font-weight:900;color:#444;margin:10px 0 5px}
+.req{color:red}
 input,textarea,select{width:100%;padding:12px;border:1px solid #d8dce5;border-radius:13px;font-size:15px;outline:none;background:#fff}
 textarea{min-height:90px;resize:vertical}
 .cart-item{display:flex;align-items:center;gap:10px;border-bottom:1px solid #eee;padding:10px 0}
@@ -73,9 +76,9 @@ footer{text-align:center;padding:28px 10px;color:#555}
 .detail-content p{margin-bottom:13px;line-height:1.55;color:#333}
 .empty{text-align:center;padding:22px;color:#666;font-weight:800}
 @media(max-width:720px){
-.header-main{flex-direction:column;align-items:stretch;padding:12px}
-.logo{text-align:center}
-.login-area{justify-content:center}
+.header-main{display:flex;flex-direction:column;align-items:stretch;padding:12px}
+.logo-box{text-align:center}
+.top-info{justify-content:center;font-size:11px;flex-wrap:wrap}
 .top-banner{font-size:12px;padding:8px}
 .banner-carousel{height:220px;border-radius:16px}
 .products-grid{grid-template-columns:repeat(2,1fr);gap:10px}
@@ -99,12 +102,17 @@ footer{text-align:center;padding:28px 10px;color:#555}
 
 <header>
 <div class="header-main">
+<div class="logo-box">
 <div class="logo" id="siteName">BRITOTEM.COM</div>
+<div class="subtitle" id="siteSubtitle">Sua loja online em Rio Negrinho SC</div>
+</div>
 <div class="search-area">
 <input id="searchInput" type="search" placeholder="Buscar produtos...">
 </div>
-<div class="login-area" id="loginArea">
-<button class="btn btn-dark" onclick="loginGoogle()">ENTRAR COM GOOGLE</button>
+<div class="top-info" id="topInfo">
+<span>📍 Rio Negrinho SC</span>
+<span>📅 <b id="dateTimeText">00/00/0000 00:00</b></span>
+<span>🌡️ <b id="temperatureText">--°C</b></span>
 </div>
 </div>
 <div class="top-banner" id="topBanner">COMPRE HOJE CHEGA AMANHÃ SOMENTE PARA RIO NEGRINHO SC FRETE GRÁTIS</div>
@@ -174,47 +182,21 @@ footer{text-align:center;padding:28px 10px;color:#555}
 <h2>Dados do cliente</h2>
 
 <div class="form-grid">
+<div><label>Nome completo <span class="req">*</span></label><input id="cNomeCompleto" required></div>
+<div><label>CPF <span class="req">*</span></label><input id="cCpf" required></div>
+<div><label>WhatsApp <span class="req">*</span></label><input id="cWhatsapp" required></div>
+<div><label>E-mail <span class="req">*</span></label><input id="cEmail" required></div>
+<div><label>CEP <span class="req">*</span></label><input id="cCep" required></div>
+<div><label>Rua <span class="req">*</span></label><input id="cRua" required></div>
+<div><label>Bairro <span class="req">*</span></label><input id="cBairro" required></div>
 <div>
-<label>Nome completo</label>
-<input id="cNomeCompleto" required>
+<label>Cidade <span class="req">*</span></label>
+<select id="cCidade" required><option value="">Selecione sua cidade</option></select>
 </div>
-<div>
-<label>CPF obrigatório</label>
-<input id="cCpf" required>
-</div>
-<div>
-<label>WhatsApp obrigatório</label>
-<input id="cWhatsapp" required>
-</div>
-<div>
-<label>E-mail</label>
-<input id="cEmail" required>
-</div>
-<div>
-<label>CEP obrigatório</label>
-<input id="cCep" required>
-</div>
-<div>
-<label>Rua obrigatória</label>
-<input id="cRua" required>
-</div>
-<div>
-<label>Bairro obrigatório</label>
-<input id="cBairro" required>
-</div>
-<div>
-<label>Cidade atendida</label>
-<select id="cCidade" required>
-<option value="">Selecione sua cidade</option>
-</select>
-</div>
-<div>
-<label>Número da Casa obrigatório</label>
-<input id="cNumero" required>
-</div>
+<div><label>Número da Casa <span class="req">*</span></label><input id="cNumero" required></div>
 </div>
 
-<label>Observações</label>
+<label>Observações <span class="req">*</span></label>
 <textarea id="cObs" required></textarea>
 
 <button class="btn btn-green" onclick="finishOrder()">FINALIZAR COMPRA</button>
@@ -247,24 +229,35 @@ footer{text-align:center;padding:28px 10px;color:#555}
 
 <div class="admin-section">
 <h3>Configurações principais da loja</h3>
-<p class="help">Edite os textos principais da loja, WhatsApp, faixa superior, faixa dos produtos e ajuste geral de preço por porcentagem.</p>
+<p class="help">Edite os textos principais da loja, subtítulo, WhatsApp, faixa superior, faixa dos produtos e ajuste geral de preço por porcentagem.</p>
+
 <label>Nome do site exibido no topo esquerdo</label>
 <input id="admSiteName">
+
+<label>Subtítulo abaixo do nome do site</label>
+<input id="admSiteSubtitle">
+
 <label>Texto da faixa superior abaixo da busca</label>
 <input id="admTopBanner">
+
 <label>WhatsApp do vendedor usado no botão flutuante e nos pedidos</label>
 <input id="admWhatsapp">
+
 <label>Texto da faixa abaixo do preço nos produtos</label>
 <input id="admBadgeText">
+
 <label>Texto do rodapé</label>
 <input id="admFooterText">
+
 <label>Mexer no preço geral da loja por porcentagem. Exemplo: 10 aumenta 10%, -10 diminui 10%</label>
 <input id="admGlobalPercent" type="number" step="0.01">
+
 <label>Exibir banners rotativos na loja?</label>
 <select id="admBannerEnabled">
 <option value="true">SIM, EXIBIR BANNERS</option>
 <option value="false">NÃO, OCULTAR BANNERS</option>
 </select>
+
 <button class="btn btn-primary" onclick="saveConfig()">SALVAR E SAIR</button>
 </div>
 
@@ -303,11 +296,7 @@ footer{text-align:center;padding:28px 10px;color:#555}
 <button class="btn btn-primary" onclick="saveRaffleConfig()">SALVAR SORTEIO E SAIR</button>
 </div>
 
-<div class="admin-section">
-<h3>Participantes do sorteio</h3>
-<p class="help">Aqui ficam salvos os cadastros do sorteio.</p>
-<div id="adminRaffleParticipants"></div>
-</div>
+<div class="admin-section"><h3>Participantes do sorteio</h3><p class="help">Aqui ficam salvos os cadastros do sorteio.</p><div id="adminRaffleParticipants"></div></div>
 
 <div class="admin-section">
 <h3>Cadastrar cupom</h3>
@@ -338,30 +327,15 @@ footer{text-align:center;padding:28px 10px;color:#555}
 <button class="btn btn-green" onclick="addProduct()">CADASTRAR PRODUTO</button>
 </div>
 
-<div class="admin-section">
-<h3>Editar produtos cadastrados</h3>
-<p class="help">Cada produto possui campos editáveis com botão salvar e botão apagar.</p>
-<div id="adminProducts"></div>
-</div>
-
-<div class="admin-section">
-<h3>Histórico de pedidos da loja</h3>
-<p class="help">Aqui ficam salvos todos os dados cadastrados no carrinho e a lista completa dos produtos comprados.</p>
-<div id="adminOrders"></div>
-</div>
-
-<div class="admin-section">
-<h3>Produtos desejados não encontrados</h3>
-<p class="help">Aqui ficam salvos os pedidos enviados pelos clientes no campo abaixo dos produtos.</p>
-<div id="adminRequests"></div>
-</div>
+<div class="admin-section"><h3>Editar produtos cadastrados</h3><p class="help">Cada produto possui campos editáveis com botão salvar e botão apagar.</p><div id="adminProducts"></div></div>
+<div class="admin-section"><h3>Histórico de pedidos da loja</h3><p class="help">Aqui ficam salvos todos os dados cadastrados no carrinho e a lista completa dos produtos comprados.</p><div id="adminOrders"></div></div>
+<div class="admin-section"><h3>Produtos desejados não encontrados</h3><p class="help">Aqui ficam salvos os pedidos enviados pelos clientes no campo abaixo dos produtos.</p><div id="adminRequests"></div></div>
 </section>
 
 <script type="module">
 import {initializeApp} from "https://www.gstatic.com/firebasejs/10.12.2/firebase-app.js";
 import {getAnalytics} from "https://www.gstatic.com/firebasejs/10.12.2/firebase-analytics.js";
 import {getDatabase,ref,set,push,onValue,update,remove} from "https://www.gstatic.com/firebasejs/10.12.2/firebase-database.js";
-import {getAuth,GoogleAuthProvider,signInWithPopup,onAuthStateChanged,signOut} from "https://www.gstatic.com/firebasejs/10.12.2/firebase-auth.js";
 
 const firebaseConfig={
 apiKey:"AIzaSyCf6_DCNSh4a3IiOtTv5Uf_N8YaxQtBczw",
@@ -377,10 +351,8 @@ measurementId:"G-QSB41880QG"
 const app=initializeApp(firebaseConfig);
 const analytics=getAnalytics(app);
 const db=getDatabase(app);
-const auth=getAuth(app);
-const provider=new GoogleAuthProvider();
 
-let products={},config={},coupons={},raffle={},raffleParticipants={},cities={},banners={},cart=[],appliedCoupon=null,currentUser=null,bannerList=[],bannerIndex=0;
+let products={},config={},coupons={},raffle={},raffleParticipants={},cities={},banners={},cart=[],appliedCoupon=null,bannerList=[],bannerIndex=0;
 
 const money=v=>Number(v||0).toLocaleString("pt-BR",{style:"currency",currency:"BRL"});
 const onlyNumbers=v=>String(v||"").replace(/\D/g,"");
@@ -405,20 +377,27 @@ stock:10
 return list;
 }
 
-window.loginGoogle=()=>signInWithPopup(auth,provider).catch(()=>alert("Não foi possível entrar com Google."));
-window.logoutGoogle=()=>signOut(auth);
-
-onAuthStateChanged(auth,user=>{
-currentUser=user;
-if(user){
-loginArea.innerHTML=`<img class="login-photo" src="${user.photoURL||""}"><span>${user.displayName||user.email}</span><button class="btn btn-red" onclick="logoutGoogle()">SAIR</button>`;
-const saved=JSON.parse(localStorage.getItem("cartClient")||"{}");
-if(!saved.nomeCompleto)cNomeCompleto.value=user.displayName||"";
-if(!saved.email)cEmail.value=user.email||"";
-}else{
-loginArea.innerHTML=`<button class="btn btn-dark" onclick="loginGoogle()">ENTRAR COM GOOGLE</button>`;
+function updateDateTime(){
+const now=new Date();
+const date=now.toLocaleDateString("pt-BR");
+const time=now.toLocaleTimeString("pt-BR",{hour:"2-digit",minute:"2-digit"});
+dateTimeText.innerText=date+" "+time;
 }
-});
+setInterval(updateDateTime,1000);
+updateDateTime();
+
+async function updateTemperature(){
+try{
+const r=await fetch("https://api.open-meteo.com/v1/forecast?latitude=-26.2544&longitude=-49.5183&current_weather=true");
+const d=await r.json();
+const temp=Math.round(d.current_weather.temperature);
+temperatureText.innerText=temp+"°C";
+}catch(e){
+temperatureText.innerText="--°C";
+}
+}
+updateTemperature();
+setInterval(updateTemperature,600000);
 
 function saveClientLocal(){
 const data={
@@ -430,10 +409,10 @@ localStorage.setItem("cartClient",JSON.stringify(data));
 
 function loadClientLocal(){
 const data=JSON.parse(localStorage.getItem("cartClient")||"{}");
-cNomeCompleto.value=data.nomeCompleto||cNomeCompleto.value||"";
+cNomeCompleto.value=data.nomeCompleto||"";
 cCpf.value=data.cpf||"";
 cWhatsapp.value=data.whatsapp||"";
-cEmail.value=data.email||cEmail.value||"";
+cEmail.value=data.email||"";
 cCep.value=data.cep||"";
 cRua.value=data.rua||"";
 cBairro.value=data.bairro||"";
@@ -452,6 +431,7 @@ document.getElementById(id)?.addEventListener("change",saveClientLocal);
 onValue(ref(db,"config"),snap=>{
 config=snap.val()||{
 siteName:"BRITOTEM.COM",
+siteSubtitle:"Sua loja online em Rio Negrinho SC",
 topBanner:"COMPRE HOJE CHEGA AMANHÃ SOMENTE PARA RIO NEGRINHO SC FRETE GRÁTIS",
 whatsapp:"47988771313",
 badgeText:"FRETE GRÁTIS - CHEGA AMANHÃ",
@@ -459,16 +439,21 @@ footerText:"© Britotem.com 2026 - Todos os direitos Reservados.",
 globalPercent:0,
 bannerEnabled:true
 };
+
 siteName.innerText=config.siteName||"BRITOTEM.COM";
+siteSubtitle.innerText=config.siteSubtitle||"Sua loja online em Rio Negrinho SC";
 topBanner.innerText=config.topBanner||"COMPRE HOJE CHEGA AMANHÃ SOMENTE PARA RIO NEGRINHO SC FRETE GRÁTIS";
 footerText.innerText=config.footerText||"© Britotem.com 2026 - Todos os direitos Reservados.";
+
 admSiteName.value=config.siteName||"BRITOTEM.COM";
+admSiteSubtitle.value=config.siteSubtitle||"Sua loja online em Rio Negrinho SC";
 admTopBanner.value=config.topBanner||"COMPRE HOJE CHEGA AMANHÃ SOMENTE PARA RIO NEGRINHO SC FRETE GRÁTIS";
 admWhatsapp.value=config.whatsapp||"47988771313";
 admBadgeText.value=config.badgeText||"FRETE GRÁTIS - CHEGA AMANHÃ";
 admFooterText.value=config.footerText||"© Britotem.com 2026 - Todos os direitos Reservados.";
 admGlobalPercent.value=config.globalPercent||0;
 admBannerEnabled.value=String(config.bannerEnabled!==false);
+
 renderProducts();
 renderCart();
 renderBannerCarousel();
@@ -651,7 +636,7 @@ const required=["cNomeCompleto","cCpf","cWhatsapp","cEmail","cCep","cRua","cBair
 for(const id of required){
 const el=document.getElementById(id);
 if(!el.value.trim()){
-alert("Preencha todos os campos obrigatórios para comprar.");
+alert("Preencha todos os campos marcados com * para comprar.");
 el.focus();
 return;
 }
@@ -664,8 +649,7 @@ items.push({id:i.id,img:p.img||"",title:p.title||"",price:adjustedPrice(p.price)
 });
 const client={
 nomeCompleto:cNomeCompleto.value.trim(),cpf:cCpf.value.trim(),whatsapp:cWhatsapp.value.trim(),email:cEmail.value.trim(),cep:cCep.value.trim(),
-rua:cRua.value.trim(),bairro:cBairro.value.trim(),cidade:cCidade.value.trim(),numero:cNumero.value.trim(),observacoes:cObs.value.trim(),
-googleUser:currentUser?{uid:currentUser.uid,email:currentUser.email,nome:currentUser.displayName}:null
+rua:cRua.value.trim(),bairro:cBairro.value.trim(),cidade:cCidade.value.trim(),numero:cNumero.value.trim(),observacoes:cObs.value.trim()
 };
 const order={client,items,subtotal:getSubtotal(),coupon:appliedCoupon||null,discount:getDiscount(),total:getTotal(),date:new Date().toLocaleString("pt-BR")};
 push(ref(db,"orders"),order);
@@ -691,7 +675,8 @@ window.openWhatsappSeller=()=>window.open(`https://wa.me/55${config.whatsapp||"4
 window.sendProductRequest=()=>{
 if(!reqName.value.trim()||!reqWhats.value.trim()||!reqProduct.value.trim())return alert("Preencha nome, WhatsApp e produto desejado.");
 push(ref(db,"requests"),{name:reqName.value.trim(),whats:reqWhats.value.trim(),product:reqProduct.value.trim(),date:new Date().toLocaleString("pt-BR")});
-reqName.value="";reqWhats.value="";reqProduct.value="";alert("Pedido salvo no ADM.");
+reqName.value="";reqWhats.value="";reqProduct.value="";
+alert("Pedido salvo no ADM.");
 };
 
 window.joinRaffle=()=>{
@@ -713,6 +698,7 @@ window.closeAdmin=()=>adminPanel.style.display="none";
 window.saveConfig=()=>{
 set(ref(db,"config"),{
 siteName:admSiteName.value.trim()||"BRITOTEM.COM",
+siteSubtitle:admSiteSubtitle.value.trim()||"Sua loja online em Rio Negrinho SC",
 topBanner:admTopBanner.value.trim()||"COMPRE HOJE CHEGA AMANHÃ SOMENTE PARA RIO NEGRINHO SC FRETE GRÁTIS",
 whatsapp:admWhatsapp.value.trim()||"47988771313",
 badgeText:admBadgeText.value.trim()||"FRETE GRÁTIS - CHEGA AMANHÃ",
