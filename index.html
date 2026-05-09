@@ -2,27 +2,528 @@
 <html lang="pt-BR">
 <head>
 <meta charset="UTF-8">
-<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<meta name="viewport" content="width=device-width,initial-scale=1.0">
 <title>BRITOTEM.COM</title>
-<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.0/css/all.min.css">
 <style>
-*{margin:0;padding:0;box-sizing:border-box;font-family:Arial,Helvetica,sans-serif}body{background:#f4f7fb;color:#111827}button{border:0;cursor:pointer}input,textarea{outline:none}header{position:sticky;top:0;z-index:50;background:#fff;border-bottom:1px solid #e5e7eb;box-shadow:0 4px 18px rgba(0,0,0,.06)}.topo{max-width:1250px;margin:auto;padding:14px;display:grid;grid-template-columns:230px 1fr;gap:15px;align-items:center}.logo{font-size:25px;font-weight:900;color:#0066ff}.busca{width:100%;padding:14px 18px;border:1px solid #e5e7eb;border-radius:100px;font-size:15px}.container{max-width:1250px;margin:auto;padding:18px 14px}.grade{display:grid;grid-template-columns:repeat(5,1fr);gap:15px}.produto{background:#fff;border:1px solid #e5e7eb;border-radius:18px;overflow:hidden;box-shadow:0 8px 22px rgba(0,0,0,.07)}.foto{height:190px;background:#eaf1ff;position:relative;overflow:hidden}.foto img{width:100%;height:100%;object-fit:cover;display:block}.faixa{position:absolute;top:8px;left:8px;background:#16a34a;color:white;font-size:11px;font-weight:900;padding:6px 8px;border-radius:20px}.esgotado{position:absolute;inset:0;background:rgba(0,0,0,.7);color:#fff;display:flex;align-items:center;justify-content:center;font-weight:900;font-size:18px}.info{padding:12px}.titulo{font-weight:900;font-size:15px;min-height:38px}.desc{font-size:12px;color:#667085;margin:8px 0;min-height:32px}.preco{font-size:22px;color:#0066ff;font-weight:900;margin-bottom:10px}.acoes{display:grid;grid-template-columns:1fr 44px;gap:8px}.add{background:#0066ff;color:white;border-radius:12px;padding:11px;font-weight:900}.add:disabled{background:#9ca3af}.detalhe{background:#eef4ff;color:#0066ff;border-radius:12px;font-weight:900}.produto-desejado{background:#fff;border:1px solid #e5e7eb;border-radius:18px;padding:16px;margin-top:22px}.produto-desejado h3{margin-bottom:8px}.produto-desejado p{color:#667085;font-size:14px;margin-bottom:10px}.linha{display:grid;grid-template-columns:1fr 1fr auto;gap:8px}.linha input{padding:13px;border:1px solid #e5e7eb;border-radius:12px}.btn{background:#0066ff;color:white;padding:13px 16px;border-radius:12px;font-weight:900}.btn2{background:#eef4ff;color:#0066ff;padding:13px 16px;border-radius:12px;font-weight:900}.btn-danger{background:#fee2e2;color:#991b1b;padding:10px 12px;border-radius:10px;font-weight:900}.btn-save{background:#dcfce7;color:#166534;padding:10px 12px;border-radius:10px;font-weight:900}.flutuante{position:fixed;z-index:90;width:60px;height:60px;border-radius:22px;color:white;display:flex;align-items:center;justify-content:center;font-size:28px;box-shadow:0 12px 28px rgba(0,0,0,.25);user-select:none;touch-action:none}.carrinho-float{right:18px;bottom:90px;background:#0066ff}.whats-float{left:18px;bottom:90px;background:#22c55e}.led{position:absolute;right:-6px;top:-9px;background:red;color:white;min-width:26px;height:26px;border-radius:50px;border:3px solid white;font-size:12px;font-weight:900;display:flex;align-items:center;justify-content:center;box-shadow:0 0 12px red}.led-texto{position:absolute;left:72px;background:#071126;color:#39ff88;white-space:nowrap;padding:8px 10px;border-radius:20px;font-size:12px;font-weight:900;text-shadow:0 0 8px #39ff88;animation:piscando 1s infinite}@keyframes piscando{50%{opacity:.55}}.modal{display:none;position:fixed;inset:0;background:rgba(0,0,0,.72);z-index:120;align-items:center;justify-content:center;padding:15px}.modal.show{display:flex}.janela{background:white;width:min(980px,100%);max-height:92vh;overflow:auto;border-radius:20px}.cab{position:sticky;top:0;background:white;border-bottom:1px solid #e5e7eb;padding:14px;display:flex;justify-content:space-between;align-items:center}.cab h2{font-size:22px}.fechar{background:#f3f4f6;border-radius:12px;width:40px;height:40px;font-size:22px}.corpo{padding:15px}.zoom-img{max-width:94vw;max-height:88vh;border-radius:16px}.item-carrinho{display:grid;grid-template-columns:60px 1fr 110px 40px;gap:9px;align-items:center;border:1px solid #e5e7eb;border-radius:14px;padding:8px;margin-bottom:8px}.item-carrinho img{width:60px;height:60px;object-fit:cover;border-radius:12px}.qtd{display:flex;gap:5px;align-items:center}.qtd button{width:28px;height:28px;border-radius:8px;background:#eef4ff;color:#0066ff;font-weight:900}.total{text-align:right;font-size:23px;font-weight:900;color:#0066ff;margin:14px 0}.form{display:grid;grid-template-columns:repeat(2,1fr);gap:9px}.form input,.form textarea{border:1px solid #e5e7eb;border-radius:12px;padding:13px}.form textarea,.full{grid-column:1/-1}.form textarea{min-height:80px}.adm-grid{display:grid;grid-template-columns:250px 1fr;gap:14px}.menu-adm{background:#f8fafc;border:1px solid #e5e7eb;border-radius:15px;padding:8px;height:max-content}.tab{width:100%;text-align:left;background:transparent;padding:12px;border-radius:12px;font-weight:900;color:#374151}.tab.active{background:#0066ff;color:white}.campo{margin-bottom:9px}.campo label{display:block;font-weight:900;margin-bottom:4px}.campo small{display:block;color:#667085;font-size:12px;margin-bottom:5px}.campo input,.campo textarea{width:100%;border:1px solid #e5e7eb;border-radius:12px;padding:12px}.campo textarea{min-height:80px}.card-adm,.pedido,.desejo{border:1px solid #e5e7eb;border-radius:15px;padding:12px;margin-bottom:10px;background:#fff}.grid2{display:grid;grid-template-columns:1fr 1fr;gap:8px}footer{text-align:center;padding:35px 12px;color:#667085}.adm-link{display:block;width:max-content;margin:0 auto 10px;color:#d1d5db;text-decoration:none;font-weight:900;font-size:12px}.aviso{position:fixed;left:50%;bottom:18px;transform:translateX(-50%);background:#111827;color:white;padding:11px 16px;border-radius:30px;z-index:200;font-weight:900;display:none}.aviso.show{display:block}.vazio{text-align:center;color:#667085;padding:20px}@media(max-width:1050px){.grade{grid-template-columns:repeat(4,1fr)}}@media(max-width:850px){.grade{grid-template-columns:repeat(3,1fr)}.adm-grid,.linha,.topo,.form,.grid2{grid-template-columns:1fr}}@media(max-width:600px){.container{padding:10px 8px}.grade{grid-template-columns:repeat(2,1fr);gap:8px}.foto{height:145px}.produto{border-radius:14px}.info{padding:8px}.titulo{font-size:13px}.desc{font-size:11px}.preco{font-size:18px}.add{font-size:12px;padding:10px 5px}.faixa{font-size:9px;padding:5px 6px}.logo{font-size:22px}.flutuante{width:55px;height:55px;border-radius:19px}.led-texto{display:none}.item-carrinho{grid-template-columns:52px 1fr}.item-carrinho img{width:52px;height:52px}}
+*{box-sizing:border-box;margin:0;padding:0;font-family:Arial,sans-serif}
+body{background:#f4f6fb;color:#111}
+header{position:sticky;top:0;z-index:50;background:#0b57d0;color:#fff;padding:14px;display:flex;gap:15px;align-items:center;box-shadow:0 4px 18px #0003}
+.logo{font-size:22px;font-weight:900;white-space:nowrap}
+.search{flex:1;display:flex;justify-content:center}
+.search input{width:100%;max-width:520px;padding:13px 18px;border:0;border-radius:30px;font-size:16px}
+.container{max-width:1300px;margin:auto;padding:18px}
+.grid{display:grid;grid-template-columns:repeat(auto-fill,minmax(210px,1fr));gap:16px}
+.card{background:#fff;border-radius:18px;overflow:hidden;box-shadow:0 8px 22px #0001;position:relative}
+.card img{width:100%;height:190px;object-fit:cover;cursor:pointer}
+.badge{position:absolute;top:10px;left:10px;background:#00a650;color:white;font-size:12px;font-weight:800;padding:6px 8px;border-radius:8px}
+.card-body{padding:12px}
+.card h3{font-size:15px;margin-bottom:6px;min-height:36px}
+.price{font-size:22px;font-weight:900;color:#0b57d0;margin:8px 0}
+.desc{font-size:13px;color:#555;min-height:38px}
+.btn{border:0;border-radius:12px;padding:12px 14px;font-weight:800;cursor:pointer}
+.btn-primary{background:#0b57d0;color:#fff;width:100%;margin-top:8px}
+.btn-dark{background:#111;color:#fff}
+.btn-green{background:#03a64a;color:#fff}
+.btn-red{background:#e00000;color:#fff}
+.btn-gray{background:#ddd;color:#111}
+.detail{margin-top:8px;background:#eef3ff;color:#0b57d0;width:100%}
+.sold{padding:12px;text-align:center;background:#eee;color:#900;font-weight:900;border-radius:12px;margin-top:8px}
+.float{position:fixed;z-index:100;width:64px;height:64px;border-radius:50%;display:flex;align-items:center;justify-content:center;font-size:28px;color:#fff;box-shadow:0 10px 25px #0005;cursor:grab;user-select:none}
+.cart{right:18px;bottom:105px;background:#0b57d0}
+.whats{left:18px;bottom:105px;background:#04b455}
+.led{position:absolute;top:-7px;right:-7px;background:red;color:#fff;border-radius:50%;min-width:24px;height:24px;font-size:13px;display:flex;align-items:center;justify-content:center;font-weight:900}
+.led-text{position:absolute;left:70px;background:#000;color:#39ff14;padding:6px 10px;border-radius:10px;font-size:12px;white-space:nowrap;font-weight:900;box-shadow:0 0 10px #39ff14}
+.modal{display:none;position:fixed;inset:0;background:#0008;z-index:200;align-items:center;justify-content:center;padding:15px}
+.box{background:#fff;border-radius:20px;padding:18px;max-width:780px;width:100%;max-height:90vh;overflow:auto}
+.box h2{margin-bottom:12px}
+.form-grid{display:grid;grid-template-columns:repeat(2,1fr);gap:10px}
+input,textarea,select{width:100%;padding:12px;border:1px solid #ddd;border-radius:12px;font-size:15px}
+textarea{min-height:85px;resize:vertical}
+.cart-item{display:flex;gap:10px;align-items:center;border-bottom:1px solid #eee;padding:10px 0}
+.cart-item img{width:58px;height:58px;object-fit:cover;border-radius:10px}
+.cart-item input{width:70px}
+.total{font-size:24px;font-weight:900;text-align:right;margin:12px 0}
+.request{background:#fff;padding:18px;border-radius:18px;margin:24px 0;box-shadow:0 8px 22px #0001}
+footer{text-align:center;padding:26px;color:#555}
+.admin-link{opacity:.22;font-size:13px;cursor:pointer;margin-bottom:8px}
+.admin{display:none;position:fixed;inset:0;background:#f4f6fb;z-index:300;overflow:auto;padding:16px}
+.admin-top{display:flex;justify-content:space-between;align-items:center;background:#111;color:#fff;padding:14px;border-radius:16px;margin-bottom:14px}
+.admin-section{background:#fff;padding:15px;border-radius:16px;margin-bottom:15px;box-shadow:0 6px 18px #0001}
+.admin-section h3{margin-bottom:10px;color:#0b57d0}
+.help{font-size:13px;color:#666;margin:7px 0}
+.product-edit{border:1px solid #eee;border-radius:14px;padding:12px;margin:10px 0}
+.zoom-img{max-width:92vw;max-height:85vh;border-radius:18px}
+@media(max-width:700px){
+header{flex-direction:column;align-items:stretch}
+.logo{text-align:center}
+.grid{grid-template-columns:repeat(2,1fr);gap:10px}
+.card img{height:150px}
+.card h3{font-size:13px}
+.price{font-size:18px}
+.form-grid{grid-template-columns:1fr}
+.container{padding:10px}
+}
 </style>
 </head>
-<body>
-<header><div class="topo"><div class="logo" id="nomeSite">BRITOTEM.COM</div><input class="busca" id="busca" placeholder="Busca de Produtos"></div></header>
-<main class="container"><div class="grade" id="gradeProdutos"></div><section class="produto-desejado"><h3>Não encontrou o produto?</h3><p>Escreva o produto que desejava e não encontrou na loja.</p><form class="linha" id="formDesejo"><input id="nomeDesejo" required placeholder="Seu nome"><input id="produtoDesejo" required placeholder="Produto desejado"><button class="btn" type="submit">ENVIAR</button></form></section></main>
-<div class="flutuante whats-float" id="btnWhats"><i class="fa-brands fa-whatsapp"></i><span class="led-texto">FALE COM O VENDEDOR</span></div><div class="flutuante carrinho-float" id="btnCarrinho"><i class="fa-solid fa-cart-shopping"></i><span class="led" id="ledCarrinho">0</span></div>
-<footer><a href="#" class="adm-link" id="abrirAdm">A</a><div>© Britotem.com 2026 - Todos os direitos Reservados.</div></footer><div class="aviso" id="aviso"></div><div class="modal" id="modalZoom"><img class="zoom-img" id="imgZoom"></div>
-<div class="modal" id="modalDetalhe"><div class="janela"><div class="cab"><h2 id="tituloDetalhe">Detalhes</h2><button class="fechar" onclick="fechar('modalDetalhe')">×</button></div><div class="corpo" id="textoDetalhe"></div></div></div>
-<div class="modal" id="modalCarrinho"><div class="janela"><div class="cab"><h2>Carrinho de Compras</h2><button class="fechar" onclick="fechar('modalCarrinho')">×</button></div><div class="corpo"><div id="listaCarrinho"></div><div class="total" id="totalCarrinho">Total: R$ 0,00</div><form class="form" id="formCompra"><input required id="nome" placeholder="Nome"><input required id="sobrenome" placeholder="Sobrenome"><input required id="cpf" placeholder="Cpf"><input required id="whatsappCliente" placeholder="Whatsapp"><input required type="email" id="email" placeholder="E-mail"><input required id="rua" placeholder="Rua"><input required id="bairro" placeholder="Bairro"><input required id="cidade" placeholder="Cidade"><input required id="numeroCasa" placeholder="Numero da Casa"><textarea required id="observacoes" placeholder="Observações"></textarea><button class="btn full" type="submit">FINALIZAR COMPRA</button><button class="btn2 full" type="button" onclick="fechar('modalCarrinho')">CONTINUAR COMPRANDO</button></form></div></div></div>
-<div class="modal" id="modalSenha"><div class="janela" style="max-width:420px"><div class="cab"><h2>ADM</h2><button class="fechar" onclick="fechar('modalSenha')">×</button></div><div class="corpo"><input id="senhaAdm" type="password" placeholder="Senha do ADM" style="width:100%;padding:13px;border:1px solid #e5e7eb;border-radius:12px;margin-bottom:10px"><button class="btn" style="width:100%" id="entrarAdm">ENTRAR</button></div></div></div>
-<div class="modal" id="modalAdm"><div class="janela"><div class="cab"><h2>Painel ADM</h2><button class="fechar" onclick="fechar('modalAdm')">×</button></div><div class="corpo"><div class="adm-grid"><div class="menu-adm"><button class="tab active" data-tab="config">Nome e textos</button><button class="tab" data-tab="produtos">Produtos</button><button class="tab" data-tab="novo">Cadastrar produto</button><button class="tab" data-tab="pedidos">Histórico de pedidos</button><button class="tab" data-tab="desejos">Produtos desejados</button></div><div id="painelAdm"></div></div></div></div></div>
-<script src="https://www.gstatic.com/firebasejs/10.12.2/firebase-app-compat.js"></script><script src="https://www.gstatic.com/firebasejs/10.12.2/firebase-analytics-compat.js"></script><script src="https://www.gstatic.com/firebasejs/10.12.2/firebase-database-compat.js"></script>
-<script>
-(function(){'use strict';
-const firebaseConfig={apiKey:'AIzaSyCf6_DCNSh4a3IiOtTv5Uf_N8YaxQtBczw',authDomain:'loja-a33e1.firebaseapp.com',databaseURL:'https://loja-a33e1-default-rtdb.firebaseio.com',projectId:'loja-a33e1',storageBucket:'loja-a33e1.firebasestorage.app',messagingSenderId:'304798626706',appId:'1:304798626706:web:23a0672e6a98ae432c474b',measurementId:'G-QSB41880QG'};firebase.initializeApp(firebaseConfig);try{firebase.analytics()}catch(e){}const db=firebase.database(),SENHA='848218';let config={nomeSite:'BRITOTEM.COM',whatsapp:'5547988771313',faixa:'FRETE GRÁTIS - CHEGA AMANHÃ'},produtos=[],carrinho=[],abaAtual='config';const $=id=>document.getElementById(id),dinheiro=v=>(Number(v)||0).toLocaleString('pt-BR',{style:'currency',currency:'BRL'}),limpar=t=>String(t??'').replace(/[&<>"']/g,m=>({'&':'&amp;','<':'&lt;','>':'&gt;','"':'&quot;',"'":'&#039;'}[m]));function aviso(txt){$('aviso').textContent=txt;$('aviso').classList.add('show');setTimeout(()=>$('aviso').classList.remove('show'),2500)}function abrir(id){$(id).classList.add('show')}window.fechar=id=>$(id).classList.remove('show');function whats(n){n=String(n||'5547988771313').replace(/\D/g,'');if(!n.startsWith('55'))n='55'+n;return n}function base(){let o={};for(let i=1;i<=100;i++){let id='produto_'+i;o[id]={id,imagem:'https://picsum.photos/seed/britotem'+i+'/700/700',titulo:'Produto '+i,preco:(29.90+i).toFixed(2),descricao:'Descrição do produto '+i,detalhes:'Parágrafo 1: descrição completa do produto '+i+'.\n\nParágrafo 2: informações adicionais cadastradas no ADM.',estoque:i<=96?10:0,faixa:''}}return o}async function iniciar(){let c=await db.ref('config').once('value');if(!c.exists())await db.ref('config').set(config);let p=await db.ref('produtos').once('value');if(!p.exists())await db.ref('produtos').set(base())}function ouvir(){db.ref('config').on('value',s=>{config={...config,...(s.val()||{})};$('nomeSite').textContent=config.nomeSite||'BRITOTEM.COM';renderProdutos()});db.ref('produtos').on('value',s=>{let v=s.val()||{};produtos=Object.keys(v).map(k=>({id:k,...v[k]}));renderProdutos();if($('modalAdm').classList.contains('show'))renderAdm(abaAtual)})}function renderProdutos(){let busca=$('busca').value.toLowerCase().trim();let lista=produtos.filter(p=>!busca||String(p.titulo).toLowerCase().includes(busca));$('gradeProdutos').innerHTML=lista.map(p=>{let e=Number(p.estoque)||0;return `<div class="produto"><div class="foto"><img src="${limpar(p.imagem)}" onclick="zoom('${p.id}')"><span class="faixa">${limpar(p.faixa||config.faixa)}</span>${e<=0?'<div class="esgotado">PRODUTO ESGOTADO</div>':''}</div><div class="info"><div class="titulo">${limpar(p.titulo)}</div><div class="desc">${limpar(p.descricao)}</div><div class="preco">${dinheiro(p.preco)}</div><div class="acoes"><button class="add" ${e<=0?'disabled':''} onclick="addCarrinho('${p.id}')">ADICIONAR</button><button class="detalhe" onclick="detalhe('${p.id}')"><i class="fa-solid fa-list"></i></button></div></div></div>`}).join('')||'<div class="vazio">Nenhum produto encontrado.</div>'}window.zoom=id=>{let p=produtos.find(x=>x.id===id);if(p){$('imgZoom').src=p.imagem;abrir('modalZoom')}};$('modalZoom').onclick=()=>fechar('modalZoom');window.detalhe=id=>{let p=produtos.find(x=>x.id===id);if(!p)return;$('tituloDetalhe').textContent=p.titulo;$('textoDetalhe').innerHTML=String(p.detalhes||p.descricao||'').split(/\n\s*\n/).map(x=>'<p style="line-height:1.7;margin-bottom:14px">'+limpar(x)+'</p>').join('');abrir('modalDetalhe')};window.addCarrinho=id=>{let p=produtos.find(x=>x.id===id);if(!p||Number(p.estoque)<=0)return aviso('Produto esgotado');let item=carrinho.find(x=>x.id===id);if(item){if(item.qtd<Number(p.estoque))item.qtd++;else return aviso('Limite do estoque atingido')}else carrinho.push({id,qtd:1});atualizarLed();aviso('Produto adicionado')};function atualizarLed(){$('ledCarrinho').textContent=carrinho.reduce((a,b)=>a+b.qtd,0)}function renderCarrinho(){if(!carrinho.length){$('listaCarrinho').innerHTML='<div class="vazio">Carrinho vazio.</div>';$('totalCarrinho').textContent='Total: R$ 0,00';return}let total=0;$('listaCarrinho').innerHTML=carrinho.map(i=>{let p=produtos.find(x=>x.id===i.id)||{};total+=Number(p.preco||0)*i.qtd;return `<div class="item-carrinho"><img src="${limpar(p.imagem)}"><div><b>${limpar(p.titulo)}</b><br><small>${dinheiro(p.preco)}</small></div><div class="qtd"><button type="button" onclick="mudarQtd('${i.id}',-1)">-</button><b>${i.qtd}</b><button type="button" onclick="mudarQtd('${i.id}',1)">+</button></div><button class="btn-danger" type="button" onclick="removerItem('${i.id}')">×</button></div>`}).join('');$('totalCarrinho').textContent='Total: '+dinheiro(total)}window.mudarQtd=(id,n)=>{let item=carrinho.find(x=>x.id===id),p=produtos.find(x=>x.id===id);if(!item||!p)return;item.qtd+=n;if(item.qtd<1)carrinho=carrinho.filter(x=>x.id!==id);if(item.qtd>Number(p.estoque))item.qtd=Number(p.estoque);atualizarLed();renderCarrinho()};window.removerItem=id=>{carrinho=carrinho.filter(x=>x.id!==id);atualizarLed();renderCarrinho()};$('btnCarrinho').onclick=()=>{renderCarrinho();abrir('modalCarrinho')};$('btnWhats').onclick=()=>window.open('https://wa.me/'+whats(config.whatsapp),'_blank');$('formCompra').onsubmit=async e=>{e.preventDefault();if(!carrinho.length)return aviso('Carrinho vazio');let dados={nome:$('nome').value.trim(),sobrenome:$('sobrenome').value.trim(),cpf:$('cpf').value.trim(),whatsapp:$('whatsappCliente').value.trim(),email:$('email').value.trim(),rua:$('rua').value.trim(),bairro:$('bairro').value.trim(),cidade:$('cidade').value.trim(),numeroCasa:$('numeroCasa').value.trim(),observacoes:$('observacoes').value.trim()};if(Object.values(dados).some(v=>!v))return aviso('Preencha todos os campos');let itens=[],total=0;for(let c of carrinho){let p=produtos.find(x=>x.id===c.id);if(!p)continue;itens.push({id:p.id,imagem:p.imagem,titulo:p.titulo,preco:Number(p.preco),quantidade:c.qtd});total+=Number(p.preco)*c.qtd}await db.ref('pedidos').push({dados,itens,total,data:new Date().toISOString(),status:'Novo'});for(let c of carrinho){let p=produtos.find(x=>x.id===c.id);if(p)await db.ref('produtos/'+p.id+'/estoque').set(Math.max(0,Number(p.estoque)-c.qtd))}let msg='Olá, quero finalizar minha compra na BRITOTEM.COM%0A%0ADADOS DO CLIENTE%0A';Object.entries(dados).forEach(([k,v])=>msg+=k+': '+encodeURIComponent(v)+'%0A');msg+='%0APRODUTOS%0A';itens.forEach(i=>msg+=encodeURIComponent(i.titulo)+' | Qtd: '+i.quantidade+' | '+encodeURIComponent(dinheiro(i.preco*i.quantidade))+'%0A');msg+='%0ATOTAL: '+encodeURIComponent(dinheiro(total));carrinho=[];atualizarLed();renderCarrinho();window.open('https://wa.me/'+whats(config.whatsapp)+'?text='+msg,'_blank');aviso('Pedido salvo no ADM')};$('formDesejo').onsubmit=async e=>{e.preventDefault();await db.ref('produtos_desejados').push({nome:$('nomeDesejo').value.trim(),produto:$('produtoDesejo').value.trim(),data:new Date().toISOString(),status:'Novo'});e.target.reset();aviso('Pedido salvo no ADM')};$('busca').oninput=renderProdutos;$('abrirAdm').onclick=e=>{e.preventDefault();abrir('modalSenha')};$('entrarAdm').onclick=()=>{if($('senhaAdm').value===SENHA){fechar('modalSenha');abrir('modalAdm');renderAdm('config')}else aviso('Senha incorreta')};document.querySelectorAll('.tab').forEach(b=>b.onclick=()=>{document.querySelectorAll('.tab').forEach(x=>x.classList.remove('active'));b.classList.add('active');renderAdm(b.dataset.tab)});function renderAdm(tab){abaAtual=tab;let p=$('painelAdm');if(tab==='config')p.innerHTML=`<div class="campo"><label>Nome do site</label><small>Texto exibido no topo esquerdo do site.</small><input id="cfgNome" value="${limpar(config.nomeSite)}"></div><div class="campo"><label>Whatsapp do vendedor</label><small>Número que recebe compras e abre no ícone flutuante.</small><input id="cfgWhats" value="${limpar(config.whatsapp)}"></div><div class="campo"><label>Faixa dos produtos</label><small>Texto pequeno exibido em todos os produtos.</small><input id="cfgFaixa" value="${limpar(config.faixa)}"></div><button class="btn-save" onclick="salvarConfig()">SALVAR E SAIR</button>`;else if(tab==='produtos')p.innerHTML=produtos.map(cardProduto).join('')||'<div class="vazio">Sem produtos.</div>';else if(tab==='novo')p.innerHTML=`<div class="grid2"><div class="campo"><label>Imagem por URL</label><small>Link da imagem do produto.</small><input id="nImagem"></div><div class="campo"><label>Título</label><small>Nome do produto exibido na loja.</small><input id="nTitulo"></div><div class="campo"><label>Preço</label><small>Valor do produto.</small><input id="nPreco"></div><div class="campo"><label>Estoque</label><small>Quantidade disponível, aparece somente no ADM.</small><input id="nEstoque"></div><div class="campo full"><label>Descrição</label><small>Descrição curta exibida no produto.</small><textarea id="nDescricao"></textarea></div><div class="campo full"><label>Detalhes</label><small>Descrição completa organizada em parágrafos para o menu detalhe.</small><textarea id="nDetalhes"></textarea></div><div class="campo full"><label>Faixa individual</label><small>Opcional. Se vazio usa a faixa geral do ADM.</small><input id="nFaixa"></div></div><button class="btn-save" onclick="cadastrarProduto()">SALVAR E SAIR</button>`;else if(tab==='pedidos'){p.innerHTML='<div id="listaPedidos">Carregando...</div>';carregarPedidos()}else if(tab==='desejos'){p.innerHTML='<div id="listaDesejos">Carregando...</div>';carregarDesejos()}}function cardProduto(p){return `<div class="card-adm"><div class="grid2"><div class="campo"><label>Imagem por URL</label><small>Imagem exibida na grade do produto.</small><input id="img_${p.id}" value="${limpar(p.imagem)}"></div><div class="campo"><label>Título</label><small>Título usado também na busca.</small><input id="tit_${p.id}" value="${limpar(p.titulo)}"></div><div class="campo"><label>Preço</label><small>Preço exibido na loja.</small><input id="pre_${p.id}" value="${limpar(p.preco)}"></div><div class="campo"><label>Estoque</label><small>Estoque visível somente no ADM.</small><input id="est_${p.id}" value="${limpar(p.estoque)}"></div><div class="campo full"><label>Descrição</label><small>Descrição curta exibida no card.</small><textarea id="des_${p.id}">${limpar(p.descricao)}</textarea></div><div class="campo full"><label>Detalhes</label><small>Descrição completa em parágrafos.</small><textarea id="det_${p.id}">${limpar(p.detalhes)}</textarea></div><div class="campo full"><label>Faixa do produto</label><small>Texto da faixa.</small><input id="fai_${p.id}" value="${limpar(p.faixa||'')}"></div></div><button class="btn-save" onclick="salvarProduto('${p.id}')">SALVAR E SAIR</button> <button class="btn-danger" onclick="apagarProduto('${p.id}')">APAGAR</button></div>`}window.salvarConfig=async()=>{await db.ref('config').set({nomeSite:$('cfgNome').value,whatsapp:whats($('cfgWhats').value),faixa:$('cfgFaixa').value});aviso('Salvo')};window.salvarProduto=async id=>{await db.ref('produtos/'+id).update({imagem:$('img_'+id).value,titulo:$('tit_'+id).value,preco:$('pre_'+id).value,estoque:Number($('est_'+id).value)||0,descricao:$('des_'+id).value,detalhes:$('det_'+id).value,faixa:$('fai_'+id).value});aviso('Produto salvo')};window.apagarProduto=async id=>{if(confirm('Apagar produto?')){await db.ref('produtos/'+id).remove();aviso('Produto apagado')}};window.cadastrarProduto=async()=>{let r=db.ref('produtos').push();await r.set({id:r.key,imagem:$('nImagem').value||'https://picsum.photos/seed/novo/700/700',titulo:$('nTitulo').value||'Novo produto',preco:$('nPreco').value||0,estoque:Number($('nEstoque').value)||0,descricao:$('nDescricao').value||'',detalhes:$('nDetalhes').value||'',faixa:$('nFaixa').value||''});aviso('Produto cadastrado');renderAdm('produtos')};function carregarPedidos(){db.ref('pedidos').limitToLast(100).once('value',s=>{let v=s.val()||{},arr=Object.keys(v).reverse().map(k=>({id:k,...v[k]}));$('listaPedidos').innerHTML=arr.map(o=>`<div class="pedido"><b>${limpar(o.dados?.nome)} ${limpar(o.dados?.sobrenome)}</b><br><small>${new Date(o.data).toLocaleString('pt-BR')} | ${limpar(o.dados?.whatsapp)}</small><p><b>Total:</b> ${dinheiro(o.total)}</p><p>${(o.itens||[]).map(i=>limpar(i.titulo)+' - qtd: '+i.quantidade).join('<br>')}</p><button class="btn-save" onclick="editarPedido('${o.id}')">EDITAR</button> <button class="btn-danger" onclick="apagarPedido('${o.id}')">APAGAR</button></div>`).join('')||'<div class="vazio">Nenhum pedido.</div>'})}window.editarPedido=async id=>{let s=await db.ref('pedidos/'+id).once('value'),o=s.val(),status=prompt('Editar status do pedido:',o.status||'Novo');if(status!==null){await db.ref('pedidos/'+id+'/status').set(status);carregarPedidos()}};window.apagarPedido=async id=>{if(confirm('Apagar pedido?')){await db.ref('pedidos/'+id).remove();carregarPedidos()}};function carregarDesejos(){db.ref('produtos_desejados').limitToLast(100).once('value',s=>{let v=s.val()||{},arr=Object.keys(v).reverse().map(k=>({id:k,...v[k]}));$('listaDesejos').innerHTML=arr.map(d=>`<div class="desejo"><b>${limpar(d.produto)}</b><br><small>Cliente: ${limpar(d.nome)} | ${new Date(d.data).toLocaleString('pt-BR')}</small><br><button class="btn-danger" onclick="apagarDesejo('${d.id}')">APAGAR</button></div>`).join('')||'<div class="vazio">Nenhum produto desejado.</div>'})}window.apagarDesejo=async id=>{if(confirm('Apagar pedido?')){await db.ref('produtos_desejados/'+id).remove();carregarDesejos()}};function arrastar(el){let ativo=false,sx=0,sy=0,ex=0,ey=0;el.addEventListener('pointerdown',e=>{ativo=true;sx=e.clientX;sy=e.clientY;let r=el.getBoundingClientRect();ex=r.left;ey=r.top;el.setPointerCapture(e.pointerId)});el.addEventListener('pointermove',e=>{if(!ativo)return;el.style.left=Math.max(4,Math.min(innerWidth-65,ex+e.clientX-sx))+'px';el.style.top=Math.max(55,Math.min(innerHeight-65,ey+e.clientY-sy))+'px';el.style.right='auto';el.style.bottom='auto'});el.addEventListener('pointerup',()=>ativo=false)}arrastar($('btnCarrinho'));arrastar($('btnWhats'));iniciar().then(ouvir).catch(()=>aviso('Erro ao conectar Firebase'));
-})();
+<body oncontextmenu="return false">
+
+<header>
+  <div class="logo" id="siteName">BRITOTEM.COM</div>
+  <div class="search">
+    <input id="searchInput" placeholder="Buscar produtos...">
+  </div>
+</header>
+
+<main class="container">
+  <section class="grid" id="productsGrid"></section>
+
+  <section class="request">
+    <h2>Não encontrou o produto?</h2>
+    <p style="margin:8px 0;color:#666">Escreva abaixo o produto desejado e seu WhatsApp.</p>
+    <div class="form-grid">
+      <input id="reqName" placeholder="Seu nome">
+      <input id="reqWhats" placeholder="Seu WhatsApp">
+    </div>
+    <textarea id="reqProduct" placeholder="Produto desejado"></textarea>
+    <button class="btn btn-primary" onclick="sendRequest()">ENVIAR PEDIDO</button>
+  </section>
+</main>
+
+<div class="float cart" id="cartFloat" onclick="openCart()">🛒<span class="led" id="cartCount">0</span></div>
+<div class="float whats" id="whatsFloat" onclick="openWhats()">☘<span class="led-text">FALE COM O VENDEDOR</span></div>
+
+<div class="modal" id="cartModal">
+  <div class="box">
+    <h2>Carrinho de compras</h2>
+    <div id="cartList"></div>
+    <div class="total" id="cartTotal">Total: R$ 0,00</div>
+
+    <div class="form-grid">
+      <input id="cNome" placeholder="Nome" required>
+      <input id="cSobrenome" placeholder="Sobrenome" required>
+      <input id="cCpf" placeholder="CPF" required>
+      <input id="cWhatsapp" placeholder="WhatsApp" required>
+      <input id="cEmail" placeholder="E-mail" required>
+      <input id="cRua" placeholder="Rua" required>
+      <input id="cBairro" placeholder="Bairro" required>
+      <input id="cCidade" placeholder="Cidade" required>
+      <input id="cNumero" placeholder="Número da Casa" required>
+    </div>
+    <textarea id="cObs" placeholder="Observações" required></textarea>
+
+    <button class="btn btn-green" onclick="finishOrder()">FINALIZAR COMPRA</button>
+    <button class="btn btn-gray" onclick="closeCart()">CONTINUAR COMPRANDO</button>
+  </div>
+</div>
+
+<div class="modal" id="detailModal" onclick="this.style.display='none'">
+  <div class="box" onclick="event.stopPropagation()">
+    <h2 id="detailTitle"></h2>
+    <div id="detailText"></div>
+    <button class="btn btn-dark" onclick="detailModal.style.display='none'">FECHAR</button>
+  </div>
+</div>
+
+<div class="modal" id="zoomModal" onclick="this.style.display='none'">
+  <img id="zoomImage" class="zoom-img">
+</div>
+
+<footer>
+  <div class="admin-link" onclick="loginAdmin()">A</div>
+  <div>© Britotem.com 2026 - Todos os direitos Reservados.</div>
+</footer>
+
+<section class="admin" id="adminPanel">
+  <div class="admin-top">
+    <h2>Painel ADM</h2>
+    <button class="btn btn-red" onclick="adminPanel.style.display='none'">SAIR</button>
+  </div>
+
+  <div class="admin-section">
+    <h3>Configurações principais</h3>
+    <p class="help">Edite nome do site, WhatsApp, faixa dos produtos e rodapé.</p>
+    <input id="admSiteName" placeholder="Nome do site">
+    <input id="admWhatsapp" placeholder="WhatsApp do vendedor">
+    <input id="admBadge" placeholder="Faixa dos produtos">
+    <input id="admFooter" placeholder="Texto do rodapé">
+    <button class="btn btn-primary" onclick="saveConfig()">SALVAR E SAIR</button>
+  </div>
+
+  <div class="admin-section">
+    <h3>Cadastrar novo produto</h3>
+    <p class="help">Cadastre imagem por URL, título, preço, descrição curta, descrição completa e estoque.</p>
+    <input id="newImg" placeholder="URL da imagem">
+    <input id="newTitle" placeholder="Título">
+    <input id="newPrice" placeholder="Preço">
+    <textarea id="newDesc" placeholder="Descrição curta"></textarea>
+    <textarea id="newFull" placeholder="Descrição completa organizada em parágrafos"></textarea>
+    <input id="newStock" type="number" placeholder="Estoque">
+    <button class="btn btn-green" onclick="addProduct()">CADASTRAR PRODUTO</button>
+  </div>
+
+  <div class="admin-section">
+    <h3>Editar produtos</h3>
+    <p class="help">Edite imagem, título, preço, descrição, descrição completa e estoque. O estoque só aparece aqui.</p>
+    <div id="adminProducts"></div>
+  </div>
+
+  <div class="admin-section">
+    <h3>Histórico de pedidos</h3>
+    <p class="help">Pedidos finalizados ficam registrados aqui com dados do cliente e lista de produtos.</p>
+    <div id="adminOrders"></div>
+  </div>
+
+  <div class="admin-section">
+    <h3>Produtos desejados não encontrados</h3>
+    <p class="help">Pedidos enviados no campo abaixo da loja aparecem aqui.</p>
+    <div id="adminRequests"></div>
+  </div>
+</section>
+
+<script type="module">
+import {initializeApp} from "https://www.gstatic.com/firebasejs/10.12.2/firebase-app.js";
+import {getDatabase,ref,set,push,onValue,update,remove} from "https://www.gstatic.com/firebasejs/10.12.2/firebase-database.js";
+
+const firebaseConfig={
+apiKey:"AIzaSyCf6_DCNSh4a3IiOtTv5Uf_N8YaxQtBczw",
+authDomain:"loja-a33e1.firebaseapp.com",
+databaseURL:"https://loja-a33e1-default-rtdb.firebaseio.com",
+projectId:"loja-a33e1",
+storageBucket:"loja-a33e1.firebasestorage.app",
+messagingSenderId:"304798626706",
+appId:"1:304798626706:web:23a0672e6a98ae432c474b",
+measurementId:"G-QSB41880QG"
+};
+
+const app=initializeApp(firebaseConfig);
+const db=getDatabase(app);
+
+let products={},config={},cart=[];
+
+const money=v=>Number(v||0).toLocaleString("pt-BR",{style:"currency",currency:"BRL"});
+
+function defaultProducts(){
+ let obj={};
+ for(let i=1;i<=100;i++){
+  obj["p"+i]={
+   img:"https://via.placeholder.com/600x600/0b57d0/ffffff?text=Produto+"+i,
+   title:"Produto "+i,
+   price:(19.90+i).toFixed(2),
+   desc:"Descrição curta do produto "+i,
+   full:"Descrição completa do produto "+i+".\n\nEdite este texto no painel ADM.",
+   stock:10
+  };
+ }
+ return obj;
+}
+
+onValue(ref(db,"config"),snap=>{
+ config=snap.val()||{
+  siteName:"BRITOTEM.COM",
+  whatsapp:"47988771313",
+  badge:"FRETE GRÁTIS - CHEGA AMANHÃ",
+  footer:"© Britotem.com 2026 - Todos os direitos Reservados."
+ };
+ siteName.innerText=config.siteName;
+ document.querySelector("footer div:last-child").innerText=config.footer;
+ admSiteName.value=config.siteName;
+ admWhatsapp.value=config.whatsapp;
+ admBadge.value=config.badge;
+ admFooter.value=config.footer;
+});
+
+onValue(ref(db,"products"),snap=>{
+ products=snap.val()||{};
+ if(Object.keys(products).length===0){
+  set(ref(db,"products"),defaultProducts());
+  return;
+ }
+ renderProducts();
+ renderAdminProducts();
+});
+
+onValue(ref(db,"orders"),snap=>renderOrders(snap.val()||{}));
+onValue(ref(db,"requests"),snap=>renderRequests(snap.val()||{}));
+
+function renderProducts(){
+ const term=searchInput.value.toLowerCase();
+ productsGrid.innerHTML="";
+ Object.entries(products).filter(([id,p])=>(p.title||"").toLowerCase().includes(term)).forEach(([id,p])=>{
+  const stock=Number(p.stock||0);
+  productsGrid.innerHTML+=`
+  <div class="card">
+   <span class="badge">${config.badge||"FRETE GRÁTIS - CHEGA AMANHÃ"}</span>
+   <img src="${p.img}" onclick="zoom('${p.img}')">
+   <div class="card-body">
+    <h3>${p.title}</h3>
+    <div class="desc">${p.desc||""}</div>
+    <div class="price">${money(p.price)}</div>
+    <button class="btn detail" onclick="showDetail('${id}')">DETALHES</button>
+    ${stock>0?`<button class="btn btn-primary" onclick="addCart('${id}')">ADICIONAR AO CARRINHO</button>`:`<div class="sold">PRODUTO ESGOTADO</div>`}
+   </div>
+  </div>`;
+ });
+}
+
+searchInput.oninput=renderProducts;
+
+window.zoom=img=>{
+ zoomImage.src=img;
+ zoomModal.style.display="flex";
+};
+
+window.showDetail=id=>{
+ const p=products[id];
+ detailTitle.innerText=p.title;
+ detailText.innerHTML=(p.full||"").split("\\n").filter(x=>x.trim()).map(x=>`<p style="margin-bottom:12px;line-height:1.5">${x}</p>`).join("");
+ detailModal.style.display="flex";
+};
+
+window.addCart=id=>{
+ const p=products[id];
+ if(Number(p.stock||0)<=0)return alert("Produto esgotado");
+ const item=cart.find(x=>x.id===id);
+ if(item)item.qty++;
+ else cart.push({id,qty:1});
+ updateCartBadge();
+};
+
+function updateCartBadge(){
+ cartCount.innerText=cart.reduce((s,i)=>s+i.qty,0);
+}
+
+window.openCart=()=>{
+ renderCart();
+ cartModal.style.display="flex";
+};
+
+window.closeCart=()=>cartModal.style.display="none";
+
+function renderCart(){
+ cartList.innerHTML="";
+ let total=0;
+ cart.forEach((item,index)=>{
+  const p=products[item.id];
+  const sub=Number(p.price||0)*item.qty;
+  total+=sub;
+  cartList.innerHTML+=`
+  <div class="cart-item">
+   <img src="${p.img}">
+   <div style="flex:1">
+    <b>${p.title}</b><br>${money(p.price)}
+   </div>
+   <input type="number" min="1" value="${item.qty}" onchange="changeQty(${index},this.value)">
+   <button class="btn btn-red" onclick="removeCart(${index})">X</button>
+  </div>`;
+ });
+ cartTotal.innerText="Total: "+money(total);
+}
+
+window.changeQty=(i,v)=>{
+ cart[i].qty=Math.max(1,Number(v||1));
+ updateCartBadge();
+ renderCart();
+};
+
+window.removeCart=i=>{
+ cart.splice(i,1);
+ updateCartBadge();
+ renderCart();
+};
+
+window.finishOrder=()=>{
+ if(cart.length===0)return alert("Seu carrinho está vazio");
+ const fields=["cNome","cSobrenome","cCpf","cWhatsapp","cEmail","cRua","cBairro","cCidade","cNumero","cObs"];
+ for(const f of fields){
+  if(!document.getElementById(f).value.trim()){
+   alert("Preencha todos os campos para finalizar a compra.");
+   document.getElementById(f).focus();
+   return;
+  }
+ }
+ let total=0;
+ const items=cart.map(i=>{
+  const p=products[i.id];
+  const sub=Number(p.price||0)*i.qty;
+  total+=sub;
+  return {id:i.id,img:p.img,title:p.title,price:p.price,qty:i.qty,subtotal:sub};
+ });
+ const client={
+  nome:cNome.value,sobrenome:cSobrenome.value,cpf:cCpf.value,whatsapp:cWhatsapp.value,email:cEmail.value,
+  rua:cRua.value,bairro:cBairro.value,cidade:cCidade.value,numero:cNumero.value,observacoes:cObs.value
+ };
+ const order={client,items,total,date:new Date().toLocaleString("pt-BR")};
+ push(ref(db,"orders"),order);
+
+ items.forEach(i=>{
+  const atual=Number(products[i.id].stock||0);
+  update(ref(db,"products/"+i.id),{stock:Math.max(0,atual-i.qty)});
+ });
+
+ let msg=`NOVO PEDIDO BRITOTEM.COM%0A%0A`;
+ msg+=`Cliente: ${client.nome} ${client.sobrenome}%0A`;
+ msg+=`CPF: ${client.cpf}%0AWhatsApp: ${client.whatsapp}%0AE-mail: ${client.email}%0A`;
+ msg+=`Endereço: ${client.rua}, ${client.numero}, ${client.bairro}, ${client.cidade}%0A`;
+ msg+=`Observações: ${client.observacoes}%0A%0APRODUTOS:%0A`;
+ items.forEach(i=>msg+=`${i.qty}x ${i.title} - ${money(i.subtotal)}%0A`);
+ msg+=`%0ATOTAL: ${money(total)}`;
+ window.open(`https://wa.me/55${config.whatsapp||"47988771313"}?text=${msg}`,"_blank");
+ cart=[];
+ updateCartBadge();
+ closeCart();
+};
+
+window.openWhats=()=>{
+ window.open(`https://wa.me/55${config.whatsapp||"47988771313"}?text=Olá, gostaria de falar com o vendedor da loja BRITOTEM.COM`,"_blank");
+};
+
+window.sendRequest=()=>{
+ if(!reqName.value||!reqWhats.value||!reqProduct.value)return alert("Preencha nome, WhatsApp e produto desejado.");
+ push(ref(db,"requests"),{
+  name:reqName.value,
+  whats:reqWhats.value,
+  product:reqProduct.value,
+  date:new Date().toLocaleString("pt-BR")
+ });
+ reqName.value=reqWhats.value=reqProduct.value="";
+ alert("Pedido enviado com sucesso.");
+};
+
+window.loginAdmin=()=>{
+ const pass=prompt("Digite a senha do ADM:");
+ if(pass==="848218")adminPanel.style.display="block";
+ else alert("Senha incorreta");
+};
+
+window.saveConfig=()=>{
+ set(ref(db,"config"),{
+  siteName:admSiteName.value,
+  whatsapp:admWhatsapp.value,
+  badge:admBadge.value,
+  footer:admFooter.value
+ });
+ alert("Configurações salvas.");
+ adminPanel.style.display="none";
+};
+
+window.addProduct=()=>{
+ if(!newTitle.value)return alert("Digite o título do produto.");
+ push(ref(db,"products"),{
+  img:newImg.value||"https://via.placeholder.com/600x600/0b57d0/ffffff?text=Produto",
+  title:newTitle.value,
+  price:newPrice.value||0,
+  desc:newDesc.value,
+  full:newFull.value,
+  stock:Number(newStock.value||0)
+ });
+ newImg.value=newTitle.value=newPrice.value=newDesc.value=newFull.value=newStock.value="";
+ alert("Produto cadastrado.");
+};
+
+function renderAdminProducts(){
+ adminProducts.innerHTML="";
+ Object.entries(products).forEach(([id,p])=>{
+  adminProducts.innerHTML+=`
+  <div class="product-edit">
+   <p class="help">Produto: ${p.title}</p>
+   <input id="img_${id}" value="${p.img||""}" placeholder="Imagem URL">
+   <input id="title_${id}" value="${p.title||""}" placeholder="Título">
+   <input id="price_${id}" value="${p.price||0}" placeholder="Preço">
+   <textarea id="desc_${id}" placeholder="Descrição curta">${p.desc||""}</textarea>
+   <textarea id="full_${id}" placeholder="Descrição completa">${p.full||""}</textarea>
+   <input id="stock_${id}" type="number" value="${p.stock||0}" placeholder="Estoque">
+   <button class="btn btn-primary" onclick="saveProduct('${id}')">SALVAR</button>
+   <button class="btn btn-red" onclick="deleteProduct('${id}')">APAGAR</button>
+  </div>`;
+ });
+}
+
+window.saveProduct=id=>{
+ update(ref(db,"products/"+id),{
+  img:document.getElementById("img_"+id).value,
+  title:document.getElementById("title_"+id).value,
+  price:document.getElementById("price_"+id).value,
+  desc:document.getElementById("desc_"+id).value,
+  full:document.getElementById("full_"+id).value,
+  stock:Number(document.getElementById("stock_"+id).value||0)
+ });
+ alert("Produto salvo.");
+};
+
+window.deleteProduct=id=>{
+ if(confirm("Apagar este produto?"))remove(ref(db,"products/"+id));
+};
+
+function renderOrders(orders){
+ adminOrders.innerHTML="";
+ Object.entries(orders).reverse().forEach(([id,o])=>{
+  adminOrders.innerHTML+=`
+  <div class="product-edit">
+   <b>${o.date}</b><br>
+   Cliente: ${o.client?.nome||""} ${o.client?.sobrenome||""}<br>
+   WhatsApp: ${o.client?.whatsapp||""}<br>
+   Endereço: ${o.client?.rua||""}, ${o.client?.numero||""}, ${o.client?.bairro||""}, ${o.client?.cidade||""}<br>
+   <br>
+   ${(o.items||[]).map(i=>`${i.qty}x ${i.title} - ${money(i.subtotal)}`).join("<br>")}
+   <h3>Total: ${money(o.total)}</h3>
+   <button class="btn btn-red" onclick="removeOrder('${id}')">APAGAR PEDIDO</button>
+  </div>`;
+ });
+}
+
+window.removeOrder=id=>{
+ if(confirm("Apagar pedido do histórico?"))remove(ref(db,"orders/"+id));
+};
+
+function renderRequests(reqs){
+ adminRequests.innerHTML="";
+ Object.entries(reqs).reverse().forEach(([id,r])=>{
+  adminRequests.innerHTML+=`
+  <div class="product-edit">
+   <b>${r.date}</b><br>
+   Nome: ${r.name}<br>
+   WhatsApp: ${r.whats}<br>
+   Produto desejado: ${r.product}<br><br>
+   <button class="btn btn-red" onclick="removeRequest('${id}')">APAGAR</button>
+  </div>`;
+ });
+}
+
+window.removeRequest=id=>{
+ if(confirm("Apagar solicitação?"))remove(ref(db,"requests/"+id));
+};
+
+function drag(el){
+ let p1=0,p2=0,p3=0,p4=0;
+ el.onmousedown=down;
+ el.ontouchstart=e=>down(e.touches[0]);
+ function down(e){
+  p3=e.clientX;p4=e.clientY;
+  document.onmouseup=up;
+  document.onmousemove=move;
+  document.ontouchend=up;
+  document.ontouchmove=ev=>move(ev.touches[0]);
+ }
+ function move(e){
+  p1=p3-e.clientX;p2=p4-e.clientY;p3=e.clientX;p4=e.clientY;
+  el.style.top=(el.offsetTop-p2)+"px";
+  el.style.left=(el.offsetLeft-p1)+"px";
+  el.style.right="auto";
+  el.style.bottom="auto";
+ }
+ function up(){
+  document.onmouseup=null;document.onmousemove=null;document.ontouchend=null;document.ontouchmove=null;
+ }
+}
+drag(cartFloat);
+drag(whatsFloat);
+
+document.onkeydown=e=>{
+ if(e.key==="F12"||(e.ctrlKey&&e.shiftKey&&["I","J","C"].includes(e.key.toUpperCase()))||(e.ctrlKey&&e.key.toUpperCase()==="U")){
+  e.preventDefault();
+  return false;
+ }
+};
 </script>
 </body>
 </html>
