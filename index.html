@@ -4,184 +4,633 @@
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width,initial-scale=1.0">
 <title>BRITOTEM.COM</title>
+
 <style>
-*{box-sizing:border-box;margin:0;padding:0;font-family:Arial,sans-serif}
-body{background:#f4f6fb;color:#111}
-header{position:sticky;top:0;z-index:50;background:#0b57d0;color:#fff;padding:14px;display:flex;gap:15px;align-items:center;box-shadow:0 4px 18px #0003}
-.logo{font-size:22px;font-weight:900;white-space:nowrap}
-.search{flex:1;display:flex;justify-content:center}
-.search input{width:100%;max-width:520px;padding:13px 18px;border:0;border-radius:30px;font-size:16px}
-.container{max-width:1300px;margin:auto;padding:18px}
-.grid{display:grid;grid-template-columns:repeat(auto-fill,minmax(210px,1fr));gap:16px}
-.card{background:#fff;border-radius:18px;overflow:hidden;box-shadow:0 8px 22px #0001;position:relative}
-.card img{width:100%;height:190px;object-fit:cover;cursor:pointer}
-.badge{position:absolute;top:10px;left:10px;background:#00a650;color:white;font-size:12px;font-weight:800;padding:6px 8px;border-radius:8px}
-.card-body{padding:12px}
-.card h3{font-size:15px;margin-bottom:6px;min-height:36px}
-.price{font-size:22px;font-weight:900;color:#0b57d0;margin:8px 0}
-.desc{font-size:13px;color:#555;min-height:38px}
-.btn{border:0;border-radius:12px;padding:12px 14px;font-weight:800;cursor:pointer}
-.btn-primary{background:#0b57d0;color:#fff;width:100%;margin-top:8px}
-.btn-dark{background:#111;color:#fff}
-.btn-green{background:#03a64a;color:#fff}
+*{margin:0;padding:0;box-sizing:border-box;font-family:Arial,Helvetica,sans-serif}
+:root{
+--azul:#075ee8;
+--azul2:#003b99;
+--verde:#00a650;
+--vermelho:#e00000;
+--fundo:#f4f6fb;
+--texto:#111827;
+--card:#fff;
+}
+body{
+background:var(--fundo);
+color:var(--texto);
+user-select:none;
+}
+header{
+position:sticky;
+top:0;
+z-index:50;
+background:linear-gradient(135deg,var(--azul),var(--azul2));
+color:#fff;
+padding:14px 18px;
+display:flex;
+align-items:center;
+gap:18px;
+box-shadow:0 5px 20px #0003;
+}
+.logo{
+font-size:23px;
+font-weight:900;
+letter-spacing:.5px;
+white-space:nowrap;
+}
+.search-area{
+flex:1;
+display:flex;
+justify-content:center;
+}
+.search-area input{
+width:100%;
+max-width:600px;
+padding:14px 20px;
+border-radius:40px;
+border:0;
+outline:0;
+font-size:16px;
+box-shadow:inset 0 2px 8px #0001;
+}
+.container{
+max-width:1350px;
+margin:auto;
+padding:18px;
+}
+.products-grid{
+display:grid;
+grid-template-columns:repeat(auto-fill,minmax(210px,1fr));
+gap:16px;
+}
+.product-card{
+background:var(--card);
+border-radius:20px;
+overflow:hidden;
+box-shadow:0 8px 22px #00000014;
+position:relative;
+transition:.25s;
+}
+.product-card:hover{
+transform:translateY(-3px);
+box-shadow:0 14px 32px #0002;
+}
+.product-card img{
+width:100%;
+height:195px;
+object-fit:cover;
+cursor:pointer;
+background:#eee;
+}
+.product-body{
+padding:12px;
+}
+.product-title{
+font-size:15px;
+font-weight:800;
+line-height:1.25;
+min-height:38px;
+margin-bottom:6px;
+}
+.product-desc{
+font-size:13px;
+color:#555;
+line-height:1.35;
+min-height:36px;
+}
+.product-price{
+font-size:23px;
+font-weight:900;
+color:var(--azul);
+margin-top:8px;
+}
+.product-badge{
+margin:8px 0;
+background:#00a650;
+color:#fff;
+font-size:11px;
+font-weight:900;
+padding:7px 8px;
+border-radius:9px;
+text-align:center;
+letter-spacing:.2px;
+}
+.btn{
+border:0;
+border-radius:13px;
+padding:12px 14px;
+font-weight:900;
+cursor:pointer;
+transition:.2s;
+margin-top:8px;
+}
+.btn:hover{filter:brightness(.92)}
+.btn-primary{background:var(--azul);color:#fff;width:100%}
+.btn-dark{background:#111827;color:#fff}
+.btn-green{background:#00a650;color:#fff;width:100%}
 .btn-red{background:#e00000;color:#fff}
-.btn-gray{background:#ddd;color:#111}
-.detail{margin-top:8px;background:#eef3ff;color:#0b57d0;width:100%}
-.sold{padding:12px;text-align:center;background:#eee;color:#900;font-weight:900;border-radius:12px;margin-top:8px}
-.float{position:fixed;z-index:100;width:64px;height:64px;border-radius:50%;display:flex;align-items:center;justify-content:center;font-size:28px;color:#fff;box-shadow:0 10px 25px #0005;cursor:grab;user-select:none}
-.cart{right:18px;bottom:105px;background:#0b57d0}
-.whats{left:18px;bottom:105px;background:#04b455}
-.led{position:absolute;top:-7px;right:-7px;background:red;color:#fff;border-radius:50%;min-width:24px;height:24px;font-size:13px;display:flex;align-items:center;justify-content:center;font-weight:900}
-.led-text{position:absolute;left:70px;background:#000;color:#39ff14;padding:6px 10px;border-radius:10px;font-size:12px;white-space:nowrap;font-weight:900;box-shadow:0 0 10px #39ff14}
-.modal{display:none;position:fixed;inset:0;background:#0008;z-index:200;align-items:center;justify-content:center;padding:15px}
-.box{background:#fff;border-radius:20px;padding:18px;max-width:780px;width:100%;max-height:90vh;overflow:auto}
-.box h2{margin-bottom:12px}
-.form-grid{display:grid;grid-template-columns:repeat(2,1fr);gap:10px}
-input,textarea,select{width:100%;padding:12px;border:1px solid #ddd;border-radius:12px;font-size:15px}
-textarea{min-height:85px;resize:vertical}
-.cart-item{display:flex;gap:10px;align-items:center;border-bottom:1px solid #eee;padding:10px 0}
-.cart-item img{width:58px;height:58px;object-fit:cover;border-radius:10px}
-.cart-item input{width:70px}
-.total{font-size:24px;font-weight:900;text-align:right;margin:12px 0}
-.request{background:#fff;padding:18px;border-radius:18px;margin:24px 0;box-shadow:0 8px 22px #0001}
-footer{text-align:center;padding:26px;color:#555}
-.admin-link{opacity:.22;font-size:13px;cursor:pointer;margin-bottom:8px}
-.admin{display:none;position:fixed;inset:0;background:#f4f6fb;z-index:300;overflow:auto;padding:16px}
-.admin-top{display:flex;justify-content:space-between;align-items:center;background:#111;color:#fff;padding:14px;border-radius:16px;margin-bottom:14px}
-.admin-section{background:#fff;padding:15px;border-radius:16px;margin-bottom:15px;box-shadow:0 6px 18px #0001}
-.admin-section h3{margin-bottom:10px;color:#0b57d0}
-.help{font-size:13px;color:#666;margin:7px 0}
-.product-edit{border:1px solid #eee;border-radius:14px;padding:12px;margin:10px 0}
-.zoom-img{max-width:92vw;max-height:85vh;border-radius:18px}
-@media(max-width:700px){
-header{flex-direction:column;align-items:stretch}
-.logo{text-align:center}
-.grid{grid-template-columns:repeat(2,1fr);gap:10px}
-.card img{height:150px}
-.card h3{font-size:13px}
-.price{font-size:18px}
-.form-grid{grid-template-columns:1fr}
-.container{padding:10px}
+.btn-gray{background:#e5e7eb;color:#111827;width:100%}
+.btn-detail{background:#eef4ff;color:var(--azul);width:100%}
+.sold-out{
+margin-top:8px;
+padding:12px;
+border-radius:13px;
+background:#f1f1f1;
+color:#a00000;
+font-weight:900;
+text-align:center;
+}
+.float-btn{
+position:fixed;
+z-index:120;
+width:66px;
+height:66px;
+border-radius:50%;
+display:flex;
+align-items:center;
+justify-content:center;
+font-size:29px;
+color:#fff;
+box-shadow:0 10px 28px #0005;
+cursor:grab;
+user-select:none;
+}
+.cart-float{
+right:18px;
+bottom:110px;
+background:var(--azul);
+}
+.whats-float{
+left:18px;
+bottom:110px;
+background:#04b455;
+}
+.cart-led{
+position:absolute;
+top:-7px;
+right:-7px;
+min-width:25px;
+height:25px;
+padding:0 6px;
+border-radius:50%;
+background:red;
+color:#fff;
+display:flex;
+align-items:center;
+justify-content:center;
+font-size:13px;
+font-weight:900;
+box-shadow:0 0 12px red;
+}
+.whats-led{
+position:absolute;
+left:72px;
+background:#030303;
+color:#39ff14;
+padding:7px 11px;
+border-radius:10px;
+font-size:12px;
+font-weight:900;
+white-space:nowrap;
+box-shadow:0 0 12px #39ff14;
+}
+.modal{
+display:none;
+position:fixed;
+inset:0;
+background:#0009;
+z-index:300;
+align-items:center;
+justify-content:center;
+padding:15px;
+}
+.modal-box{
+background:#fff;
+border-radius:22px;
+padding:18px;
+width:100%;
+max-width:850px;
+max-height:92vh;
+overflow:auto;
+box-shadow:0 20px 50px #0006;
+}
+.modal-box h2{
+margin-bottom:14px;
+color:var(--azul);
+}
+.form-grid{
+display:grid;
+grid-template-columns:repeat(2,1fr);
+gap:11px;
+}
+label{
+display:block;
+font-size:12px;
+font-weight:900;
+color:#444;
+margin:10px 0 5px;
+}
+input,textarea,select{
+width:100%;
+padding:12px;
+border:1px solid #d8dce5;
+border-radius:13px;
+font-size:15px;
+outline:none;
+background:#fff;
+}
+textarea{
+min-height:90px;
+resize:vertical;
+}
+.cart-item{
+display:flex;
+align-items:center;
+gap:10px;
+border-bottom:1px solid #eee;
+padding:10px 0;
+}
+.cart-item img{
+width:62px;
+height:62px;
+border-radius:12px;
+object-fit:cover;
+}
+.cart-item-info{
+flex:1;
+font-size:14px;
+}
+.cart-item input{
+width:72px;
+}
+.total-box{
+font-size:23px;
+font-weight:900;
+text-align:right;
+margin:12px 0;
+}
+.coupon-line{
+background:#f8fafc;
+border:1px solid #e5e7eb;
+padding:12px;
+border-radius:15px;
+margin:12px 0;
+}
+.request-box{
+background:#fff;
+padding:18px;
+border-radius:20px;
+box-shadow:0 8px 22px #00000012;
+margin:25px 0;
+}
+.request-box h2{
+color:var(--azul);
+}
+footer{
+text-align:center;
+padding:28px 10px;
+color:#555;
+}
+.admin-link{
+font-size:13px;
+opacity:.20;
+cursor:pointer;
+margin-bottom:8px;
+font-weight:900;
+}
+.admin-panel{
+display:none;
+position:fixed;
+inset:0;
+z-index:500;
+background:#f4f6fb;
+overflow:auto;
+padding:15px;
+}
+.admin-header{
+display:flex;
+align-items:center;
+justify-content:space-between;
+background:#111827;
+color:#fff;
+padding:14px;
+border-radius:18px;
+margin-bottom:14px;
+}
+.admin-section{
+background:#fff;
+padding:15px;
+border-radius:18px;
+box-shadow:0 7px 20px #00000012;
+margin-bottom:15px;
+}
+.admin-section h3{
+color:var(--azul);
+margin-bottom:10px;
+}
+.help{
+font-size:13px;
+color:#666;
+line-height:1.4;
+margin:5px 0 10px;
+}
+.admin-item{
+border:1px solid #e5e7eb;
+border-radius:16px;
+padding:12px;
+margin:11px 0;
+background:#fcfcfd;
+}
+.admin-actions{
+display:flex;
+gap:8px;
+flex-wrap:wrap;
+}
+.zoom-img{
+max-width:94vw;
+max-height:88vh;
+border-radius:18px;
+box-shadow:0 20px 50px #0008;
+}
+.detail-content p{
+margin-bottom:13px;
+line-height:1.55;
+color:#333;
+}
+.empty{
+text-align:center;
+padding:22px;
+color:#666;
+font-weight:800;
+}
+@media(max-width:720px){
+header{
+flex-direction:column;
+align-items:stretch;
+padding:12px;
+}
+.logo{
+text-align:center;
+}
+.products-grid{
+grid-template-columns:repeat(2,1fr);
+gap:10px;
+}
+.container{
+padding:10px;
+}
+.product-card{
+border-radius:16px;
+}
+.product-card img{
+height:150px;
+}
+.product-body{
+padding:9px;
+}
+.product-title{
+font-size:13px;
+min-height:34px;
+}
+.product-desc{
+font-size:12px;
+}
+.product-price{
+font-size:18px;
+}
+.product-badge{
+font-size:9.5px;
+padding:6px;
+}
+.form-grid{
+grid-template-columns:1fr;
+}
+.float-btn{
+width:58px;
+height:58px;
+font-size:25px;
+}
+.whats-led{
+font-size:10px;
+left:62px;
+}
 }
 </style>
 </head>
+
 <body oncontextmenu="return false">
 
 <header>
-  <div class="logo" id="siteName">BRITOTEM.COM</div>
-  <div class="search">
-    <input id="searchInput" placeholder="Buscar produtos...">
-  </div>
+<div class="logo" id="siteName">BRITOTEM.COM</div>
+<div class="search-area">
+<input id="searchInput" type="search" placeholder="Buscar produtos...">
+</div>
 </header>
 
 <main class="container">
-  <section class="grid" id="productsGrid"></section>
+<section class="products-grid" id="productsGrid"></section>
 
-  <section class="request">
-    <h2>Não encontrou o produto?</h2>
-    <p style="margin:8px 0;color:#666">Escreva abaixo o produto desejado e seu WhatsApp.</p>
-    <div class="form-grid">
-      <input id="reqName" placeholder="Seu nome">
-      <input id="reqWhats" placeholder="Seu WhatsApp">
-    </div>
-    <textarea id="reqProduct" placeholder="Produto desejado"></textarea>
-    <button class="btn btn-primary" onclick="sendRequest()">ENVIAR PEDIDO</button>
-  </section>
+<section class="request-box">
+<h2>Não encontrou o produto?</h2>
+<p class="help">Escreva o produto que você desejava e não encontrou na loja.</p>
+
+<label>Nome do cliente</label>
+<input id="reqName" placeholder="Digite seu nome">
+
+<label>WhatsApp do cliente</label>
+<input id="reqWhats" placeholder="Digite seu WhatsApp">
+
+<label>Produto desejado</label>
+<textarea id="reqProduct" placeholder="Digite aqui o produto que você queria encontrar"></textarea>
+
+<button class="btn btn-primary" onclick="sendProductRequest()">ENVIAR PEDIDO</button>
+</section>
 </main>
 
-<div class="float cart" id="cartFloat" onclick="openCart()">🛒<span class="led" id="cartCount">0</span></div>
-<div class="float whats" id="whatsFloat" onclick="openWhats()">☘<span class="led-text">FALE COM O VENDEDOR</span></div>
+<div class="float-btn cart-float" id="cartFloat" onclick="openCart()">
+🛒
+<span class="cart-led" id="cartCount">0</span>
+</div>
+
+<div class="float-btn whats-float" id="whatsFloat" onclick="openWhatsappSeller()">
+☘
+<span class="whats-led">FALE COM O VENDEDOR</span>
+</div>
 
 <div class="modal" id="cartModal">
-  <div class="box">
-    <h2>Carrinho de compras</h2>
-    <div id="cartList"></div>
-    <div class="total" id="cartTotal">Total: R$ 0,00</div>
+<div class="modal-box">
+<h2>Carrinho de compras</h2>
 
-    <div class="form-grid">
-      <input id="cNome" placeholder="Nome" required>
-      <input id="cSobrenome" placeholder="Sobrenome" required>
-      <input id="cCpf" placeholder="CPF" required>
-      <input id="cWhatsapp" placeholder="WhatsApp" required>
-      <input id="cEmail" placeholder="E-mail" required>
-      <input id="cRua" placeholder="Rua" required>
-      <input id="cBairro" placeholder="Bairro" required>
-      <input id="cCidade" placeholder="Cidade" required>
-      <input id="cNumero" placeholder="Número da Casa" required>
-    </div>
-    <textarea id="cObs" placeholder="Observações" required></textarea>
+<div id="cartList"></div>
 
-    <button class="btn btn-green" onclick="finishOrder()">FINALIZAR COMPRA</button>
-    <button class="btn btn-gray" onclick="closeCart()">CONTINUAR COMPRANDO</button>
-  </div>
+<div class="coupon-line">
+<label>Cupom de desconto</label>
+<input id="couponInput" placeholder="Digite seu cupom">
+<button class="btn btn-dark" onclick="applyCoupon()">APLICAR CUPOM</button>
+<div class="help" id="couponStatus"></div>
 </div>
 
-<div class="modal" id="detailModal" onclick="this.style.display='none'">
-  <div class="box" onclick="event.stopPropagation()">
-    <h2 id="detailTitle"></h2>
-    <div id="detailText"></div>
-    <button class="btn btn-dark" onclick="detailModal.style.display='none'">FECHAR</button>
-  </div>
+<div class="total-box" id="cartTotal">Total: R$ 0,00</div>
+
+<h2>Dados do cliente</h2>
+
+<div class="form-grid">
+<div>
+<label>Nome</label>
+<input id="cNome" required>
+</div>
+<div>
+<label>Sobrenome</label>
+<input id="cSobrenome" required>
+</div>
+<div>
+<label>CPF</label>
+<input id="cCpf" required>
+</div>
+<div>
+<label>WhatsApp</label>
+<input id="cWhatsapp" required>
+</div>
+<div>
+<label>E-mail</label>
+<input id="cEmail" required>
+</div>
+<div>
+<label>Rua</label>
+<input id="cRua" required>
+</div>
+<div>
+<label>Bairro</label>
+<input id="cBairro" required>
+</div>
+<div>
+<label>Cidade</label>
+<input id="cCidade" required>
+</div>
+<div>
+<label>Número da Casa</label>
+<input id="cNumero" required>
+</div>
 </div>
 
-<div class="modal" id="zoomModal" onclick="this.style.display='none'">
-  <img id="zoomImage" class="zoom-img">
+<label>Observações</label>
+<textarea id="cObs" required></textarea>
+
+<button class="btn btn-green" onclick="finishOrder()">FINALIZAR COMPRA</button>
+<button class="btn btn-gray" onclick="closeCart()">CONTINUAR COMPRANDO</button>
+</div>
+</div>
+
+<div class="modal" id="detailModal" onclick="closeDetail()">
+<div class="modal-box" onclick="event.stopPropagation()">
+<h2 id="detailTitle"></h2>
+<div class="detail-content" id="detailText"></div>
+<button class="btn btn-dark" onclick="closeDetail()">FECHAR</button>
+</div>
+</div>
+
+<div class="modal" id="zoomModal" onclick="closeZoom()">
+<img id="zoomImage" class="zoom-img">
 </div>
 
 <footer>
-  <div class="admin-link" onclick="loginAdmin()">A</div>
-  <div>© Britotem.com 2026 - Todos os direitos Reservados.</div>
+<div class="admin-link" onclick="openAdminLogin()">A</div>
+<div id="footerText">© Britotem.com 2026 - Todos os direitos Reservados.</div>
 </footer>
 
-<section class="admin" id="adminPanel">
-  <div class="admin-top">
-    <h2>Painel ADM</h2>
-    <button class="btn btn-red" onclick="adminPanel.style.display='none'">SAIR</button>
-  </div>
+<section class="admin-panel" id="adminPanel">
 
-  <div class="admin-section">
-    <h3>Configurações principais</h3>
-    <p class="help">Edite nome do site, WhatsApp, faixa dos produtos e rodapé.</p>
-    <input id="admSiteName" placeholder="Nome do site">
-    <input id="admWhatsapp" placeholder="WhatsApp do vendedor">
-    <input id="admBadge" placeholder="Faixa dos produtos">
-    <input id="admFooter" placeholder="Texto do rodapé">
-    <button class="btn btn-primary" onclick="saveConfig()">SALVAR E SAIR</button>
-  </div>
+<div class="admin-header">
+<h2>Painel ADM</h2>
+<button class="btn btn-red" onclick="closeAdmin()">SALVAR E SAIR</button>
+</div>
 
-  <div class="admin-section">
-    <h3>Cadastrar novo produto</h3>
-    <p class="help">Cadastre imagem por URL, título, preço, descrição curta, descrição completa e estoque.</p>
-    <input id="newImg" placeholder="URL da imagem">
-    <input id="newTitle" placeholder="Título">
-    <input id="newPrice" placeholder="Preço">
-    <textarea id="newDesc" placeholder="Descrição curta"></textarea>
-    <textarea id="newFull" placeholder="Descrição completa organizada em parágrafos"></textarea>
-    <input id="newStock" type="number" placeholder="Estoque">
-    <button class="btn btn-green" onclick="addProduct()">CADASTRAR PRODUTO</button>
-  </div>
+<div class="admin-section">
+<h3>Configurações principais da loja</h3>
+<p class="help">Edite os textos principais da loja, WhatsApp, faixa dos produtos e ajuste geral de preço por porcentagem.</p>
 
-  <div class="admin-section">
-    <h3>Editar produtos</h3>
-    <p class="help">Edite imagem, título, preço, descrição, descrição completa e estoque. O estoque só aparece aqui.</p>
-    <div id="adminProducts"></div>
-  </div>
+<label>Nome do site exibido no topo esquerdo</label>
+<input id="admSiteName">
 
-  <div class="admin-section">
-    <h3>Histórico de pedidos</h3>
-    <p class="help">Pedidos finalizados ficam registrados aqui com dados do cliente e lista de produtos.</p>
-    <div id="adminOrders"></div>
-  </div>
+<label>WhatsApp do vendedor usado no botão flutuante e nos pedidos</label>
+<input id="admWhatsapp">
 
-  <div class="admin-section">
-    <h3>Produtos desejados não encontrados</h3>
-    <p class="help">Pedidos enviados no campo abaixo da loja aparecem aqui.</p>
-    <div id="adminRequests"></div>
-  </div>
+<label>Texto da faixa abaixo do preço nos produtos</label>
+<input id="admBadgeText">
+
+<label>Texto do rodapé</label>
+<input id="admFooterText">
+
+<label>Mexer no preço geral da loja por porcentagem. Exemplo: 10 aumenta 10%, -10 diminui 10%</label>
+<input id="admGlobalPercent" type="number" step="0.01">
+
+<button class="btn btn-primary" onclick="saveConfig()">SALVAR E SAIR</button>
+</div>
+
+<div class="admin-section">
+<h3>Cadastrar cupom</h3>
+<p class="help">Cadastre cupons para o cliente usar dentro do carrinho.</p>
+
+<label>Código do cupom</label>
+<input id="couponCode" placeholder="Exemplo: BRITO10">
+
+<label>Desconto do cupom em porcentagem</label>
+<input id="couponDiscount" type="number" placeholder="Exemplo: 10">
+
+<button class="btn btn-green" onclick="saveCoupon()">SALVAR CUPOM</button>
+
+<div id="adminCoupons"></div>
+</div>
+
+<div class="admin-section">
+<h3>Cadastrar novo produto</h3>
+<p class="help">Cadastre novos produtos que serão salvos no Firebase e exibidos automaticamente na loja.</p>
+
+<label>Imagem do produto por URL</label>
+<input id="newImg">
+
+<label>Título do produto</label>
+<input id="newTitle">
+
+<label>Preço do produto</label>
+<input id="newPrice" type="number" step="0.01">
+
+<label>Descrição curta exibida na grade</label>
+<textarea id="newDesc"></textarea>
+
+<label>Descrição completa organizada em parágrafos para o menu Detalhes</label>
+<textarea id="newFull"></textarea>
+
+<label>Estoque do produto, visível somente no ADM</label>
+<input id="newStock" type="number">
+
+<button class="btn btn-green" onclick="addProduct()">CADASTRAR PRODUTO</button>
+</div>
+
+<div class="admin-section">
+<h3>Editar produtos cadastrados</h3>
+<p class="help">Cada produto possui campos editáveis com botão salvar e botão apagar. O estoque não aparece na loja, apenas aqui.</p>
+<div id="adminProducts"></div>
+</div>
+
+<div class="admin-section">
+<h3>Histórico de pedidos da loja</h3>
+<p class="help">Aqui ficam salvos todos os dados cadastrados no carrinho e a lista completa dos produtos comprados.</p>
+<div id="adminOrders"></div>
+</div>
+
+<div class="admin-section">
+<h3>Produtos desejados não encontrados</h3>
+<p class="help">Aqui ficam salvos os pedidos enviados pelos clientes no campo abaixo dos produtos.</p>
+<div id="adminRequests"></div>
+</div>
+
 </section>
 
 <script type="module">
 import {initializeApp} from "https://www.gstatic.com/firebasejs/10.12.2/firebase-app.js";
+import {getAnalytics} from "https://www.gstatic.com/firebasejs/10.12.2/firebase-analytics.js";
 import {getDatabase,ref,set,push,onValue,update,remove} from "https://www.gstatic.com/firebasejs/10.12.2/firebase-database.js";
 
 const firebaseConfig={
@@ -196,334 +645,604 @@ measurementId:"G-QSB41880QG"
 };
 
 const app=initializeApp(firebaseConfig);
+const analytics=getAnalytics(app);
 const db=getDatabase(app);
 
-let products={},config={},cart=[];
+let products={};
+let config={};
+let coupons={};
+let cart=[];
+let appliedCoupon=null;
 
 const money=v=>Number(v||0).toLocaleString("pt-BR",{style:"currency",currency:"BRL"});
 
-function defaultProducts(){
- let obj={};
- for(let i=1;i<=100;i++){
-  obj["p"+i]={
-   img:"https://via.placeholder.com/600x600/0b57d0/ffffff?text=Produto+"+i,
-   title:"Produto "+i,
-   price:(19.90+i).toFixed(2),
-   desc:"Descrição curta do produto "+i,
-   full:"Descrição completa do produto "+i+".\n\nEdite este texto no painel ADM.",
-   stock:10
-  };
- }
- return obj;
+function adjustedPrice(price){
+const percent=Number(config.globalPercent||0);
+return Number(price||0)+(Number(price||0)*percent/100);
+}
+
+function createDefaultProducts(){
+let list={};
+for(let i=1;i<=100;i++){
+list["produto_"+i]={
+img:"https://via.placeholder.com/700x700/075ee8/ffffff?text=Produto+"+i,
+title:"Produto "+i,
+price:(20+i).toFixed(2),
+desc:"Descrição curta do produto "+i,
+full:"Descrição completa do produto "+i+".\\n\\nEste texto pode ser editado dentro do painel ADM.\\n\\nOrganize as informações em parágrafos.",
+stock:10
+};
+}
+return list;
 }
 
 onValue(ref(db,"config"),snap=>{
- config=snap.val()||{
-  siteName:"BRITOTEM.COM",
-  whatsapp:"47988771313",
-  badge:"FRETE GRÁTIS - CHEGA AMANHÃ",
-  footer:"© Britotem.com 2026 - Todos os direitos Reservados."
- };
- siteName.innerText=config.siteName;
- document.querySelector("footer div:last-child").innerText=config.footer;
- admSiteName.value=config.siteName;
- admWhatsapp.value=config.whatsapp;
- admBadge.value=config.badge;
- admFooter.value=config.footer;
+config=snap.val()||{
+siteName:"BRITOTEM.COM",
+whatsapp:"47988771313",
+badgeText:"FRETE GRÁTIS - CHEGA AMANHÃ",
+footerText:"© Britotem.com 2026 - Todos os direitos Reservados.",
+globalPercent:0
+};
+siteName.innerText=config.siteName||"BRITOTEM.COM";
+footerText.innerText=config.footerText||"© Britotem.com 2026 - Todos os direitos Reservados.";
+admSiteName.value=config.siteName||"BRITOTEM.COM";
+admWhatsapp.value=config.whatsapp||"47988771313";
+admBadgeText.value=config.badgeText||"FRETE GRÁTIS - CHEGA AMANHÃ";
+admFooterText.value=config.footerText||"© Britotem.com 2026 - Todos os direitos Reservados.";
+admGlobalPercent.value=config.globalPercent||0;
+renderProducts();
+renderCart();
 });
 
 onValue(ref(db,"products"),snap=>{
- products=snap.val()||{};
- if(Object.keys(products).length===0){
-  set(ref(db,"products"),defaultProducts());
-  return;
- }
- renderProducts();
- renderAdminProducts();
+products=snap.val()||{};
+if(Object.keys(products).length===0){
+set(ref(db,"products"),createDefaultProducts());
+return;
+}
+renderProducts();
+renderAdminProducts();
 });
 
-onValue(ref(db,"orders"),snap=>renderOrders(snap.val()||{}));
-onValue(ref(db,"requests"),snap=>renderRequests(snap.val()||{}));
+onValue(ref(db,"coupons"),snap=>{
+coupons=snap.val()||{};
+renderCoupons();
+});
+
+onValue(ref(db,"orders"),snap=>{
+renderOrders(snap.val()||{});
+});
+
+onValue(ref(db,"requests"),snap=>{
+renderRequests(snap.val()||{});
+});
 
 function renderProducts(){
- const term=searchInput.value.toLowerCase();
- productsGrid.innerHTML="";
- Object.entries(products).filter(([id,p])=>(p.title||"").toLowerCase().includes(term)).forEach(([id,p])=>{
-  const stock=Number(p.stock||0);
-  productsGrid.innerHTML+=`
-  <div class="card">
-   <span class="badge">${config.badge||"FRETE GRÁTIS - CHEGA AMANHÃ"}</span>
-   <img src="${p.img}" onclick="zoom('${p.img}')">
-   <div class="card-body">
-    <h3>${p.title}</h3>
-    <div class="desc">${p.desc||""}</div>
-    <div class="price">${money(p.price)}</div>
-    <button class="btn detail" onclick="showDetail('${id}')">DETALHES</button>
-    ${stock>0?`<button class="btn btn-primary" onclick="addCart('${id}')">ADICIONAR AO CARRINHO</button>`:`<div class="sold">PRODUTO ESGOTADO</div>`}
-   </div>
-  </div>`;
- });
+if(!productsGrid)return;
+const term=(searchInput.value||"").toLowerCase().trim();
+productsGrid.innerHTML="";
+let entries=Object.entries(products).filter(([id,p])=>(p.title||"").toLowerCase().includes(term));
+
+if(entries.length===0){
+productsGrid.innerHTML='<div class="empty">Nenhum produto encontrado.</div>';
+return;
 }
 
-searchInput.oninput=renderProducts;
+entries.forEach(([id,p])=>{
+const stock=Number(p.stock||0);
+const price=adjustedPrice(p.price);
+productsGrid.innerHTML+=`
+<div class="product-card">
+<img src="${p.img||""}" onclick="openZoom('${encodeURIComponent(p.img||"")}')" draggable="false">
+<div class="product-body">
+<div class="product-title">${p.title||""}</div>
+<div class="product-desc">${p.desc||""}</div>
+<div class="product-price">${money(price)}</div>
+<div class="product-badge">${config.badgeText||"FRETE GRÁTIS - CHEGA AMANHÃ"}</div>
+<button class="btn btn-detail" onclick="openDetail('${id}')">DETALHES</button>
+${stock>0?`<button class="btn btn-primary" onclick="addToCart('${id}')">ADICIONAR AO CARRINHO</button>`:`<div class="sold-out">PRODUTO ESGOTADO</div>`}
+</div>
+</div>`;
+});
+}
 
-window.zoom=img=>{
- zoomImage.src=img;
- zoomModal.style.display="flex";
+searchInput.addEventListener("input",renderProducts);
+
+window.openZoom=img=>{
+zoomImage.src=decodeURIComponent(img);
+zoomModal.style.display="flex";
 };
 
-window.showDetail=id=>{
- const p=products[id];
- detailTitle.innerText=p.title;
- detailText.innerHTML=(p.full||"").split("\\n").filter(x=>x.trim()).map(x=>`<p style="margin-bottom:12px;line-height:1.5">${x}</p>`).join("");
- detailModal.style.display="flex";
+window.closeZoom=()=>{
+zoomModal.style.display="none";
+zoomImage.src="";
 };
 
-window.addCart=id=>{
- const p=products[id];
- if(Number(p.stock||0)<=0)return alert("Produto esgotado");
- const item=cart.find(x=>x.id===id);
- if(item)item.qty++;
- else cart.push({id,qty:1});
- updateCartBadge();
+window.openDetail=id=>{
+const p=products[id];
+detailTitle.innerText=p.title||"Detalhes";
+detailText.innerHTML=(p.full||"").split("\\n").filter(t=>t.trim()).map(t=>`<p>${t}</p>`).join("");
+detailModal.style.display="flex";
 };
 
-function updateCartBadge(){
- cartCount.innerText=cart.reduce((s,i)=>s+i.qty,0);
+window.closeDetail=()=>{
+detailModal.style.display="none";
+};
+
+window.addToCart=id=>{
+const p=products[id];
+if(!p)return;
+if(Number(p.stock||0)<=0){
+alert("Produto esgotado.");
+return;
+}
+const item=cart.find(x=>x.id===id);
+if(item)item.qty++;
+else cart.push({id,qty:1});
+updateCartCount();
+};
+
+function updateCartCount(){
+cartCount.innerText=cart.reduce((s,i)=>s+Number(i.qty||0),0);
 }
 
 window.openCart=()=>{
- renderCart();
- cartModal.style.display="flex";
+renderCart();
+cartModal.style.display="flex";
 };
 
-window.closeCart=()=>cartModal.style.display="none";
+window.closeCart=()=>{
+cartModal.style.display="none";
+};
 
-function renderCart(){
- cartList.innerHTML="";
- let total=0;
- cart.forEach((item,index)=>{
-  const p=products[item.id];
-  const sub=Number(p.price||0)*item.qty;
-  total+=sub;
-  cartList.innerHTML+=`
-  <div class="cart-item">
-   <img src="${p.img}">
-   <div style="flex:1">
-    <b>${p.title}</b><br>${money(p.price)}
-   </div>
-   <input type="number" min="1" value="${item.qty}" onchange="changeQty(${index},this.value)">
-   <button class="btn btn-red" onclick="removeCart(${index})">X</button>
-  </div>`;
- });
- cartTotal.innerText="Total: "+money(total);
+function getSubtotal(){
+let subtotal=0;
+cart.forEach(i=>{
+const p=products[i.id];
+if(p)subtotal+=adjustedPrice(p.price)*Number(i.qty||1);
+});
+return subtotal;
 }
 
-window.changeQty=(i,v)=>{
- cart[i].qty=Math.max(1,Number(v||1));
- updateCartBadge();
- renderCart();
+function getDiscount(){
+const subtotal=getSubtotal();
+if(!appliedCoupon)return 0;
+return subtotal*Number(appliedCoupon.discount||0)/100;
+}
+
+function getTotal(){
+return Math.max(0,getSubtotal()-getDiscount());
+}
+
+function renderCart(){
+if(!cartList)return;
+cartList.innerHTML="";
+if(cart.length===0){
+cartList.innerHTML='<div class="empty">Seu carrinho está vazio.</div>';
+cartTotal.innerText="Total: R$ 0,00";
+return;
+}
+
+cart.forEach((item,index)=>{
+const p=products[item.id];
+if(!p)return;
+cartList.innerHTML+=`
+<div class="cart-item">
+<img src="${p.img||""}" draggable="false">
+<div class="cart-item-info">
+<b>${p.title||""}</b><br>
+${money(adjustedPrice(p.price))}
+</div>
+<input type="number" min="1" value="${item.qty}" onchange="changeCartQty(${index},this.value)">
+<button class="btn btn-red" onclick="removeCartItem(${index})">X</button>
+</div>`;
+});
+
+let txt=`Subtotal: ${money(getSubtotal())}`;
+if(appliedCoupon){
+txt+=` | Desconto: ${money(getDiscount())}`;
+couponStatus.innerText=`Cupom aplicado: ${appliedCoupon.code} - ${appliedCoupon.discount}%`;
+}
+cartTotal.innerText=txt+" | Total: "+money(getTotal());
+}
+
+window.changeCartQty=(index,value)=>{
+cart[index].qty=Math.max(1,Number(value||1));
+updateCartCount();
+renderCart();
 };
 
-window.removeCart=i=>{
- cart.splice(i,1);
- updateCartBadge();
- renderCart();
+window.removeCartItem=index=>{
+cart.splice(index,1);
+updateCartCount();
+renderCart();
+};
+
+window.applyCoupon=()=>{
+const code=(couponInput.value||"").trim().toUpperCase();
+if(!code){
+appliedCoupon=null;
+couponStatus.innerText="";
+renderCart();
+return;
+}
+const found=Object.values(coupons).find(c=>(c.code||"").toUpperCase()===code);
+if(!found){
+appliedCoupon=null;
+couponStatus.innerText="Cupom inválido.";
+renderCart();
+return;
+}
+appliedCoupon=found;
+couponStatus.innerText=`Cupom aplicado: ${found.code} - ${found.discount}%`;
+renderCart();
 };
 
 window.finishOrder=()=>{
- if(cart.length===0)return alert("Seu carrinho está vazio");
- const fields=["cNome","cSobrenome","cCpf","cWhatsapp","cEmail","cRua","cBairro","cCidade","cNumero","cObs"];
- for(const f of fields){
-  if(!document.getElementById(f).value.trim()){
-   alert("Preencha todos os campos para finalizar a compra.");
-   document.getElementById(f).focus();
-   return;
-  }
- }
- let total=0;
- const items=cart.map(i=>{
-  const p=products[i.id];
-  const sub=Number(p.price||0)*i.qty;
-  total+=sub;
-  return {id:i.id,img:p.img,title:p.title,price:p.price,qty:i.qty,subtotal:sub};
- });
- const client={
-  nome:cNome.value,sobrenome:cSobrenome.value,cpf:cCpf.value,whatsapp:cWhatsapp.value,email:cEmail.value,
-  rua:cRua.value,bairro:cBairro.value,cidade:cCidade.value,numero:cNumero.value,observacoes:cObs.value
- };
- const order={client,items,total,date:new Date().toLocaleString("pt-BR")};
- push(ref(db,"orders"),order);
+if(cart.length===0){
+alert("Seu carrinho está vazio.");
+return;
+}
 
- items.forEach(i=>{
-  const atual=Number(products[i.id].stock||0);
-  update(ref(db,"products/"+i.id),{stock:Math.max(0,atual-i.qty)});
- });
+const required=["cNome","cSobrenome","cCpf","cWhatsapp","cEmail","cRua","cBairro","cCidade","cNumero","cObs"];
+for(const id of required){
+const el=document.getElementById(id);
+if(!el.value.trim()){
+alert("Preencha todos os campos obrigatórios para comprar.");
+el.focus();
+return;
+}
+}
 
- let msg=`NOVO PEDIDO BRITOTEM.COM%0A%0A`;
- msg+=`Cliente: ${client.nome} ${client.sobrenome}%0A`;
- msg+=`CPF: ${client.cpf}%0AWhatsApp: ${client.whatsapp}%0AE-mail: ${client.email}%0A`;
- msg+=`Endereço: ${client.rua}, ${client.numero}, ${client.bairro}, ${client.cidade}%0A`;
- msg+=`Observações: ${client.observacoes}%0A%0APRODUTOS:%0A`;
- items.forEach(i=>msg+=`${i.qty}x ${i.title} - ${money(i.subtotal)}%0A`);
- msg+=`%0ATOTAL: ${money(total)}`;
- window.open(`https://wa.me/55${config.whatsapp||"47988771313"}?text=${msg}`,"_blank");
- cart=[];
- updateCartBadge();
- closeCart();
+let items=[];
+cart.forEach(i=>{
+const p=products[i.id];
+if(!p)return;
+items.push({
+id:i.id,
+img:p.img||"",
+title:p.title||"",
+price:adjustedPrice(p.price),
+qty:Number(i.qty||1),
+subtotal:adjustedPrice(p.price)*Number(i.qty||1)
+});
+});
+
+const client={
+nome:cNome.value.trim(),
+sobrenome:cSobrenome.value.trim(),
+cpf:cCpf.value.trim(),
+whatsapp:cWhatsapp.value.trim(),
+email:cEmail.value.trim(),
+rua:cRua.value.trim(),
+bairro:cBairro.value.trim(),
+cidade:cCidade.value.trim(),
+numero:cNumero.value.trim(),
+observacoes:cObs.value.trim()
 };
 
-window.openWhats=()=>{
- window.open(`https://wa.me/55${config.whatsapp||"47988771313"}?text=Olá, gostaria de falar com o vendedor da loja BRITOTEM.COM`,"_blank");
+const order={
+client,
+items,
+subtotal:getSubtotal(),
+coupon:appliedCoupon||null,
+discount:getDiscount(),
+total:getTotal(),
+date:new Date().toLocaleString("pt-BR")
 };
 
-window.sendRequest=()=>{
- if(!reqName.value||!reqWhats.value||!reqProduct.value)return alert("Preencha nome, WhatsApp e produto desejado.");
- push(ref(db,"requests"),{
-  name:reqName.value,
-  whats:reqWhats.value,
-  product:reqProduct.value,
-  date:new Date().toLocaleString("pt-BR")
- });
- reqName.value=reqWhats.value=reqProduct.value="";
- alert("Pedido enviado com sucesso.");
+push(ref(db,"orders"),order);
+
+items.forEach(item=>{
+const current=Number(products[item.id]?.stock||0);
+update(ref(db,"products/"+item.id),{stock:Math.max(0,current-item.qty)});
+});
+
+let msg="NOVO PEDIDO BRITOTEM.COM%0A%0A";
+msg+=`Cliente: ${client.nome} ${client.sobrenome}%0A`;
+msg+=`CPF: ${client.cpf}%0A`;
+msg+=`WhatsApp: ${client.whatsapp}%0A`;
+msg+=`E-mail: ${client.email}%0A`;
+msg+=`Endereço: ${client.rua}, ${client.numero}, ${client.bairro}, ${client.cidade}%0A`;
+msg+=`Observações: ${client.observacoes}%0A%0A`;
+msg+="PRODUTOS:%0A";
+items.forEach(i=>{
+msg+=`${i.qty}x ${i.title} - ${money(i.subtotal)}%0A`;
+});
+msg+=`%0ASubtotal: ${money(order.subtotal)}`;
+if(appliedCoupon){
+msg+=`%0ACupom: ${appliedCoupon.code} - ${appliedCoupon.discount}%`;
+msg+=`%0ADesconto: ${money(order.discount)}`;
+}
+msg+=`%0ATOTAL: ${money(order.total)}`;
+
+window.open(`https://wa.me/55${config.whatsapp||"47988771313"}?text=${msg}`,"_blank");
+
+cart=[];
+appliedCoupon=null;
+couponInput.value="";
+couponStatus.innerText="";
+updateCartCount();
+renderCart();
+closeCart();
 };
 
-window.loginAdmin=()=>{
- const pass=prompt("Digite a senha do ADM:");
- if(pass==="848218")adminPanel.style.display="block";
- else alert("Senha incorreta");
+window.openWhatsappSeller=()=>{
+window.open(`https://wa.me/55${config.whatsapp||"47988771313"}?text=Olá, quero falar com o vendedor da BRITOTEM.COM`,"_blank");
+};
+
+window.sendProductRequest=()=>{
+if(!reqName.value.trim()||!reqWhats.value.trim()||!reqProduct.value.trim()){
+alert("Preencha nome, WhatsApp e produto desejado.");
+return;
+}
+push(ref(db,"requests"),{
+name:reqName.value.trim(),
+whats:reqWhats.value.trim(),
+product:reqProduct.value.trim(),
+date:new Date().toLocaleString("pt-BR")
+});
+reqName.value="";
+reqWhats.value="";
+reqProduct.value="";
+alert("Pedido salvo no ADM.");
+};
+
+window.openAdminLogin=()=>{
+const senha=prompt("Digite a senha do ADM:");
+if(senha==="848218"){
+adminPanel.style.display="block";
+}else{
+alert("Senha incorreta.");
+}
+};
+
+window.closeAdmin=()=>{
+adminPanel.style.display="none";
 };
 
 window.saveConfig=()=>{
- set(ref(db,"config"),{
-  siteName:admSiteName.value,
-  whatsapp:admWhatsapp.value,
-  badge:admBadge.value,
-  footer:admFooter.value
- });
- alert("Configurações salvas.");
- adminPanel.style.display="none";
+set(ref(db,"config"),{
+siteName:admSiteName.value.trim()||"BRITOTEM.COM",
+whatsapp:admWhatsapp.value.trim()||"47988771313",
+badgeText:admBadgeText.value.trim()||"FRETE GRÁTIS - CHEGA AMANHÃ",
+footerText:admFooterText.value.trim()||"© Britotem.com 2026 - Todos os direitos Reservados.",
+globalPercent:Number(admGlobalPercent.value||0)
+});
+alert("Configurações salvas.");
+adminPanel.style.display="none";
+};
+
+window.saveCoupon=()=>{
+if(!couponCode.value.trim()){
+alert("Digite o código do cupom.");
+return;
+}
+push(ref(db,"coupons"),{
+code:couponCode.value.trim().toUpperCase(),
+discount:Number(couponDiscount.value||0)
+});
+couponCode.value="";
+couponDiscount.value="";
+alert("Cupom salvo.");
+};
+
+function renderCoupons(){
+adminCoupons.innerHTML="";
+Object.entries(coupons).forEach(([id,c])=>{
+adminCoupons.innerHTML+=`
+<div class="admin-item">
+<b>Cupom:</b> ${c.code}<br>
+<b>Desconto:</b> ${c.discount}%<br>
+<button class="btn btn-red" onclick="deleteCoupon('${id}')">APAGAR CUPOM</button>
+</div>`;
+});
+}
+
+window.deleteCoupon=id=>{
+if(confirm("Apagar este cupom?"))remove(ref(db,"coupons/"+id));
 };
 
 window.addProduct=()=>{
- if(!newTitle.value)return alert("Digite o título do produto.");
- push(ref(db,"products"),{
-  img:newImg.value||"https://via.placeholder.com/600x600/0b57d0/ffffff?text=Produto",
-  title:newTitle.value,
-  price:newPrice.value||0,
-  desc:newDesc.value,
-  full:newFull.value,
-  stock:Number(newStock.value||0)
- });
- newImg.value=newTitle.value=newPrice.value=newDesc.value=newFull.value=newStock.value="";
- alert("Produto cadastrado.");
+if(!newTitle.value.trim()){
+alert("Digite o título do produto.");
+return;
+}
+push(ref(db,"products"),{
+img:newImg.value.trim()||"https://via.placeholder.com/700x700/075ee8/ffffff?text=Produto",
+title:newTitle.value.trim(),
+price:Number(newPrice.value||0),
+desc:newDesc.value.trim(),
+full:newFull.value.trim(),
+stock:Number(newStock.value||0)
+});
+newImg.value="";
+newTitle.value="";
+newPrice.value="";
+newDesc.value="";
+newFull.value="";
+newStock.value="";
+alert("Produto cadastrado.");
 };
 
 function renderAdminProducts(){
- adminProducts.innerHTML="";
- Object.entries(products).forEach(([id,p])=>{
-  adminProducts.innerHTML+=`
-  <div class="product-edit">
-   <p class="help">Produto: ${p.title}</p>
-   <input id="img_${id}" value="${p.img||""}" placeholder="Imagem URL">
-   <input id="title_${id}" value="${p.title||""}" placeholder="Título">
-   <input id="price_${id}" value="${p.price||0}" placeholder="Preço">
-   <textarea id="desc_${id}" placeholder="Descrição curta">${p.desc||""}</textarea>
-   <textarea id="full_${id}" placeholder="Descrição completa">${p.full||""}</textarea>
-   <input id="stock_${id}" type="number" value="${p.stock||0}" placeholder="Estoque">
-   <button class="btn btn-primary" onclick="saveProduct('${id}')">SALVAR</button>
-   <button class="btn btn-red" onclick="deleteProduct('${id}')">APAGAR</button>
-  </div>`;
- });
+adminProducts.innerHTML="";
+Object.entries(products).forEach(([id,p])=>{
+adminProducts.innerHTML+=`
+<div class="admin-item">
+<label>Imagem do produto por URL</label>
+<input id="img_${id}" value="${p.img||""}">
+
+<label>Título do produto</label>
+<input id="title_${id}" value="${p.title||""}">
+
+<label>Preço original do produto</label>
+<input id="price_${id}" type="number" step="0.01" value="${p.price||0}">
+
+<label>Descrição curta exibida na loja</label>
+<textarea id="desc_${id}">${p.desc||""}</textarea>
+
+<label>Descrição completa exibida no menu Detalhes</label>
+<textarea id="full_${id}">${p.full||""}</textarea>
+
+<label>Estoque do produto, visível somente no ADM</label>
+<input id="stock_${id}" type="number" value="${p.stock||0}">
+
+<div class="admin-actions">
+<button class="btn btn-primary" onclick="saveProduct('${id}')">SALVAR</button>
+<button class="btn btn-red" onclick="deleteProduct('${id}')">APAGAR</button>
+</div>
+</div>`;
+});
 }
 
 window.saveProduct=id=>{
- update(ref(db,"products/"+id),{
-  img:document.getElementById("img_"+id).value,
-  title:document.getElementById("title_"+id).value,
-  price:document.getElementById("price_"+id).value,
-  desc:document.getElementById("desc_"+id).value,
-  full:document.getElementById("full_"+id).value,
-  stock:Number(document.getElementById("stock_"+id).value||0)
- });
- alert("Produto salvo.");
+update(ref(db,"products/"+id),{
+img:document.getElementById("img_"+id).value,
+title:document.getElementById("title_"+id).value,
+price:Number(document.getElementById("price_"+id).value||0),
+desc:document.getElementById("desc_"+id).value,
+full:document.getElementById("full_"+id).value,
+stock:Number(document.getElementById("stock_"+id).value||0)
+});
+alert("Produto salvo.");
 };
 
 window.deleteProduct=id=>{
- if(confirm("Apagar este produto?"))remove(ref(db,"products/"+id));
+if(confirm("Apagar este produto?")){
+remove(ref(db,"products/"+id));
+}
 };
 
 function renderOrders(orders){
- adminOrders.innerHTML="";
- Object.entries(orders).reverse().forEach(([id,o])=>{
-  adminOrders.innerHTML+=`
-  <div class="product-edit">
-   <b>${o.date}</b><br>
-   Cliente: ${o.client?.nome||""} ${o.client?.sobrenome||""}<br>
-   WhatsApp: ${o.client?.whatsapp||""}<br>
-   Endereço: ${o.client?.rua||""}, ${o.client?.numero||""}, ${o.client?.bairro||""}, ${o.client?.cidade||""}<br>
-   <br>
-   ${(o.items||[]).map(i=>`${i.qty}x ${i.title} - ${money(i.subtotal)}`).join("<br>")}
-   <h3>Total: ${money(o.total)}</h3>
-   <button class="btn btn-red" onclick="removeOrder('${id}')">APAGAR PEDIDO</button>
-  </div>`;
- });
+adminOrders.innerHTML="";
+const entries=Object.entries(orders).reverse();
+if(entries.length===0){
+adminOrders.innerHTML='<div class="empty">Nenhum pedido registrado.</div>';
+return;
+}
+entries.forEach(([id,o])=>{
+adminOrders.innerHTML+=`
+<div class="admin-item">
+<label>Data do pedido</label>
+<div>${o.date||""}</div>
+
+<label>Dados do cliente</label>
+<div>
+${o.client?.nome||""} ${o.client?.sobrenome||""}<br>
+CPF: ${o.client?.cpf||""}<br>
+WhatsApp: ${o.client?.whatsapp||""}<br>
+E-mail: ${o.client?.email||""}<br>
+Endereço: ${o.client?.rua||""}, ${o.client?.numero||""}, ${o.client?.bairro||""}, ${o.client?.cidade||""}<br>
+Observações: ${o.client?.observacoes||""}
+</div>
+
+<label>Lista de produtos</label>
+<div>${(o.items||[]).map(i=>`${i.qty}x ${i.title} - ${money(i.subtotal)}`).join("<br>")}</div>
+
+<label>Cupom usado</label>
+<div>${o.coupon?`${o.coupon.code} - ${o.coupon.discount}%`:"Nenhum"}</div>
+
+<label>Total do pedido</label>
+<div><b>${money(o.total)}</b></div>
+
+<div class="admin-actions">
+<button class="btn btn-red" onclick="deleteOrder('${id}')">APAGAR PEDIDO</button>
+</div>
+</div>`;
+});
 }
 
-window.removeOrder=id=>{
- if(confirm("Apagar pedido do histórico?"))remove(ref(db,"orders/"+id));
+window.deleteOrder=id=>{
+if(confirm("Apagar pedido do histórico?")){
+remove(ref(db,"orders/"+id));
+}
 };
 
-function renderRequests(reqs){
- adminRequests.innerHTML="";
- Object.entries(reqs).reverse().forEach(([id,r])=>{
-  adminRequests.innerHTML+=`
-  <div class="product-edit">
-   <b>${r.date}</b><br>
-   Nome: ${r.name}<br>
-   WhatsApp: ${r.whats}<br>
-   Produto desejado: ${r.product}<br><br>
-   <button class="btn btn-red" onclick="removeRequest('${id}')">APAGAR</button>
-  </div>`;
- });
+function renderRequests(requests){
+adminRequests.innerHTML="";
+const entries=Object.entries(requests).reverse();
+if(entries.length===0){
+adminRequests.innerHTML='<div class="empty">Nenhum produto desejado enviado.</div>';
+return;
+}
+entries.forEach(([id,r])=>{
+adminRequests.innerHTML+=`
+<div class="admin-item">
+<label>Data do pedido</label>
+<div>${r.date||""}</div>
+
+<label>Nome do cliente</label>
+<div>${r.name||""}</div>
+
+<label>WhatsApp do cliente</label>
+<div>${r.whats||""}</div>
+
+<label>Produto desejado</label>
+<div>${r.product||""}</div>
+
+<button class="btn btn-red" onclick="deleteRequest('${id}')">APAGAR</button>
+</div>`;
+});
 }
 
-window.removeRequest=id=>{
- if(confirm("Apagar solicitação?"))remove(ref(db,"requests/"+id));
-};
-
-function drag(el){
- let p1=0,p2=0,p3=0,p4=0;
- el.onmousedown=down;
- el.ontouchstart=e=>down(e.touches[0]);
- function down(e){
-  p3=e.clientX;p4=e.clientY;
-  document.onmouseup=up;
-  document.onmousemove=move;
-  document.ontouchend=up;
-  document.ontouchmove=ev=>move(ev.touches[0]);
- }
- function move(e){
-  p1=p3-e.clientX;p2=p4-e.clientY;p3=e.clientX;p4=e.clientY;
-  el.style.top=(el.offsetTop-p2)+"px";
-  el.style.left=(el.offsetLeft-p1)+"px";
-  el.style.right="auto";
-  el.style.bottom="auto";
- }
- function up(){
-  document.onmouseup=null;document.onmousemove=null;document.ontouchend=null;document.ontouchmove=null;
- }
+window.deleteRequest=id=>{
+if(confirm("Apagar pedido de produto desejado?")){
+remove(ref(db,"requests/"+id));
 }
-drag(cartFloat);
-drag(whatsFloat);
-
-document.onkeydown=e=>{
- if(e.key==="F12"||(e.ctrlKey&&e.shiftKey&&["I","J","C"].includes(e.key.toUpperCase()))||(e.ctrlKey&&e.key.toUpperCase()==="U")){
-  e.preventDefault();
-  return false;
- }
 };
+
+function makeDraggable(el){
+let startX=0,startY=0,currentX=0,currentY=0;
+el.addEventListener("mousedown",start);
+el.addEventListener("touchstart",e=>start(e.touches[0]));
+function start(e){
+startX=e.clientX;
+startY=e.clientY;
+document.addEventListener("mousemove",move);
+document.addEventListener("mouseup",stop);
+document.addEventListener("touchmove",touchMove,{passive:false});
+document.addEventListener("touchend",stop);
+}
+function touchMove(e){
+e.preventDefault();
+move(e.touches[0]);
+}
+function move(e){
+currentX=startX-e.clientX;
+currentY=startY-e.clientY;
+startX=e.clientX;
+startY=e.clientY;
+el.style.top=(el.offsetTop-currentY)+"px";
+el.style.left=(el.offsetLeft-currentX)+"px";
+el.style.right="auto";
+el.style.bottom="auto";
+}
+function stop(){
+document.removeEventListener("mousemove",move);
+document.removeEventListener("mouseup",stop);
+document.removeEventListener("touchmove",touchMove);
+document.removeEventListener("touchend",stop);
+}
+}
+
+makeDraggable(cartFloat);
+makeDraggable(whatsFloat);
+
+document.addEventListener("keydown",e=>{
+if(
+e.key==="F12"||
+(e.ctrlKey&&e.shiftKey&&["I","J","C"].includes(e.key.toUpperCase()))||
+(e.ctrlKey&&e.key.toUpperCase()==="U")
+){
+e.preventDefault();
+return false;
+}
+});
+
+document.addEventListener("dragstart",e=>e.preventDefault());
 </script>
+
 </body>
 </html>
