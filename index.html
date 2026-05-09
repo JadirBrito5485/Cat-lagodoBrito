@@ -27,11 +27,13 @@ top:0;
 z-index:50;
 background:linear-gradient(135deg,var(--azul),var(--azul2));
 color:#fff;
+box-shadow:0 5px 20px #0003;
+}
+.header-main{
 padding:14px 18px;
 display:flex;
 align-items:center;
 gap:18px;
-box-shadow:0 5px 20px #0003;
 }
 .logo{
 font-size:23px;
@@ -53,6 +55,16 @@ border:0;
 outline:0;
 font-size:16px;
 box-shadow:inset 0 2px 8px #0001;
+}
+.top-banner{
+background:#00a650;
+color:#fff;
+text-align:center;
+font-weight:900;
+font-size:14px;
+padding:9px 10px;
+letter-spacing:.3px;
+box-shadow:inset 0 1px 0 #ffffff35;
 }
 .container{
 max-width:1350px;
@@ -277,15 +289,35 @@ padding:12px;
 border-radius:15px;
 margin:12px 0;
 }
-.request-box{
+.request-box,.raffle-box{
 background:#fff;
 padding:18px;
 border-radius:20px;
 box-shadow:0 8px 22px #00000012;
 margin:25px 0;
 }
-.request-box h2{
+.request-box h2,.raffle-box h2{
 color:var(--azul);
+}
+.raffle-layout{
+display:grid;
+grid-template-columns:320px 1fr;
+gap:18px;
+align-items:start;
+}
+.raffle-img{
+width:100%;
+border-radius:18px;
+object-fit:cover;
+max-height:320px;
+background:#eee;
+cursor:pointer;
+}
+.raffle-desc{
+line-height:1.5;
+color:#444;
+margin:10px 0;
+white-space:pre-line;
 }
 footer{
 text-align:center;
@@ -365,56 +397,29 @@ color:#666;
 font-weight:800;
 }
 @media(max-width:720px){
-header{
+.header-main{
 flex-direction:column;
 align-items:stretch;
 padding:12px;
 }
-.logo{
-text-align:center;
-}
+.logo{text-align:center}
+.top-banner{font-size:12px;padding:8px}
 .products-grid{
 grid-template-columns:repeat(2,1fr);
 gap:10px;
 }
-.container{
-padding:10px;
-}
-.product-card{
-border-radius:16px;
-}
-.product-card img{
-height:150px;
-}
-.product-body{
-padding:9px;
-}
-.product-title{
-font-size:13px;
-min-height:34px;
-}
-.product-desc{
-font-size:12px;
-}
-.product-price{
-font-size:18px;
-}
-.product-badge{
-font-size:9.5px;
-padding:6px;
-}
-.form-grid{
-grid-template-columns:1fr;
-}
-.float-btn{
-width:58px;
-height:58px;
-font-size:25px;
-}
-.whats-led{
-font-size:10px;
-left:62px;
-}
+.container{padding:10px}
+.product-card{border-radius:16px}
+.product-card img{height:150px}
+.product-body{padding:9px}
+.product-title{font-size:13px;min-height:34px}
+.product-desc{font-size:12px}
+.product-price{font-size:18px}
+.product-badge{font-size:9.5px;padding:6px}
+.form-grid{grid-template-columns:1fr}
+.raffle-layout{grid-template-columns:1fr}
+.float-btn{width:58px;height:58px;font-size:25px}
+.whats-led{font-size:10px;left:62px}
 }
 </style>
 </head>
@@ -422,13 +427,17 @@ left:62px;
 <body oncontextmenu="return false">
 
 <header>
+<div class="header-main">
 <div class="logo" id="siteName">BRITOTEM.COM</div>
 <div class="search-area">
 <input id="searchInput" type="search" placeholder="Buscar produtos...">
 </div>
+</div>
+<div class="top-banner" id="topBanner">COMPRE HOJE CHEGA AMANHÃ SOMENTE PARA RIO NEGRINHO SC FRETE GRÁTIS</div>
 </header>
 
 <main class="container">
+
 <section class="products-grid" id="productsGrid"></section>
 
 <section class="request-box">
@@ -446,6 +455,35 @@ left:62px;
 
 <button class="btn btn-primary" onclick="sendProductRequest()">ENVIAR PEDIDO</button>
 </section>
+
+<section class="raffle-box">
+<div class="raffle-layout">
+<div>
+<img id="raffleImage" class="raffle-img" src="" onclick="openZoom(encodeURIComponent(this.src))">
+</div>
+<div>
+<h2 id="raffleTitle">Sorteio Especial BRITOTEM.COM</h2>
+<div class="raffle-desc" id="raffleDesc">Cadastre-se para participar do nosso sorteio especial.</div>
+
+<h2>Participar do sorteio</h2>
+
+<label>Nome Completo</label>
+<input id="raffleName" placeholder="Digite seu nome completo">
+
+<label>CPF</label>
+<input id="raffleCpf" placeholder="Digite seu CPF">
+
+<label>Seu WhatsApp</label>
+<input id="raffleWhatsapp" placeholder="Digite seu WhatsApp">
+
+<label>WhatsApp de um amigo</label>
+<input id="raffleFriendWhatsapp" placeholder="Digite o WhatsApp de um amigo">
+
+<button class="btn btn-green" onclick="joinRaffle()">PARTICIPAR DO SORTEIO</button>
+</div>
+</div>
+</section>
+
 </main>
 
 <div class="float-btn cart-float" id="cartFloat" onclick="openCart()">
@@ -548,10 +586,13 @@ left:62px;
 
 <div class="admin-section">
 <h3>Configurações principais da loja</h3>
-<p class="help">Edite os textos principais da loja, WhatsApp, faixa dos produtos e ajuste geral de preço por porcentagem.</p>
+<p class="help">Edite os textos principais da loja, WhatsApp, faixa superior, faixa dos produtos e ajuste geral de preço por porcentagem.</p>
 
 <label>Nome do site exibido no topo esquerdo</label>
 <input id="admSiteName">
+
+<label>Texto da faixa superior abaixo da busca</label>
+<input id="admTopBanner">
 
 <label>WhatsApp do vendedor usado no botão flutuante e nos pedidos</label>
 <input id="admWhatsapp">
@@ -566,6 +607,28 @@ left:62px;
 <input id="admGlobalPercent" type="number" step="0.01">
 
 <button class="btn btn-primary" onclick="saveConfig()">SALVAR E SAIR</button>
+</div>
+
+<div class="admin-section">
+<h3>Editar sessão de sorteio</h3>
+<p class="help">Edite o título, imagem e descrição da sessão de sorteio exibida na sequência do site.</p>
+
+<label>Título do sorteio</label>
+<input id="admRaffleTitle">
+
+<label>Imagem do sorteio por URL</label>
+<input id="admRaffleImage">
+
+<label>Descrição do sorteio organizada em parágrafos</label>
+<textarea id="admRaffleDesc"></textarea>
+
+<button class="btn btn-primary" onclick="saveRaffleConfig()">SALVAR SORTEIO E SAIR</button>
+</div>
+
+<div class="admin-section">
+<h3>Participantes do sorteio</h3>
+<p class="help">Aqui ficam salvos os cadastros do sorteio. O sistema não permite repetir WhatsApp já cadastrado nem usar o próprio WhatsApp como WhatsApp de amigo.</p>
+<div id="adminRaffleParticipants"></div>
 </div>
 
 <div class="admin-section">
@@ -651,10 +714,16 @@ const db=getDatabase(app);
 let products={};
 let config={};
 let coupons={};
+let raffle={};
+let raffleParticipants={};
 let cart=[];
 let appliedCoupon=null;
 
 const money=v=>Number(v||0).toLocaleString("pt-BR",{style:"currency",currency:"BRL"});
+
+function onlyNumbers(v){
+return String(v||"").replace(/\D/g,"");
+}
 
 function adjustedPrice(price){
 const percent=Number(config.globalPercent||0);
@@ -679,20 +748,42 @@ return list;
 onValue(ref(db,"config"),snap=>{
 config=snap.val()||{
 siteName:"BRITOTEM.COM",
+topBanner:"COMPRE HOJE CHEGA AMANHÃ SOMENTE PARA RIO NEGRINHO SC FRETE GRÁTIS",
 whatsapp:"47988771313",
 badgeText:"FRETE GRÁTIS - CHEGA AMANHÃ",
 footerText:"© Britotem.com 2026 - Todos os direitos Reservados.",
 globalPercent:0
 };
 siteName.innerText=config.siteName||"BRITOTEM.COM";
+topBanner.innerText=config.topBanner||"COMPRE HOJE CHEGA AMANHÃ SOMENTE PARA RIO NEGRINHO SC FRETE GRÁTIS";
 footerText.innerText=config.footerText||"© Britotem.com 2026 - Todos os direitos Reservados.";
 admSiteName.value=config.siteName||"BRITOTEM.COM";
+admTopBanner.value=config.topBanner||"COMPRE HOJE CHEGA AMANHÃ SOMENTE PARA RIO NEGRINHO SC FRETE GRÁTIS";
 admWhatsapp.value=config.whatsapp||"47988771313";
 admBadgeText.value=config.badgeText||"FRETE GRÁTIS - CHEGA AMANHÃ";
 admFooterText.value=config.footerText||"© Britotem.com 2026 - Todos os direitos Reservados.";
 admGlobalPercent.value=config.globalPercent||0;
 renderProducts();
 renderCart();
+});
+
+onValue(ref(db,"raffle"),snap=>{
+raffle=snap.val()||{
+title:"Sorteio Especial BRITOTEM.COM",
+image:"https://via.placeholder.com/900x600/075ee8/ffffff?text=Sorteio+BRITOTEM.COM",
+description:"Cadastre-se para participar do nosso sorteio especial.\\n\\nPreencha seus dados e indique o WhatsApp de um amigo."
+};
+raffleTitle.innerText=raffle.title||"Sorteio Especial BRITOTEM.COM";
+raffleImage.src=raffle.image||"https://via.placeholder.com/900x600/075ee8/ffffff?text=Sorteio+BRITOTEM.COM";
+raffleDesc.innerText=raffle.description||"Cadastre-se para participar do nosso sorteio especial.";
+admRaffleTitle.value=raffle.title||"";
+admRaffleImage.value=raffle.image||"";
+admRaffleDesc.value=raffle.description||"";
+});
+
+onValue(ref(db,"raffleParticipants"),snap=>{
+raffleParticipants=snap.val()||{};
+renderRaffleParticipants();
 });
 
 onValue(ref(db,"products"),snap=>{
@@ -989,6 +1080,45 @@ reqProduct.value="";
 alert("Pedido salvo no ADM.");
 };
 
+window.joinRaffle=()=>{
+const name=raffleName.value.trim();
+const cpf=raffleCpf.value.trim();
+const whatsapp=onlyNumbers(raffleWhatsapp.value);
+const friendWhatsapp=onlyNumbers(raffleFriendWhatsapp.value);
+
+if(!name||!cpf||!whatsapp||!friendWhatsapp){
+alert("Preencha todos os campos para participar do sorteio.");
+return;
+}
+
+if(whatsapp===friendWhatsapp){
+alert("O WhatsApp do amigo não pode ser igual ao seu próprio WhatsApp.");
+return;
+}
+
+const exists=Object.values(raffleParticipants).some(p=>onlyNumbers(p.whatsapp)===whatsapp);
+
+if(exists){
+alert("Este WhatsApp já está cadastrado no sorteio.");
+return;
+}
+
+push(ref(db,"raffleParticipants"),{
+name,
+cpf,
+whatsapp,
+friendWhatsapp,
+date:new Date().toLocaleString("pt-BR")
+});
+
+raffleName.value="";
+raffleCpf.value="";
+raffleWhatsapp.value="";
+raffleFriendWhatsapp.value="";
+
+alert("Cadastro realizado com sucesso no sorteio.");
+};
+
 window.openAdminLogin=()=>{
 const senha=prompt("Digite a senha do ADM:");
 if(senha==="848218"){
@@ -1005,12 +1135,23 @@ adminPanel.style.display="none";
 window.saveConfig=()=>{
 set(ref(db,"config"),{
 siteName:admSiteName.value.trim()||"BRITOTEM.COM",
+topBanner:admTopBanner.value.trim()||"COMPRE HOJE CHEGA AMANHÃ SOMENTE PARA RIO NEGRINHO SC FRETE GRÁTIS",
 whatsapp:admWhatsapp.value.trim()||"47988771313",
 badgeText:admBadgeText.value.trim()||"FRETE GRÁTIS - CHEGA AMANHÃ",
 footerText:admFooterText.value.trim()||"© Britotem.com 2026 - Todos os direitos Reservados.",
 globalPercent:Number(admGlobalPercent.value||0)
 });
 alert("Configurações salvas.");
+adminPanel.style.display="none";
+};
+
+window.saveRaffleConfig=()=>{
+set(ref(db,"raffle"),{
+title:admRaffleTitle.value.trim()||"Sorteio Especial BRITOTEM.COM",
+image:admRaffleImage.value.trim()||"https://via.placeholder.com/900x600/075ee8/ffffff?text=Sorteio+BRITOTEM.COM",
+description:admRaffleDesc.value.trim()||"Cadastre-se para participar do nosso sorteio especial."
+});
+alert("Sorteio salvo.");
 adminPanel.style.display="none";
 };
 
@@ -1193,10 +1334,80 @@ remove(ref(db,"requests/"+id));
 }
 };
 
+function renderRaffleParticipants(){
+adminRaffleParticipants.innerHTML="";
+const entries=Object.entries(raffleParticipants).reverse();
+
+if(entries.length===0){
+adminRaffleParticipants.innerHTML='<div class="empty">Nenhum participante cadastrado.</div>';
+return;
+}
+
+entries.forEach(([id,p])=>{
+adminRaffleParticipants.innerHTML+=`
+<div class="admin-item">
+<label>Data do cadastro</label>
+<div>${p.date||""}</div>
+
+<label>Nome completo</label>
+<input id="rp_name_${id}" value="${p.name||""}">
+
+<label>CPF</label>
+<input id="rp_cpf_${id}" value="${p.cpf||""}">
+
+<label>WhatsApp do participante</label>
+<input id="rp_whatsapp_${id}" value="${p.whatsapp||""}">
+
+<label>WhatsApp do amigo</label>
+<input id="rp_friend_${id}" value="${p.friendWhatsapp||""}">
+
+<div class="admin-actions">
+<button class="btn btn-primary" onclick="saveRaffleParticipant('${id}')">SALVAR PARTICIPANTE</button>
+<button class="btn btn-red" onclick="deleteRaffleParticipant('${id}')">APAGAR PARTICIPANTE</button>
+</div>
+</div>`;
+});
+}
+
+window.saveRaffleParticipant=id=>{
+const whatsapp=onlyNumbers(document.getElementById("rp_whatsapp_"+id).value);
+const friend=onlyNumbers(document.getElementById("rp_friend_"+id).value);
+
+if(whatsapp===friend){
+alert("O WhatsApp do amigo não pode ser igual ao WhatsApp do participante.");
+return;
+}
+
+const repeat=Object.entries(raffleParticipants).some(([otherId,p])=>{
+return otherId!==id && onlyNumbers(p.whatsapp)===whatsapp;
+});
+
+if(repeat){
+alert("Este WhatsApp já está cadastrado em outro participante.");
+return;
+}
+
+update(ref(db,"raffleParticipants/"+id),{
+name:document.getElementById("rp_name_"+id).value,
+cpf:document.getElementById("rp_cpf_"+id).value,
+whatsapp,
+friendWhatsapp:friend
+});
+alert("Participante salvo.");
+};
+
+window.deleteRaffleParticipant=id=>{
+if(confirm("Apagar participante do sorteio?")){
+remove(ref(db,"raffleParticipants/"+id));
+}
+};
+
 function makeDraggable(el){
 let startX=0,startY=0,currentX=0,currentY=0;
+
 el.addEventListener("mousedown",start);
 el.addEventListener("touchstart",e=>start(e.touches[0]));
+
 function start(e){
 startX=e.clientX;
 startY=e.clientY;
@@ -1205,10 +1416,12 @@ document.addEventListener("mouseup",stop);
 document.addEventListener("touchmove",touchMove,{passive:false});
 document.addEventListener("touchend",stop);
 }
+
 function touchMove(e){
 e.preventDefault();
 move(e.touches[0]);
 }
+
 function move(e){
 currentX=startX-e.clientX;
 currentY=startY-e.clientY;
@@ -1219,6 +1432,7 @@ el.style.left=(el.offsetLeft-currentX)+"px";
 el.style.right="auto";
 el.style.bottom="auto";
 }
+
 function stop(){
 document.removeEventListener("mousemove",move);
 document.removeEventListener("mouseup",stop);
