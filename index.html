@@ -10,7 +10,7 @@
 :root{--azul:#075ee8;--azul2:#003b99;--verde:#00a650;--vermelho:#e00000;--fundo:#f4f6fb;--texto:#111827;--card:#fff}
 body{background:var(--fundo);color:var(--texto);user-select:none}
 header{position:sticky;top:0;z-index:50;background:linear-gradient(135deg,var(--azul),var(--azul2));color:#fff;box-shadow:0 5px 20px #0003}
-.header-main{padding:14px 18px;display:grid;grid-template-columns:260px 1fr 360px;align-items:center;gap:18px}
+.header-main{padding:14px 18px;display:grid;grid-template-columns:260px 1fr;align-items:center;gap:18px}
 .logo-box{line-height:1.15}
 .logo{font-size:23px;font-weight:900;letter-spacing:.5px;white-space:nowrap}
 .subtitle{font-size:12px;font-weight:700;opacity:.9;margin-top:3px}
@@ -64,7 +64,8 @@ textarea{min-height:90px;resize:vertical}
 .raffle-img{width:100%;border-radius:18px;object-fit:cover;max-height:320px;background:#eee;cursor:pointer}
 .raffle-desc{line-height:1.5;color:#444;margin:10px 0;white-space:pre-line}
 footer{text-align:center;padding:28px 10px;color:#555}
-.admin-link{font-size:13px;opacity:.20;cursor:pointer;margin-bottom:8px;font-weight:900}
+.admin-link{position:fixed;right:8px;bottom:6px;font-size:12px;opacity:.12;cursor:pointer;font-weight:900;z-index:999;color:#000;user-select:none}
+.admin-link:hover{opacity:.35}
 .admin-panel{display:none;position:fixed;inset:0;z-index:500;background:#f4f6fb;overflow:auto;padding:15px}
 .admin-header{display:flex;align-items:center;justify-content:space-between;background:#111827;color:#fff;padding:14px;border-radius:18px;margin-bottom:14px}
 .admin-section{background:#fff;padding:15px;border-radius:18px;box-shadow:0 7px 20px #00000012;margin-bottom:15px}
@@ -75,10 +76,29 @@ footer{text-align:center;padding:28px 10px;color:#555}
 .zoom-img{max-width:94vw;max-height:88vh;border-radius:18px}
 .detail-content p{margin-bottom:13px;line-height:1.55;color:#333}
 .empty{text-align:center;padding:22px;color:#666;font-weight:800}
+.payment-box{background:#f8fafc;border:1px solid #e5e7eb;border-radius:15px;padding:12px;margin:12px 0}
+.payment-options{display:flex;gap:10px;flex-wrap:wrap;margin:8px 0}
+.payment-options label{display:flex;align-items:center;gap:7px;background:#fff;border:1px solid #d8dce5;border-radius:12px;padding:10px 12px;margin:0;cursor:pointer}
+.payment-options input{width:auto}
+.pix-box{display:none;margin-top:10px}
+.admin-products-list{display:flex;flex-direction:column;gap:8px}
+.admin-product-compact{border:1px solid #e5e7eb;border-radius:14px;padding:9px;background:#fcfcfd;cursor:grab}
+.admin-product-compact.dragging{opacity:.45}
+.admin-product-top{display:grid;grid-template-columns:32px 52px 1fr 90px 80px;gap:8px;align-items:center}
+.drag-handle{font-size:20px;font-weight:900;color:#777;text-align:center;cursor:grab}
+.admin-thumb{width:52px;height:52px;border-radius:10px;object-fit:cover;background:#eee}
+.admin-product-fields{display:grid;grid-template-columns:1fr 110px 90px;gap:8px;align-items:center}
+.admin-product-fields input{padding:9px;border-radius:10px}
+.admin-product-more{display:none;margin-top:8px;grid-template-columns:1fr 1fr;gap:8px}
+.admin-product-more.open{display:grid}
+.admin-product-more textarea{min-height:65px}
+.admin-compact-actions{display:flex;gap:6px;flex-wrap:wrap;margin-top:8px}
+.admin-compact-actions .btn{width:auto;padding:9px 11px;margin-top:0}
+@media(max-width:720px){.admin-product-top{grid-template-columns:28px 48px 1fr}.admin-product-fields{grid-template-columns:1fr}.admin-product-more.open{grid-template-columns:1fr}}
+.affiliate-alert{background:#fff7ed;border:1px solid #fed7aa;color:#9a3412;border-radius:12px;padding:10px;margin:10px 0;font-weight:800}
 @media(max-width:720px){
 .header-main{display:flex;flex-direction:column;align-items:stretch;padding:12px}
 .logo-box{text-align:center}
-.top-info{justify-content:center;font-size:11px;flex-wrap:wrap}
 .top-banner{font-size:12px;padding:8px}
 .banner-carousel{height:220px;border-radius:16px}
 .products-grid{grid-template-columns:repeat(2,1fr);gap:10px}
@@ -109,11 +129,7 @@ footer{text-align:center;padding:28px 10px;color:#555}
 <div class="search-area">
 <input id="searchInput" type="search" placeholder="Buscar produtos...">
 </div>
-<div class="top-info" id="topInfo">
-<span>📍 Rio Negrinho SC</span>
-<span>📅 <b id="dateTimeText">00/00/0000 00:00</b></span>
-<span>🌡️ <b id="temperatureText">--°C</b></span>
-</div>
+
 </div>
 <div class="top-banner" id="topBanner">COMPRE HOJE CHEGA AMANHÃ SOMENTE PARA RIO NEGRINHO SC FRETE GRÁTIS</div>
 </header>
@@ -182,7 +198,8 @@ footer{text-align:center;padding:28px 10px;color:#555}
 <h2>Dados do cliente</h2>
 
 <div class="form-grid">
-<div><label>Nome completo <span class="req">*</span></label><input id="cNomeCompleto" required></div>
+<div><label>Nome <span class="req">*</span></label><input id="cNome" required></div>
+<div><label>Sobrenome <span class="req">*</span></label><input id="cSobrenome" required></div>
 <div><label>CPF <span class="req">*</span></label><input id="cCpf" required></div>
 <div><label>WhatsApp <span class="req">*</span></label><input id="cWhatsapp" required></div>
 <div><label>E-mail <span class="req">*</span></label><input id="cEmail" required></div>
@@ -198,6 +215,21 @@ footer{text-align:center;padding:28px 10px;color:#555}
 
 <label>Observações <span class="req">*</span></label>
 <textarea id="cObs" required></textarea>
+
+<div class="payment-box">
+<h2>Forma de pagamento</h2>
+<div class="payment-options">
+<label><input type="radio" name="paymentMethod" value="dinheiro" checked onchange="updatePaymentBox()"> Dinheiro</label>
+<label><input type="radio" name="paymentMethod" value="pix" onchange="updatePaymentBox()"> PIX</label>
+</div>
+<div id="cashBox">
+<label>Troco para quanto?</label>
+<input id="cashChange" type="number" step="0.01" placeholder="Exemplo: 100">
+</div>
+<div id="pixBox" class="pix-box">
+<p class="help">Pagamento selecionado: PIX. O pedido será enviado para o WhatsApp do vendedor com a lista de produtos, valores e dados do cliente.</p>
+</div>
+</div>
 
 <button class="btn btn-green" onclick="finishOrder()">FINALIZAR COMPRA</button>
 <button class="btn btn-gray" onclick="closeCart()">CONTINUAR COMPRANDO</button>
@@ -242,6 +274,7 @@ footer{text-align:center;padding:28px 10px;color:#555}
 
 <label>WhatsApp do vendedor usado no botão flutuante e nos pedidos</label>
 <input id="admWhatsapp">
+
 
 <label>Texto da faixa abaixo do preço nos produtos</label>
 <input id="admBadgeText">
@@ -310,6 +343,17 @@ footer{text-align:center;padding:28px 10px;color:#555}
 </div>
 
 <div class="admin-section">
+<h3>Afiliados</h3>
+<p class="help">Cadastre afiliados com código único. O link ficará no formato ?ref=CODIGO e as vendas feitas por esse link aparecem no histórico de pedidos.</p>
+<label>Nome do afiliado</label>
+<input id="affiliateName" placeholder="Nome do afiliado">
+<label>Código único do afiliado, sem espaço</label>
+<input id="affiliateCode" placeholder="Exemplo: JOAO10">
+<button class="btn btn-green" onclick="saveAffiliate()">CADASTRAR AFILIADO</button>
+<div id="adminAffiliates"></div>
+</div>
+
+<div class="admin-section">
 <h3>Cadastrar novo produto</h3>
 <p class="help">Cadastre novos produtos que serão salvos no Firebase e exibidos automaticamente na loja.</p>
 <label>Imagem do produto por URL</label>
@@ -352,10 +396,13 @@ const app=initializeApp(firebaseConfig);
 const analytics=getAnalytics(app);
 const db=getDatabase(app);
 
-let products={},config={},coupons={},raffle={},raffleParticipants={},cities={},banners={},cart=[],appliedCoupon=null,bannerList=[],bannerIndex=0;
+let products={},config={},coupons={},raffle={},raffleParticipants={},cities={},banners={},affiliates={},cart=[],appliedCoupon=null,bannerList=[],bannerIndex=0,currentAffiliate=null;
 
 const money=v=>Number(v||0).toLocaleString("pt-BR",{style:"currency",currency:"BRL"});
 const onlyNumbers=v=>String(v||"").replace(/\D/g,"");
+const escapeHtml=v=>String(v||"").replace(/[&<>"\']/g,m=>({"&":"&amp;","<":"&lt;",">":"&gt;","\"":"&quot;","'":"&#39;"}[m]));
+const getSortedProducts=()=>Object.entries(products).sort((a,b)=>(Number(a[1].order||999999)-Number(b[1].order||999999))||String(a[1].title||"").localeCompare(String(b[1].title||"")));
+const getPaymentMethod=()=>document.querySelector('input[name="paymentMethod"]:checked')?.value||"dinheiro";
 
 function adjustedPrice(price){
 const percent=Number(config.globalPercent||0);
@@ -371,37 +418,16 @@ title:"Produto "+i,
 price:(20+i).toFixed(2),
 desc:"Descrição curta do produto "+i,
 full:"Descrição completa do produto "+i+".\\n\\nEste texto pode ser editado dentro do painel ADM.\\n\\nOrganize as informações em parágrafos.",
-stock:10
+stock:10,
+order:i
 };
 }
 return list;
 }
 
-function updateDateTime(){
-const now=new Date();
-const date=now.toLocaleDateString("pt-BR");
-const time=now.toLocaleTimeString("pt-BR",{hour:"2-digit",minute:"2-digit"});
-dateTimeText.innerText=date+" "+time;
-}
-setInterval(updateDateTime,1000);
-updateDateTime();
-
-async function updateTemperature(){
-try{
-const r=await fetch("https://api.open-meteo.com/v1/forecast?latitude=-26.2544&longitude=-49.5183&current_weather=true");
-const d=await r.json();
-const temp=Math.round(d.current_weather.temperature);
-temperatureText.innerText=temp+"°C";
-}catch(e){
-temperatureText.innerText="--°C";
-}
-}
-updateTemperature();
-setInterval(updateTemperature,600000);
-
 function saveClientLocal(){
 const data={
-nomeCompleto:cNomeCompleto.value,cpf:cCpf.value,whatsapp:cWhatsapp.value,email:cEmail.value,cep:cCep.value,
+nome:cNome.value,sobrenome:cSobrenome.value,cpf:cCpf.value,whatsapp:cWhatsapp.value,email:cEmail.value,cep:cCep.value,
 rua:cRua.value,bairro:cBairro.value,cidade:cCidade.value,numero:cNumero.value,observacoes:cObs.value
 };
 localStorage.setItem("cartClient",JSON.stringify(data));
@@ -409,7 +435,8 @@ localStorage.setItem("cartClient",JSON.stringify(data));
 
 function loadClientLocal(){
 const data=JSON.parse(localStorage.getItem("cartClient")||"{}");
-cNomeCompleto.value=data.nomeCompleto||"";
+cNome.value=data.nome||data.nomeCompleto||"";
+cSobrenome.value=data.sobrenome||"";
 cCpf.value=data.cpf||"";
 cWhatsapp.value=data.whatsapp||"";
 cEmail.value=data.email||"";
@@ -421,7 +448,7 @@ cObs.value=data.observacoes||"";
 setTimeout(()=>{if(data.cidade)cCidade.value=data.cidade},200);
 }
 
-["cNomeCompleto","cCpf","cWhatsapp","cEmail","cCep","cRua","cBairro","cCidade","cNumero","cObs"].forEach(id=>{
+["cNome","cSobrenome","cCpf","cWhatsapp","cEmail","cCep","cRua","cBairro","cCidade","cNumero","cObs","cashChange"].forEach(id=>{
 setTimeout(()=>{
 document.getElementById(id)?.addEventListener("input",saveClientLocal);
 document.getElementById(id)?.addEventListener("change",saveClientLocal);
@@ -550,13 +577,14 @@ raffleSection.style.display=raffle.enabled===false?"none":"block";
 onValue(ref(db,"raffleParticipants"),snap=>{raffleParticipants=snap.val()||{};renderRaffleParticipants()});
 onValue(ref(db,"products"),snap=>{products=snap.val()||{};if(Object.keys(products).length===0){set(ref(db,"products"),createDefaultProducts());return}renderProducts();renderAdminProducts()});
 onValue(ref(db,"coupons"),snap=>{coupons=snap.val()||{};renderCoupons()});
+onValue(ref(db,"affiliates"),snap=>{affiliates=snap.val()||{};detectAffiliate();renderAffiliates()});
 onValue(ref(db,"orders"),snap=>renderOrders(snap.val()||{}));
 onValue(ref(db,"requests"),snap=>renderRequests(snap.val()||{}));
 
 function renderProducts(){
 const term=(searchInput.value||"").toLowerCase().trim();
 productsGrid.innerHTML="";
-let entries=Object.entries(products).filter(([id,p])=>(p.title||"").toLowerCase().includes(term));
+let entries=getSortedProducts().filter(([id,p])=>(p.title||"").toLowerCase().includes(term));
 if(entries.length===0){
 productsGrid.innerHTML='<div class="empty">Nenhum produto encontrado.</div>';
 return;
@@ -617,6 +645,7 @@ cartList.innerHTML+=`
 let txt=`Subtotal: ${money(getSubtotal())}`;
 if(appliedCoupon){txt+=` | Desconto: ${money(getDiscount())}`;couponStatus.innerText=`Cupom aplicado: ${appliedCoupon.code} - ${appliedCoupon.discount}%`}
 cartTotal.innerText=txt+" | Total: "+money(getTotal());
+updatePaymentBox();
 }
 
 window.changeCartQty=(index,value)=>{cart[index].qty=Math.max(1,Number(value||1));updateCartCount();renderCart()};
@@ -630,9 +659,24 @@ if(!found){appliedCoupon=null;couponStatus.innerText="Cupom inválido.";renderCa
 appliedCoupon=found;couponStatus.innerText=`Cupom aplicado: ${found.code} - ${found.discount}%`;renderCart();
 };
 
+
+window.updatePaymentBox=()=>{
+const method=getPaymentMethod();
+if(!document.getElementById("cashBox")||!document.getElementById("pixBox"))return;
+cashBox.style.display=method==="dinheiro"?"block":"none";
+pixBox.style.display=method==="pix"?"block":"none";
+};
+function detectAffiliate(){
+const params=new URLSearchParams(location.search);
+const code=(params.get("ref")||localStorage.getItem("affiliateRef")||"").trim().toUpperCase();
+if(!code)return;
+const found=Object.entries(affiliates).find(([id,a])=>(a.code||"").toUpperCase()===code);
+if(found){currentAffiliate={id:found[0],...found[1]};localStorage.setItem("affiliateRef",code)}
+}
+
 window.finishOrder=()=>{
 if(cart.length===0)return alert("Seu carrinho está vazio.");
-const required=["cNomeCompleto","cCpf","cWhatsapp","cEmail","cCep","cRua","cBairro","cCidade","cNumero","cObs"];
+const required=["cNome","cSobrenome","cCpf","cWhatsapp","cEmail","cCep","cRua","cBairro","cCidade","cNumero","cObs"];
 for(const id of required){
 const el=document.getElementById(id);
 if(!el.value.trim()){
@@ -648,10 +692,12 @@ if(!p)return;
 items.push({id:i.id,img:p.img||"",title:p.title||"",price:adjustedPrice(p.price),qty:Number(i.qty||1),subtotal:adjustedPrice(p.price)*Number(i.qty||1)});
 });
 const client={
-nomeCompleto:cNomeCompleto.value.trim(),cpf:cCpf.value.trim(),whatsapp:cWhatsapp.value.trim(),email:cEmail.value.trim(),cep:cCep.value.trim(),
+nome:cNome.value.trim(),sobrenome:cSobrenome.value.trim(),nomeCompleto:(cNome.value.trim()+" "+cSobrenome.value.trim()).trim(),cpf:cCpf.value.trim(),whatsapp:cWhatsapp.value.trim(),email:cEmail.value.trim(),cep:cCep.value.trim(),
 rua:cRua.value.trim(),bairro:cBairro.value.trim(),cidade:cCidade.value.trim(),numero:cNumero.value.trim(),observacoes:cObs.value.trim()
 };
-const order={client,items,subtotal:getSubtotal(),coupon:appliedCoupon||null,discount:getDiscount(),total:getTotal(),date:new Date().toLocaleString("pt-BR")};
+const payment={method:getPaymentMethod(),cashChange:cashChange.value||""};
+const affiliate=currentAffiliate?{id:currentAffiliate.id,name:currentAffiliate.name||"",code:currentAffiliate.code||""}:null;
+const order={client,items,subtotal:getSubtotal(),coupon:appliedCoupon||null,discount:getDiscount(),total:getTotal(),payment,affiliate,date:new Date().toLocaleString("pt-BR")};
 push(ref(db,"orders"),order);
 items.forEach(item=>{
 const current=Number(products[item.id]?.stock||0);
@@ -666,6 +712,9 @@ items.forEach(i=>msg+=`${i.qty}x ${i.title} - ${money(i.subtotal)}%0A`);
 msg+=`%0ASubtotal: ${money(order.subtotal)}`;
 if(appliedCoupon){msg+=`%0ACupom: ${appliedCoupon.code} - ${appliedCoupon.discount}%%0ADesconto: ${money(order.discount)}`}
 msg+=`%0ATOTAL: ${money(order.total)}`;
+msg+=`%0AForma de pagamento: ${payment.method.toUpperCase()}`;
+if(payment.method==="dinheiro"&&payment.cashChange)msg+=`%0ATroco para: ${money(payment.cashChange)}`;
+if(affiliate)msg+=`%0AAfiliado: ${affiliate.name} - ${affiliate.code}`;
 window.open(`https://wa.me/55${config.whatsapp||"47988771313"}?text=${msg}`,"_blank");
 cart=[];appliedCoupon=null;couponInput.value="";couponStatus.innerText="";updateCartCount();renderCart();closeCart();
 };
@@ -788,28 +837,80 @@ title:newTitle.value.trim(),
 price:Number(newPrice.value||0),
 desc:newDesc.value.trim(),
 full:newFull.value.trim(),
-stock:Number(newStock.value||0)
+stock:Number(newStock.value||0),
+order:getSortedProducts().length+1
 });
 newImg.value="";newTitle.value="";newPrice.value="";newDesc.value="";newFull.value="";newStock.value="";
 alert("Produto cadastrado.");
 };
 
 function renderAdminProducts(){
-adminProducts.innerHTML="";
-Object.entries(products).forEach(([id,p])=>{
-adminProducts.innerHTML+=`
-<div class="admin-item">
-<label>Imagem do produto por URL</label><input id="img_${id}" value="${p.img||""}">
-<label>Título do produto</label><input id="title_${id}" value="${p.title||""}">
-<label>Preço original do produto</label><input id="price_${id}" type="number" step="0.01" value="${p.price||0}">
-<label>Descrição curta exibida na loja</label><textarea id="desc_${id}">${p.desc||""}</textarea>
-<label>Descrição completa exibida no menu Detalhes</label><textarea id="full_${id}">${p.full||""}</textarea>
-<label>Estoque do produto, visível somente no ADM</label><input id="stock_${id}" type="number" value="${p.stock||0}">
-<div class="admin-actions">
-<button class="btn btn-primary" onclick="saveProduct('${id}')">SALVAR</button>
+adminProducts.innerHTML='<div class="admin-products-list" id="adminProductsList"></div>';
+const list=document.getElementById("adminProductsList");
+getSortedProducts().forEach(([id,p])=>{
+list.innerHTML+=`
+<div class="admin-product-compact" draggable="true" data-id="${id}">
+<div class="admin-product-top">
+<div class="drag-handle" title="Arraste para mudar a ordem">☰</div>
+<img class="admin-thumb" src="${p.img||""}">
+<div class="admin-product-fields">
+<input id="title_${id}" value="${escapeHtml(p.title||"")}" placeholder="Título do produto">
+<input id="price_${id}" type="number" step="0.01" value="${p.price||0}" placeholder="Preço">
+<input id="stock_${id}" type="number" value="${p.stock||0}" placeholder="Estoque">
+</div>
+<button class="btn btn-detail" onclick="toggleProductEdit('${id}')">EDITAR</button>
 <button class="btn btn-red" onclick="deleteProduct('${id}')">APAGAR</button>
 </div>
+<div class="admin-product-more" id="more_${id}">
+<div><label>Ordem de exibição</label><input id="order_${id}" type="number" value="${p.order||999}"></div>
+<div><label>Imagem do produto por URL</label><input id="img_${id}" value="${escapeHtml(p.img||"")}"></div>
+<div><label>Descrição curta exibida na loja</label><textarea id="desc_${id}">${escapeHtml(p.desc||"")}</textarea></div>
+<div><label>Descrição completa exibida no menu Detalhes</label><textarea id="full_${id}">${escapeHtml(p.full||"")}</textarea></div>
+</div>
+<div class="admin-compact-actions">
+<button class="btn btn-primary" onclick="saveProduct('${id}')">SALVAR</button>
+</div>
 </div>`;
+});
+setupProductDragDrop();
+}
+
+window.toggleProductEdit=id=>document.getElementById("more_"+id)?.classList.toggle("open");
+
+function setupProductDragDrop(){
+const list=document.getElementById("adminProductsList");
+if(!list)return;
+let dragging=null;
+list.querySelectorAll(".admin-product-compact").forEach(item=>{
+item.addEventListener("dragstart",e=>{dragging=item;item.classList.add("dragging");e.dataTransfer.effectAllowed="move";});
+item.addEventListener("dragend",()=>{item.classList.remove("dragging");saveProductOrderFromDom();dragging=null;});
+});
+list.addEventListener("dragover",e=>{
+e.preventDefault();
+const after=getDragAfterElement(list,e.clientY);
+if(!dragging)return;
+if(after==null)list.appendChild(dragging);else list.insertBefore(dragging,after);
+});
+}
+
+function getDragAfterElement(container,y){
+const els=[...container.querySelectorAll(".admin-product-compact:not(.dragging)")];
+return els.reduce((closest,child)=>{
+const box=child.getBoundingClientRect();
+const offset=y-box.top-box.height/2;
+if(offset<0&&offset>closest.offset)return{offset,element:child};
+return closest;
+},{offset:Number.NEGATIVE_INFINITY}).element;
+}
+
+function saveProductOrderFromDom(){
+const list=document.getElementById("adminProductsList");
+if(!list)return;
+[...list.querySelectorAll(".admin-product-compact")].forEach((el,index)=>{
+const id=el.dataset.id;
+const orderInput=document.getElementById("order_"+id);
+if(orderInput)orderInput.value=index+1;
+update(ref(db,"products/"+id),{order:index+1});
 });
 }
 
@@ -820,12 +921,43 @@ title:document.getElementById("title_"+id).value,
 price:Number(document.getElementById("price_"+id).value||0),
 desc:document.getElementById("desc_"+id).value,
 full:document.getElementById("full_"+id).value,
-stock:Number(document.getElementById("stock_"+id).value||0)
+stock:Number(document.getElementById("stock_"+id).value||0),
+order:Number(document.getElementById("order_"+id).value||999)
 });
 alert("Produto salvo.");
 };
 
 window.deleteProduct=id=>{if(confirm("Apagar este produto?"))remove(ref(db,"products/"+id))};
+
+window.saveAffiliate=()=>{
+const name=affiliateName.value.trim();
+const code=affiliateCode.value.trim().toUpperCase().replace(/\s+/g,"");
+if(!name||!code)return alert("Digite nome e código do afiliado.");
+if(Object.values(affiliates).some(a=>(a.code||"").toUpperCase()===code))return alert("Esse código de afiliado já existe.");
+push(ref(db,"affiliates"),{name,code,date:new Date().toLocaleString("pt-BR")});
+affiliateName.value="";affiliateCode.value="";alert("Afiliado cadastrado.");
+};
+function renderAffiliates(){
+adminAffiliates.innerHTML="";
+Object.entries(affiliates).forEach(([id,a])=>{
+const link=location.origin+location.pathname+"?ref="+(a.code||"");
+adminAffiliates.innerHTML+=`
+<div class="admin-item">
+<label>Nome do afiliado</label><input id="aff_name_${id}" value="${escapeHtml(a.name||"")}">
+<label>Código único do afiliado</label><input id="aff_code_${id}" value="${escapeHtml(a.code||"")}">
+<label>Link de venda do afiliado</label><input readonly value="${escapeHtml(link)}">
+<div class="admin-actions">
+<button class="btn btn-primary" onclick="saveAffiliateEdit('${id}')">SALVAR AFILIADO</button>
+<button class="btn btn-red" onclick="deleteAffiliate('${id}')">APAGAR AFILIADO</button>
+</div>
+</div>`;
+});
+}
+window.saveAffiliateEdit=id=>{
+update(ref(db,"affiliates/"+id),{name:document.getElementById("aff_name_"+id).value,code:document.getElementById("aff_code_"+id).value.trim().toUpperCase().replace(/\s+/g,"")});
+alert("Afiliado salvo.");
+};
+window.deleteAffiliate=id=>{if(confirm("Apagar afiliado?"))remove(ref(db,"affiliates/"+id))};
 
 function renderOrders(orders){
 adminOrders.innerHTML="";
@@ -847,6 +979,8 @@ Observações: ${o.client?.observacoes||""}
 </div>
 <label>Lista de produtos</label><div>${(o.items||[]).map(i=>`${i.qty}x ${i.title} - ${money(i.subtotal)}`).join("<br>")}</div>
 <label>Cupom usado</label><div>${o.coupon?`${o.coupon.code} - ${o.coupon.discount}%`:"Nenhum"}</div>
+<label>Forma de pagamento</label><div>${o.payment?`${(o.payment.method||"").toUpperCase()} ${o.payment.cashChange?" - Troco para "+money(o.payment.cashChange):""}`:"Não informado"}</div>
+<label>Afiliado</label><div>${o.affiliate?`<div class="affiliate-alert">Venda feita pelo afiliado: ${o.affiliate.name} - Código ${o.affiliate.code}</div>`:"Nenhum"}</div>
 <label>Total do pedido</label><div><b>${money(o.total)}</b></div>
 <div class="admin-actions"><button class="btn btn-red" onclick="deleteOrder('${id}')">APAGAR PEDIDO</button></div>
 </div>`;
@@ -943,7 +1077,7 @@ e.preventDefault();
 return false;
 }
 });
-document.addEventListener("dragstart",e=>e.preventDefault());
+document.addEventListener("dragstart",e=>{if(e.target.closest && e.target.closest("#adminProductsList"))return;e.preventDefault()});
 </script>
 </body>
 </html>
